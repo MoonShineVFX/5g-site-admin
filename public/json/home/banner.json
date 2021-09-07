@@ -1,0 +1,52 @@
+{
+    "result": 1,
+    "message": "",
+    "errors": [],
+    "data": {
+        "banner": [
+            {
+                "id": 156421,
+                "title": "",
+                "imgUrl": "//fakeimg.pl/1200x520",
+                "link": "http://google.com.tw",
+                "priority": 1
+            },
+            {
+                "id": 156422,
+                "title": "標題-156422",
+                "imgUrl": "//fakeimg.pl/1200x520",
+                "link": "http://google.com.tw",
+                "priority": 2
+            },
+            {
+                "id": 156423,
+                "title": "標題-156423",
+                "imgUrl": "//fakeimg.pl/1200x520",
+                "link": "http://google.com.tw",
+                "priority": 3
+            },
+            {
+                "id": 156424,
+                "title": "標題-156424",
+                "imgUrl": "//fakeimg.pl/1200x520",
+                "link": "http://google.com.tw",
+                "priority": 4
+            },
+            {
+                "id": 156425,
+                "title": "標題-156425",
+                "imgUrl": "//fakeimg.pl/1200x520",
+                "link": "http://google.com.tw",
+                "priority": 5
+            },
+            {
+                "id": 156426,
+                "title": "標題-156426",
+                "imgUrl": "//fakeimg.pl/1200x520",
+                "link": "http://google.com.tw",
+                "priority": 6
+            }
+        ],
+        "length": 3
+    }
+}
