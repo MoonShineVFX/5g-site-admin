@@ -19,7 +19,7 @@
 .env.test.local
 .env.production.local
 
-public/json
+# public/json
 /.next
 
 npm-debug.log*

@@ -8,7 +8,7 @@ const { Sider } = Layout;
 const { SubMenu, Item } = Menu;
 const { navbar } = adminConst;
 
-const SiderBase = styled(Sider)`
+const SiderLayout = styled(Sider)`
     height: 100vh;
     text-align: center;
     padding: 20px 0;
@@ -26,20 +26,25 @@ const SiderBase = styled(Sider)`
 
 const Navbar = ({ width }) => (
 
-    <SiderBase width={width}>
+    <SiderLayout width={width}>
         <Links url="/" className="logo">
-            <img src="//fakeimg.pl/200x60?text=LOGO" alt="LOGO"/>
+            <img src="//fakeimg.pl/200x60?text=LOGO" alt="LOGO" />
         </Links>
 
-        <Menu theme="dark" mode="inline">
+        <Menu
+            theme="dark"
+            mode="inline"
+            defaultOpenKeys={navbar.flatMap(({ pageKey }) => pageKey)}
+            defaultSelectedKeys={['banner']}
+        >
             {
-                navbar.map(({ name, pageKey, subItems }, idx) => (
+                navbar.map(({ name, pageKey, subItems }) => (
 
                     subItems.length ? (
 
                         <SubMenu key={pageKey} title={name}>
                             {
-                                subItems.map((obj, idx) => (
+                                subItems.map((obj) => (
 
                                     <Item key={obj.pageKey}>
                                         <Links url={obj.pageKey}>{obj.name}</Links>
@@ -60,7 +65,7 @@ const Navbar = ({ width }) => (
                 ))
             }
         </Menu>
-    </SiderBase>
+    </SiderLayout>
 
 );
 

@@ -1,12 +1,12 @@
-import { Fragment, useEffect } from 'react';
+import { Fragment } from 'react';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 import { Layout } from 'antd';
 import 'antd/dist/antd.css';
 import { faUserShield, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
-import { createGlobalStyle, ThemeProvider } from 'styled-components';
+import { ThemeProvider } from 'styled-components';
 import styled from 'styled-components';
 
+import GlobalStyle from '../src/containers/GlobalStyle';
 import Navbar from '../src/containers/Navbar';
 import MainContent from '../src/containers/MainContent';
 import FontIcon from '../src/components/FontIcon';
@@ -17,22 +17,13 @@ import { GlobalProvider } from '../src/context/global.state';
 const { Header, Content, Footer } = Layout;
 const navbarWidth = 240;
 
-const GlobalStyle = createGlobalStyle`
-    body {
-        background-color: #F0F2F5;
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-`;
-
 const theme = {
     // main: 'mediumseagreen',
 };
 
-const HeaderBase = styled(Header)`
+const HeaderLayout = styled(Header)`
     text-align: right;
-    background-color: #FFF;
+    background-color: #F0F2F5;
     padding: 0 20px;
     svg {
         font-size: 1.4em;
@@ -48,41 +39,18 @@ const HeaderBase = styled(Header)`
     }
 `;
 
-const ContentBase = styled(Content)`
+const ContentLayout = styled(Content)`
     margin-bottom: 40px;
     padding: 20px;
-    section {
-        background-color: #FFF;
-        padding: 30px;
-    }
+`;
+
+const FooterLayout = styled(Footer)`
+    text-align: center;
+    background-color: #F0F2F5;
 `;
 
 //
 const AdminSite = ({ Component, pageProps }) => {
-
-    const router = useRouter();
-
-    // useEffect(() => {
-
-    //     const handleRouteChange = (url, { shallow }) => {
-
-    //         console.log(
-    //             `App is changing to ${url} ${
-    //             shallow ? 'with' : 'without'
-    //             } shallow routing`
-    //         );
-
-    //     };
-
-    //     router.events.on('routeChangeStart', handleRouteChange);
-
-    //     return () => {
-
-    //         router.events.off('routeChangeStart', handleRouteChange);
-
-    //     };
-
-    // }, []);
 
     const handleLogout = () => {
 
@@ -106,9 +74,9 @@ const AdminSite = ({ Component, pageProps }) => {
                         <Navbar width={navbarWidth} />
 
                         <Layout
-                            style={{ marginLeft: navbarWidth }}
+                            style={{ marginLeft: navbarWidth, backgroundColor: '#FFF' }}
                         >
-                            <HeaderBase>
+                            <HeaderLayout>
                                 <span>
                                     <FontIcon icon={faUserShield} />
                                     <span className="account">administrator</span>
@@ -119,18 +87,18 @@ const AdminSite = ({ Component, pageProps }) => {
                                 >
                                     <FontIcon icon={faSignOutAlt} />
                                 </span>
-                            </HeaderBase>
+                            </HeaderLayout>
 
-                            <ContentBase>
+                            <ContentLayout>
                                 <section>
                                     <MainContent
                                         Component={Component}
                                         pageProps={pageProps}
                                     />
                                 </section>
-                            </ContentBase>
+                            </ContentLayout>
 
-                            <Footer style={{ textAlign: 'center' }}>中華電信 5G ©2021 Created by MoonShine</Footer>
+                            <FooterLayout>中華電信 5G ©2021 Created by MoonShine</FooterLayout>
                         </Layout>
                     </Layout>
                 </GlobalProvider>

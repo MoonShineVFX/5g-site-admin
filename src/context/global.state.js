@@ -58,6 +58,9 @@ const GlobalProvider = ({ children }) => {
             // 全域資料
             page,
 
+            // Form 表單暫存
+            formStorageData,
+
             // Lightbox
             visible,
             currEvent,

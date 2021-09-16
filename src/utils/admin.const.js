@@ -17,12 +17,12 @@ const adminConst = {
             pageKey: 'index',
             subItems: [
                 {
-                    name: 'Banner',
+                    name: 'Banner輪播設定',
                     pageKey: 'banner',
                 },
                 {
                     name: '標籤管理',
-                    pageKey: 'tags',
+                    pageKey: '/home/tags',
                 },
             ],
         },
@@ -32,11 +32,11 @@ const adminConst = {
             subItems: [
                 {
                     name: '新聞快訊',
-                    pageKey: 'newsNews',
+                    pageKey: '/news/newsNews',
                 },
                 {
                     name: '產業訊息',
-                    pageKey: 'newsIndustry',
+                    pageKey: '/news/newsIndustry',
                 },
             ],
         },
@@ -79,6 +79,11 @@ const adminConst = {
             ],
         },
     ],
+
+    lightboxTitle: {
+        createBanner: '新增 Banner',
+        updateBanner: '編輯 Banner',
+    },
 
     // Prompt type
     prompts: {

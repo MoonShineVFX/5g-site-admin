@@ -1,0 +1,34 @@
+import PropTypes from 'prop-types';
+import { Button } from 'antd';
+import styled from 'styled-components';
+
+const ButtonLayout = styled(Button)`
+    height: auto;
+    font-size: 15px;
+    padding: 4px 24px;
+    span {
+        letter-spacing: -2px;
+    }
+`;
+
+const Buttons = ({ type, text, children, ...rest }) => (
+
+    <ButtonLayout
+        type={type}
+        {...rest}
+    >
+        {text ? text : children}
+    </ButtonLayout>
+
+);
+
+Buttons.defaultProps = {
+    type: 'primary',
+};
+
+Buttons.propTypes = {
+    type: PropTypes.string,
+    text: PropTypes.string.isRequired,
+};
+
+export default Buttons;
