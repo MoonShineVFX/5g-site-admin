@@ -3,10 +3,10 @@ import Head from 'next/head';
 import { Layout } from 'antd';
 import 'antd/dist/antd.css';
 import { faUserShield, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
-import { ThemeProvider } from 'styled-components';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 
 import GlobalStyle from '../src/containers/GlobalStyle';
+import theme from '../src/utils/theme';
 import Navbar from '../src/containers/Navbar';
 import MainContent from '../src/containers/MainContent';
 import FontIcon from '../src/components/FontIcon';
@@ -17,37 +17,33 @@ import { GlobalProvider } from '../src/context/global.state';
 const { Header, Content, Footer } = Layout;
 const navbarWidth = 240;
 
-const theme = {
-    // main: 'mediumseagreen',
-};
+const HeaderLayout = styled(Header)(({ theme }) => ({
+    textAlign: 'right',
+    backgroundColor: theme.palette.container,
+    padding: '0 20px',
+    'svg': {
+        fontSize: '1.4em',
+    },
+    '.account': {
+        fontSize: '16px',
+        marginLeft: '8px',
+    },
+    '.logout': {
+        marginLeft: '12px',
+        padding: '4px',
+        cursor: 'pointer',
+    },
+}));
 
-const HeaderLayout = styled(Header)`
-    text-align: right;
-    background-color: #F0F2F5;
-    padding: 0 20px;
-    svg {
-        font-size: 1.4em;
-    }
-    .account {
-        font-size: 16px;
-        margin-left: 8px;
-    }
-    .logout {
-        margin-left: 12px;
-        padding: 4px;
-        cursor: pointer;
-    }
-`;
+const ContentLayout = styled(Content)({
+    marginBottom: '40px',
+    padding: '20px',
+});
 
-const ContentLayout = styled(Content)`
-    margin-bottom: 40px;
-    padding: 20px;
-`;
-
-const FooterLayout = styled(Footer)`
-    text-align: center;
-    background-color: #F0F2F5;
-`;
+const FooterLayout = styled(Footer)(({ theme}) => ({
+    textAlign: 'center',
+    backgroundColor: theme.palette.container,
+}));
 
 //
 const AdminSite = ({ Component, pageProps }) => {

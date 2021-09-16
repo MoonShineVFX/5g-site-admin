@@ -1,9 +1,10 @@
+import { white, blue, red } from '@ant-design/colors';
 import { createGlobalStyle } from 'styled-components';
 
 const LightboxFormStyle = createGlobalStyle`
     .noBorder {
         height: 34px;
-        background-color: #FFF;
+        background-color: ${white};
         padding: 4px 12px;
         transition: all .3s ease-in-out;
         outline: 0;
@@ -11,18 +12,21 @@ const LightboxFormStyle = createGlobalStyle`
     .row {
         display: block;
         margin-bottom: 20px;
+        .title {
+            margin-bottom: 4px;
+        }
         .field {
             height: 34px;
             font-size: 15px;
-            background-color: #fff;
-            border: 1px solid #d9d9d9;
+            background-color: ${white};
+            border: 1px solid ${({ theme }) => theme.palette.border};
             border-radius: 2px;
             padding: 4px 12px;
             transition: all .3s ease-in-out;
             outline: 0;
             &:hover,
             &:focus {
-                border-color: #2196f3;
+                border-color: ${blue.primary};
             }
             &:focus {
                 box-shadow: 0 0 1px 2px rgba(33, 150, 243, .3);
@@ -36,13 +40,13 @@ const LightboxFormStyle = createGlobalStyle`
         .disabled {
             &:hover,
             &:focus {
-                border-color: #d9d9d9;
+                border-color: ${({ theme }) => theme.palette.border};
             }
             [disabled] {
-                background-color: #f0f0f0;
+                background-color: ${({ theme }) => theme.palette.disabled};
                 cursor: not-allowed;
                 &:hover {
-                    border-color: #d9d9d9;
+                    border-color: ${({ theme }) => theme.palette.border};
                 }
             }
         }
@@ -51,7 +55,7 @@ const LightboxFormStyle = createGlobalStyle`
             height: 34px;
             &:focus,
             &:active {
-                border: 1px solid #2196f3;
+                border: 1px solid ${blue.primary};
                 box-shadow: none;
                 outline: 0;
             }
@@ -85,26 +89,26 @@ const LightboxFormStyle = createGlobalStyle`
         }
         select {
             font-size: 15px;
-            border-color: #d9d9d9;
+            border-color: ${({ theme }) => theme.palette.border};
             border-radius: 2px;
             padding: 4px 12px;
             transition: all .3s ease-in-out;
             &:hover {
-                border-color: #2196f3;
+                border-color: ${blue.primary};
             }
         }
         textarea {
             height: 100%;
             font-size: 15px;
-            color: #333;
-            border: 1px solid #d9d9d9;
+            color: ${({ theme }) => theme.palette.font}
+            border: 1px solid ${({ theme }) => theme.palette.border};
             border-radius: 2px;
             padding: 8px 12px;
             resize: none;
             outline: 0;
             transition: all .3s ease-in-out;
             &:hover {
-                border-color: #2196f3;
+                border-color: ${blue.primary};
             }
         }
         &.textarea {
@@ -132,7 +136,7 @@ const LightboxFormStyle = createGlobalStyle`
         &:before {
             content: '*';
             font-size: 13px;
-            color: #ef5350;
+            color: ${red.primary};
             display: inline-block;
             vertical-align: middle;
             margin-right: 4px;
@@ -140,18 +144,18 @@ const LightboxFormStyle = createGlobalStyle`
     }
     .hasError {
         .field {
-            border-color: #ef5350;
+            border-color: ${red};
             &:hover {
-                border-color: #ef5350;
+                border-color: ${red.primary};
             }
         }
         .error {
             font-size: 15px;
-            color: #ef5350;
+            color: ${red.primary};
             margin: 2px 0;
         }
         .noBorder select {
-            border-color: #ef5350;
+            border-color: ${red.primary};
         }
     }
 `;

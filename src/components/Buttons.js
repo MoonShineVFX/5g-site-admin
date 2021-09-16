@@ -2,14 +2,16 @@ import PropTypes from 'prop-types';
 import { Button } from 'antd';
 import styled from 'styled-components';
 
-const ButtonLayout = styled(Button)`
-    height: auto;
-    font-size: 15px;
-    padding: 4px 24px;
-    span {
-        letter-spacing: -2px;
-    }
-`;
+const ButtonLayout = styled(Button).attrs(() => ({
+    className: 'test',
+}))({
+    height: 'auto',
+    fontSize: '15px',
+    padding: '4px 24px',
+    'span': {
+        letterSpacing: '-2px',
+    },
+});
 
 const Buttons = ({ type, text, children, ...rest }) => (
 

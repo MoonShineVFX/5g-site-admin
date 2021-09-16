@@ -21,35 +21,35 @@ const OtherErrorMesg = () => (
 
 );
 
-const LightboxFormLayout = styled(Modal)`
-    .ant-modal-header {
-        padding: 20px;
-    }
-    .ant-modal-title {
-        font-size: 20px;
-        font-weight: bold;
-        position: relative;
-    }
-    .ant-modal-body {
-        min-height: 150px;
-        padding: 30px 40px;
-    }
-    .title {
-        font-size: 15px;
-        font-weight: normal;
-        color: #333;
-        margin-bottom: 4px;
-    }
-    .items {
-        display: flex;
-        .row {
-            flex: 1;
-            &:not(:last-child) {
-                margin-right: 20px;
-            }
-        }
-    }
-`;
+const LightboxFormLayout = styled(Modal)(({ theme }) => ({
+    '.ant-modal-header': {
+        padding: '20px',
+    },
+    '.ant-modal-title': {
+        fontSize: '20px',
+        fontWeight: 'bold',
+        position: 'relative',
+    },
+    '.ant-modal-body': {
+        minHeight: '150px',
+        padding: '30px 40px',
+    },
+    '.title': {
+        fontSize: '15px',
+        fontWeight: 'normal',
+        color: theme.palette.font,
+        marginBottom: '4px',
+    },
+    '.items': {
+        display: 'flex',
+        '.row': {
+            flex: 1,
+            '&:not(:last-child)': {
+                marginRight: '20px',
+            },
+        },
+    },
+}));
 
 // Form 欄位
 const FormRow = ({

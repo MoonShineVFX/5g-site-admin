@@ -6,25 +6,25 @@ import adminConst from '../utils/admin.const';
 
 const { emptyText } = adminConst;
 
-const TablesLayout = styled(Table)`
-    .ant-table {
-        font-size: 16px;
-    }
-    .ant-table-thead .ant-table-cell {
-        font-weight: bold;
-    }
-    .ant-table-cell {
-        padding: 8px 16px;
-    }
-    .pagination {
-        text-align: right;
-        margin-top: 30px;
-    }
-    .ant-pagination-total-text {
-        font-size: 16px;
-        margin-right: 20px;
-    }
-`;
+const TablesLayout = styled(Table)({
+    '.ant-table': {
+        fontSize: '16px',
+    },
+    '.ant-table-thead .ant-table-cell': {
+        fontWeight: 'bold',
+    },
+    '.ant-table-cell': {
+        padding: '8px 16px',
+    },
+    '.pagination': {
+        textAlign: 'right',
+        marginTop: '30px',
+    },
+    '.ant-pagination-total-text': {
+        fontSize: '16px',
+        marginRight: '20px',
+    },
+});
 
 // 表格列表
 const Tables = ({

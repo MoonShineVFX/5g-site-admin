@@ -8,21 +8,21 @@ const { Sider } = Layout;
 const { SubMenu, Item } = Menu;
 const { navbar } = adminConst;
 
-const SiderLayout = styled(Sider)`
-    height: 100vh;
-    text-align: center;
-    padding: 20px 0;
-    position: fixed;
-    left: 0;
-    overflow: auto;
-    .logo {
-        display: inline-block;
-        margin-bottom: 20px;
-    }
-    li {
-        font-size: 16px;
-    }
-`;
+const SiderLayout = styled(Sider)({
+    height: '100vh',
+    textAlign: 'center',
+    padding: '20px 0',
+    position: 'fixed',
+    left: 0,
+    overflow: 'auto',
+    '.logo': {
+        display: 'inline-block',
+        marginBottom: '20px',
+    },
+    'li': {
+        fontSize: '16px',
+    },
+});
 
 const Navbar = ({ width }) => (
 

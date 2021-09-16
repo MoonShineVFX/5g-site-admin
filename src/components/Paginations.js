@@ -5,11 +5,11 @@ import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons
 import FontIcon from './FontIcon';
 import Buttons from './Buttons';
 
-const PaginationLayout = styled(Pagination)`
-    .ant-pagination {
-        margin-top: 20px;
-    }
-`;
+const PaginationLayout = styled(Pagination)({
+    '.ant-pagination': {
+        marginTop: '20px',
+    },
+});
 
 const nextPrevButtons = (type) => (
 
