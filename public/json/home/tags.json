@@ -1,0 +1,53 @@
+{
+    "result": 1,
+    "message": "",
+    "errors": [],
+    "data": {
+        "tag": [
+            {
+                "id": "156421",
+                "name": "標題-156421",
+                "category": "parner",
+                "categoryName": "合作夥伴"
+            },
+            {
+                "id": "156422",
+                "name": "標題-156422",
+                "category": "news",
+                "categoryName": "新聞快訊"
+            },
+            {
+                "id": "156423",
+                "name": "標題-156423",
+                "category": "newsIndustry",
+                "categoryName": "產業訊息"
+            },
+            {
+                "id": "156424",
+                "name": "標題-156424",
+                "category": "news",
+                "categoryName": "新聞快訊"
+            },
+            {
+                "id": "156425",
+                "name": "標題-156425",
+                "category": "parner",
+                "categoryName": "合作夥伴"
+            }
+        ],
+        "category": [
+            {
+                "key": "news",
+                "name": "新聞快訊"
+            },
+            {
+                "key": "newsIndustry",
+                "name": "產業訊息"
+            },
+            {
+                "key": "parner",
+                "name": "合作夥伴"
+            }
+        ]
+    }
+}

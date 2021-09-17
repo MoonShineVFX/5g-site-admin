@@ -3,11 +3,13 @@ import { useRouter } from 'next/router';
 import { Image } from 'antd';
 import styled, { createGlobalStyle } from 'styled-components';
 
+import ContentHeader from '../../src/containers/ContentHeader';
 import Tables from '../../src/components/Tables';
 import Links from '../../src/components/Links';
 import Buttons from '../../src/components/Buttons';
 import LightboxForm from '../../src/components/LightboxForm';
 import BannerForm from '../../src/components/home/BannerForm';
+
 import { GlobalContext } from '../../src/context/global.state';
 import admin from '../../src/utils/admin';
 import adminConst from '../../src/utils/admin.const';
@@ -22,14 +24,9 @@ const BannerStyle = createGlobalStyle`
             width: 100%;
         }
     }
-    .btn-create {
-        padding-left: 40px;
-        padding-right: 40px;
-    }
 `;
 
 const SelectOptLayout = styled.span(({ theme }) => ({
-    float: 'right',
     marginTop: '2px',
     'select': {
         border: `1px solid ${theme.palette.border}`,
@@ -46,6 +43,7 @@ const SelectOptLayout = styled.span(({ theme }) => ({
 const Banner = ({ pageData }) => {
 
     // console.log('pageData:', pageData);
+    const { pathname } = useRouter();
 
     // Context
     const {
@@ -55,8 +53,6 @@ const Banner = ({ pageData }) => {
         lightboxDispatch,
         formStorageDispatch,
     } = useContext(GlobalContext);
-
-    const { pathname } = useRouter();
 
     useEffect(() => {
 
@@ -134,15 +130,10 @@ const Banner = ({ pageData }) => {
         <Fragment>
             <BannerStyle />
 
-            <h1>{pageData.title}</h1>
-
-            <p>
-                <Buttons
-                    text="新增"
-                    className="btn-create"
-                    onClick={btnCreate}
-                />
-
+            <ContentHeader
+                title={pageData.title}
+                onClick={btnCreate}
+            >
                 <SelectOptLayout>
                     前台顯示則數:
                     <select
@@ -162,7 +153,7 @@ const Banner = ({ pageData }) => {
                         }
                     </select>
                 </SelectOptLayout>
-            </p>
+            </ContentHeader>
 
             <Tables
                 columns={columns}

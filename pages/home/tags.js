@@ -1,63 +1,64 @@
-import React, { Fragment, useContext, useEffect } from 'react';
-import { useRouter } from 'next/router';
-import { GlobalContext } from '../../src/context/global.state';
-import admin from '../../src/utils/admin';
+import TagBase from '../../src/components/home/TagBase';
+import { TagProvider } from '../../src/context/home/tag.state';
 
-const Tags = ({ pageData }) => {
+const Tags = ({ pageData }) => (
 
-    // console.log('pageData:', pageData);
+    <TagProvider>
+        <TagBase pageData={pageData} />
+    </TagProvider>
 
-    // Context
-    const { globalDispatch } = useContext(GlobalContext);
-    const { pathname } = useRouter();
-
-    useEffect(() => {
-
-        globalDispatch({
-            type: 'page',
-            payload: admin.pathnameKey(pathname),
-        });
-
-    }, [globalDispatch, pathname]);
-
-    return (
-
-        <Fragment>
-            <div>This is Tags manage~</div>
-        </Fragment>
-
-    );
-
-};
+);
 
 export default Tags;
 
-// export async function getStaticProps () {
+export async function getStaticProps () {
 
-//     // const res = await util.ServiceServer('api/user/userList');
-//     // const { data } = res;
+    // const res = await util.ServiceServer('api/user/userList');
+    // const { data } = res;
 
-//     const res = await fetch('http://localhost:1002/json/home/banner.json');
-//     const data = await res.json();
+    const res = await fetch('http://localhost:1002/json/home/tags.json');
+    const data = await res.json();
 
-//     if (!data.result) {
+    // 整理標籤結構
+    const arrangeTagData = (data) => data.reduce((acc, obj) => {
 
-//         return {
-//             redirect: {
-//                 destination: '/',
-//                 permanent: false,
-//             },
-//         };
+        const key = obj.category;
 
-//     }
+        acc[key] = acc[key] || [];
+        acc[key].push(obj);
+        return acc;
 
-//     return {
-//         props: {
-//             pageData: {
-//                 title: 'Banner輪播設定',
-//                 data: data.data,
-//             },
-//         },
-//     };
+    }, {});
 
-// }
+    // 整理標籤類別結構
+    const arrangeTagCategory = (data) => data.reduce((acc, { key, name }) => {
+
+        acc[key] = name;
+        return acc;
+
+    }, {});
+
+    if (!data.result) {
+
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false,
+            },
+        };
+
+    }
+
+    return {
+        props: {
+            pageData: {
+                title: '標籤管理',
+                data: {
+                    tag: arrangeTagData(data.data.tag),
+                    category: arrangeTagCategory(data.data.category),
+                },
+            },
+        },
+    };
+
+}

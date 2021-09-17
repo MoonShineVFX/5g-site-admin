@@ -14,6 +14,7 @@ const LightboxFormStyle = createGlobalStyle`
         margin-bottom: 20px;
         .title {
             margin-bottom: 4px;
+            cursor: default;
         }
         .field {
             height: 34px;

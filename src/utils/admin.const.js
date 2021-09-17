@@ -83,6 +83,8 @@ const adminConst = {
     lightboxTitle: {
         createBanner: '新增 Banner',
         updateBanner: '編輯 Banner',
+        createTag: '新增標籤',
+        updateTag: '編輯標籤',
     },
 
     // Prompt type

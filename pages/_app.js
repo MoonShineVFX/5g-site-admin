@@ -8,7 +8,6 @@ import styled, { ThemeProvider } from 'styled-components';
 import GlobalStyle from '../src/containers/GlobalStyle';
 import theme from '../src/utils/theme';
 import Navbar from '../src/containers/Navbar';
-import MainContent from '../src/containers/MainContent';
 import FontIcon from '../src/components/FontIcon';
 
 // Context
@@ -87,10 +86,7 @@ const AdminSite = ({ Component, pageProps }) => {
 
                             <ContentLayout>
                                 <section>
-                                    <MainContent
-                                        Component={Component}
-                                        pageProps={pageProps}
-                                    />
+                                    <Component {...pageProps} />
                                 </section>
                             </ContentLayout>
 

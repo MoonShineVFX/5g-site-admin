@@ -23,6 +23,9 @@ const GlobalStyle = createGlobalStyle`
         box-shadow: none;
         outline: 0;
     }
+    select {
+        outline: 0
+    }
 `;
 
 export default GlobalStyle;
