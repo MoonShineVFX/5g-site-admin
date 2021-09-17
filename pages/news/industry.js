@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { GlobalContext } from '../../src/context/global.state';
 import admin from '../../src/utils/admin';
 
-const Tags = ({ pageData }) => {
+const Industry = ({ pageData }) => {
 
     // console.log('pageData:', pageData);
 
@@ -23,14 +23,14 @@ const Tags = ({ pageData }) => {
     return (
 
         <Fragment>
-            <div>This is Tags manage~</div>
+            <div>This is Industry~</div>
         </Fragment>
 
     );
 
 };
 
-export default Tags;
+export default Industry;
 
 // export async function getStaticProps () {
 

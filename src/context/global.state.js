@@ -9,9 +9,7 @@ import {
 
 // Global
 const globalInitState = {
-    page: '',
-
-    // 全域資料
+    page: 'banner',
 };
 
 // Form values

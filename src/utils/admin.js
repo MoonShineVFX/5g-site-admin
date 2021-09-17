@@ -86,7 +86,7 @@ const util = {
 
     },
 
-    pathnameKey: (path) => path.split('/')[1] || 'index',
+    pathnameKey: (path) => path.split('/')[2] || 'banner',
 
 };
 

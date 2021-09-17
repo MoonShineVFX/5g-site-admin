@@ -37,7 +37,7 @@ const HeaderLayout = styled(Header)(({ theme }) => ({
 
 const ContentLayout = styled(Content)({
     marginBottom: '40px',
-    padding: '20px',
+    padding: '30px 30px 20px',
 });
 
 const FooterLayout = styled(Footer)(({ theme}) => ({
@@ -58,7 +58,7 @@ const AdminSite = ({ Component, pageProps }) => {
 
         <Fragment>
             <Head>
-                <title>5G 後台</title>
+                <title>中華電信5G後台管理</title>
                 <meta name="viewport" content="initial-scale=1, width=device-width" />
             </Head>
 

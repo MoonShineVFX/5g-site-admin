@@ -14,7 +14,7 @@ const adminConst = {
     navbar: [
         {
             name: '首頁',
-            pageKey: 'index',
+            pageKey: 'home',
             subItems: [
                 {
                     name: 'Banner輪播設定',
@@ -22,7 +22,7 @@ const adminConst = {
                 },
                 {
                     name: '標籤管理',
-                    pageKey: '/home/tags',
+                    pageKey: 'tags',
                 },
             ],
         },
@@ -32,11 +32,11 @@ const adminConst = {
             subItems: [
                 {
                     name: '新聞快訊',
-                    pageKey: '/news/newsNews',
+                    pageKey: 'news',
                 },
                 {
                     name: '產業訊息',
-                    pageKey: '/news/newsIndustry',
+                    pageKey: 'industry',
                 },
             ],
         },
@@ -56,11 +56,11 @@ const adminConst = {
             subItems: [
                 {
                     name: '中央資源',
-                    pageKey: 'policyCenter',
+                    pageKey: 'center',
                 },
                 {
                     name: '地方資源',
-                    pageKey: 'policyLocal',
+                    pageKey: 'local',
                 },
             ],
         },
@@ -70,11 +70,11 @@ const adminConst = {
             subItems: [
                 {
                     name: '5G示範場域',
-                    pageKey: 'area5g',
+                    pageKey: '5g',
                 },
                 {
                     name: '互動科技示範場域',
-                    pageKey: 'areaTech',
+                    pageKey: 'tech',
                 },
             ],
         },

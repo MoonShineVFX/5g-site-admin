@@ -1,9 +1,8 @@
 import util from './admin';
 
 const Service = {
-    storeList: (reqData) => util.serviceProxy('/store/storeList', reqData),
-    userList: (reqData) => util.serviceProxy('/user/userList', reqData),
-    updateAuthority: (reqData) => util.serviceProxy('/user/updateAuthority', reqData),
+    bannerList: (reqData) => util.serviceProxy('/???', reqData),
+    bannerLengthControl: (reqData) => util.serviceProxy('/???', reqData),
 };
 
 export default Service;

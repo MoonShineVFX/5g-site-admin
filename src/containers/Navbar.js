@@ -1,7 +1,9 @@
+import { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Layout, Menu } from 'antd';
 import styled from 'styled-components';
 import Links from '../components/Links';
+import { GlobalContext } from '../context/global.state';
 import adminConst from '../utils/admin.const';
 
 const { Sider } = Layout;
@@ -24,50 +26,57 @@ const SiderLayout = styled(Sider)({
     },
 });
 
-const Navbar = ({ width }) => (
+const Navbar = ({ width }) => {
 
-    <SiderLayout width={width}>
-        <Links url="/" className="logo">
-            <img src="//fakeimg.pl/200x60?text=LOGO" alt="LOGO" />
-        </Links>
+    // Context
+    const { page } = useContext(GlobalContext);
 
-        <Menu
-            theme="dark"
-            mode="inline"
-            defaultOpenKeys={navbar.flatMap(({ pageKey }) => pageKey)}
-            defaultSelectedKeys={['banner']}
-        >
-            {
-                navbar.map(({ name, pageKey, subItems }) => (
+    return (
 
-                    subItems.length ? (
+        <SiderLayout width={width}>
+            <Links url="/" className="logo">
+                <img src="//fakeimg.pl/200x60?text=LOGO" alt="LOGO" />
+            </Links>
 
-                        <SubMenu key={pageKey} title={name}>
-                            {
-                                subItems.map((obj) => (
+            <Menu
+                theme="dark"
+                mode="inline"
+                openKeys={navbar.flatMap(({ pageKey }) => pageKey)}
+                selectedKeys={[page]}
+            >
+                {
+                    navbar.map(({ name, pageKey, subItems }) => (
 
-                                    <Item key={obj.pageKey}>
-                                        <Links url={obj.pageKey}>{obj.name}</Links>
-                                    </Item>
+                        subItems.length ? (
 
-                                ))
-                            }
-                        </SubMenu>
+                            <SubMenu key={pageKey} title={name}>
+                                {
+                                    subItems.map((obj) => (
 
-                    ) : (
+                                        <Item key={obj.pageKey}>
+                                            <Links url={`/${pageKey}/${obj.pageKey}`}>{obj.name}</Links>
+                                        </Item>
 
-                        <Item key={pageKey}>
-                            <Links url={pageKey}>{name}</Links>
-                        </Item>
+                                    ))
+                                }
+                            </SubMenu>
 
-                    )
+                        ) : (
 
-                ))
-            }
-        </Menu>
-    </SiderLayout>
+                            <Item key={pageKey}>
+                                <Links url={pageKey}>{name}</Links>
+                            </Item>
 
-);
+                        )
+
+                    ))
+                }
+            </Menu>
+        </SiderLayout>
+
+    );
+
+};
 
 Navbar.defaultProps = {
     width: 240,

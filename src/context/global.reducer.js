@@ -2,7 +2,7 @@
 const globalReducer = (state, { type, payload }) => {
 
     switch (type) {
-        case 'PAGE':
+        case 'page':
             return {
                 ...state,
                 page: payload,
