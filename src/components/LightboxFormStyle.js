@@ -1,7 +1,12 @@
-import { white, blue, red } from '@ant-design/colors';
+import { white, blue, red, grey } from '@ant-design/colors';
 import { createGlobalStyle } from 'styled-components';
 
 const LightboxFormStyle = createGlobalStyle`
+    .lightbox-wrap {
+        p {
+            color: ${grey[2]};
+        }
+    }
     .noBorder {
         height: 34px;
         background-color: ${white};

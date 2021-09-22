@@ -17,6 +17,9 @@ const GlobalStyle = createGlobalStyle`
     p {
         margin-bottom: 16px;
     }
+    ul {
+        padding-inline-start: 20px;
+    }
     input {
         background-color: transparent;
         border: none;

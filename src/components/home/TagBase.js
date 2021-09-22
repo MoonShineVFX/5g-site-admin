@@ -26,6 +26,9 @@ const UpdateTagFormLayout = styled(LightboxForm).attrs(() => ({
     '.items .row:nth-child(2)': {
         marginRight: 0,
     },
+    'p': {
+        display: 'block',
+    },
 });
 
 const TagFormLayout = styled.div(({ theme }) => ({

@@ -35,6 +35,9 @@ const CreateFieldLayout = styled.div.attrs(() => ({
     color: blue.primary,
     textDecoration: 'underline',
     cursor: 'pointer',
+    '& + p': {
+        display: 'none',
+    },
 });
 
 const TagForm = () => {
@@ -106,6 +109,8 @@ const TagForm = () => {
             <CreateFieldLayout onClick={targetAppend}>
                 增加欄位
             </CreateFieldLayout>
+
+            {(currEvent === 'updateTag') && <p>id: {formStorageData.id}</p>}
 
             {
                 fields.map((item, idx) => (
