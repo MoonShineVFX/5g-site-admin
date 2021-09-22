@@ -52,8 +52,4 @@ const lightboxReducer = (state, { type, currEvent }) => {
 
 };
 
-export {
-    globalReducer,
-    formStorageReducer,
-    lightboxReducer,
-};
+export { globalReducer, formStorageReducer, lightboxReducer };

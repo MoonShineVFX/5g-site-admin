@@ -4,13 +4,32 @@ const tagReducer = (state, { type, payload }) => {
         case 'category_option':
             return {
                 ...state,
-                categoryOpt: { ...payload },
+                categoryOpt: payload,
             };
 
         case 'tag_list':
             return {
                 ...state,
-                lists: { ...payload },
+                lists: payload,
+            };
+
+        case 'tag_create':
+            return {
+                ...state,
+                action: payload.action,
+                lists: [...payload.resData, ...state.lists],
+            };
+
+        case 'tag_update':
+            return {
+                ...state,
+                action: payload.action,
+                lists: state.lists.map((obj) => {
+
+                    if (obj.id === payload.resData.id) obj = payload.resData;
+                    return obj;
+
+                }),
             };
 
         default:
@@ -19,6 +38,4 @@ const tagReducer = (state, { type, payload }) => {
 
 };
 
-export {
-    tagReducer,
-};
+export { tagReducer };

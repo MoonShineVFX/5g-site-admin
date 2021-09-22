@@ -1,10 +1,10 @@
 import { Fragment } from 'react';
-import Head from 'next/head';
 import { Layout } from 'antd';
 import 'antd/dist/antd.css';
 import { faUserShield, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import styled, { ThemeProvider } from 'styled-components';
 
+import HeadTag from '../src/containers/HeadTag';
 import GlobalStyle from '../src/containers/GlobalStyle';
 import theme from '../src/utils/theme';
 import Navbar from '../src/containers/Navbar';
@@ -35,6 +35,7 @@ const HeaderLayout = styled(Header)(({ theme }) => ({
 }));
 
 const ContentLayout = styled(Content)({
+    minHeight: 'calc(100vh - 64px - 70px - 40px)', // header: 64px, footer: 70px, main margin bottom: 40px
     marginBottom: '40px',
     padding: '30px 30px 20px',
 });
@@ -56,10 +57,7 @@ const AdminSite = ({ Component, pageProps }) => {
     return (
 
         <Fragment>
-            <Head>
-                <title>中華電信5G後台管理</title>
-                <meta name="viewport" content="initial-scale=1, width=device-width" />
-            </Head>
+            <HeadTag />
 
             <ThemeProvider theme={theme}>
                 <GlobalStyle />

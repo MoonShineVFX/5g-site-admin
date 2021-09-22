@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { Image } from 'antd';
 import styled, { createGlobalStyle } from 'styled-components';
 
+import HeadTag from '../../src/containers/HeadTag';
 import ContentHeader from '../../src/containers/ContentHeader';
 import Tables from '../../src/components/Tables';
 import Links from '../../src/components/Links';
@@ -129,6 +130,8 @@ const Banner = ({ pageData }) => {
 
         <Fragment>
             <BannerStyle />
+
+            <HeadTag title={pageData.title} />
 
             <ContentHeader
                 title={pageData.title}

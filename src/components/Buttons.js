@@ -3,7 +3,7 @@ import { Button } from 'antd';
 import styled from 'styled-components';
 
 const ButtonLayout = styled(Button).attrs(() => ({
-    className: 'test',
+    className: 'admin-btn',
 }))({
     height: 'auto',
     fontSize: '15px',

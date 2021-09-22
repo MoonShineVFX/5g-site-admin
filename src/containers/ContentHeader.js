@@ -4,38 +4,48 @@ import styled from 'styled-components';
 import Buttons from '../components/Buttons';
 
 const ContentHeaderLayout = styled.p({
+    '> *': {
+        float: 'right',
+    },
     '&:after': {
         content: '""',
         display: 'block',
         clear: 'both',
     },
     '.btn-create': {
-        float: 'right',
+        float: 'left',
         paddingLeft: '40px',
         paddingRight: '40px',
     },
 });
 
-const ContentHeader = ({ title, onClick, children }) => (
+const ContentHeader = ({ title, showButton, onClick, children }) => (
 
     <Fragment>
         <h1>{title}</h1>
-        <ContentHeaderLayout>
-            {children && children}
-
-            <Buttons
-                text="新增"
-                className="btn-create"
-                onClick={onClick}
-            />
-        </ContentHeaderLayout>
+        {
+            showButton &&
+                <ContentHeaderLayout>
+                    <Buttons
+                        text="新增"
+                        className="btn-create"
+                        onClick={onClick}
+                    />
+                    {children && children}
+                </ContentHeaderLayout>
+        }
     </Fragment>
 
 );
 
+ContentHeader.defaultProps = {
+    showButton: true,
+};
+
 ContentHeader.propTypes = {
     title: PropTypes.string.isRequired,
-    onClick: PropTypes.func.isRequired, // 暫時由外層傳遞，不確定每一頁的行為是否都一致
+    showButton: PropTypes.bool,
+    onClick: PropTypes.func,
 };
 
 export default ContentHeader;
