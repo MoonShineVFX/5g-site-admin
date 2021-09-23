@@ -16,7 +16,8 @@ const bannerReducer = (state, { type, payload }) => {
         case 'banner_create':
             return {
                 ...state,
-                lists: [...payload.resData, ...state.lists],
+                action: payload.action,
+                lists: [{ ...payload.resData }, ...state.lists],
             };
 
         case 'banner_update':

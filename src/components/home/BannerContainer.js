@@ -8,6 +8,7 @@ const TagWrapLayout = styled.div(() => ({
     marginBottom: '60px',
     'h3': {
         fontSize: '18px',
+        fontWeight: 'bold',
         marginBottom: '6px',
         '& + div': {
             padding: '0 20px',

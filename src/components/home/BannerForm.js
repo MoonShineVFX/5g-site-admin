@@ -1,14 +1,17 @@
-import { useContext } from 'react';
+import { useContext, useRef } from 'react';
+import { message } from 'antd';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import Buttons from '../../components/Buttons';
-import UploadFile from '../../components/UploadFile';
+import Upload from '../Upload';
 import { FormRow, ErrorMesg } from '../../components/LightboxForm';
 import { GlobalContext } from '../../context/global.state';
+import { BannerContext } from '../../context/home/banner.state';
 
 const RowUpload = styled.div.attrs(() => ({
     className: 'row row-upload',
 }))({
+    marginTop: '30px',
     marginBottom: '40px',
 });
 
@@ -17,17 +20,25 @@ const BannerForm = () => {
     // Context
     const {
         currEvent,
+        formStorageData,
         formStorageDispatch,
         lightboxDispatch,
-        formStorageData,
     } = useContext(GlobalContext);
+
+    const {
+        bannerCreate,
+        bannerUpdate,
+    } = useContext(BannerContext);
 
     // React Hook Form
     const {
-        handleSubmit,
+        // handleSubmit,
         register,
         formState: { errors },
     } = useForm();
+
+    // Ref
+    const form = useRef(null);
 
     // 隱藏 Modal
     const hideModal = () => {
@@ -37,21 +48,56 @@ const BannerForm = () => {
 
     };
 
-    // Submit
+    // 送資料
     const handleReqData = (reqData) => {
 
         reqData = {
             ...reqData,
             priority: +reqData.priority,
+            image: formStorageData.files,
         };
 
+        const limitSize = (reqData.image.size / 1024 / 1024) < 5;
+        const formData = new FormData();
+
+        // 檢查圖片大小是否超過 5MB
+        if (!limitSize) {
+
+            message.error('檔案不能超過 5MB，請重新上傳');
+            return;
+
+        }
+
         console.log('reqData:', reqData);
+
+        // append form data
+        for (const key in reqData) {
+
+            formData.append(key, reqData[key]);
+
+        }
+
+        if (currEvent === 'updateBanner') bannerUpdate(formData);
+        else bannerCreate(formData);
+
+    };
+
+    const handleSubmit = (e) => {
+
+        // console.log('form.current:', form.current)
+        e.preventDefault();
+        const formData = new FormData(form.current);
+
+        // Debug
+        if (currEvent === 'updateBanner') bannerUpdate(formData);
+        else bannerCreate(formData);
 
     };
 
     return (
 
-        <form onSubmit={handleSubmit(handleReqData)}>
+        // <form onSubmit={handleSubmit(handleReqData)}>
+        <form ref={form} onSubmit={handleSubmit}>
             {(currEvent === 'updateBanner') && <p>id: {formStorageData.id}</p>}
 
             <div className="items">
@@ -60,6 +106,7 @@ const BannerForm = () => {
                         type="text"
                         name="title"
                         defaultValue={formStorageData.title}
+                        placeholder="給 SEO 用"
                         {...register('title')}
                     />
                 </FormRow>
@@ -109,7 +156,7 @@ const BannerForm = () => {
             </FormRow>
 
             <RowUpload>
-                <UploadFile />
+                <Upload size="1200x520" />
             </RowUpload>
 
             <div className="row row-btns">

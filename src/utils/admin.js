@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Modal } from 'antd';
 
 const util = {
     /**
@@ -35,7 +36,17 @@ const util = {
             },
             showErrorMesg = (message, callback) => {
 
-                console.log(message || '出了些狀況，請找研發');
+                Modal.error({
+                    title: '發生錯誤',
+                    content: message || '出了些狀況，請找後台管理員',
+                    ...callback && {
+                        onOk: () => {
+
+                            if (callback) callback();
+
+                        },
+                    },
+                });
 
             };
 

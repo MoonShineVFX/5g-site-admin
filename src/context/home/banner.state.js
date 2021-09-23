@@ -48,15 +48,25 @@ const BannerProvider = ({ children }) => {
         const resData = [
             {
                 id: '81344',
-                name: 'create-81344',
-                category: '',
-                categoryName: '',
+                title: 'create-81344',
+                image: {
+                    url: '//fakeimg.pl/1200x520?text=create-81344',
+                    name: 'xxxx.png',
+                    size: 265678,
+                },
+                link: 'http://google.com.tw',
+                priority: 3,
             },
             {
                 id: '81345',
-                name: 'create-81345',
-                category: 'newsIndustry',
-                categoryName: '產業訊息',
+                title: 'create-81345',
+                image: {
+                    url: '//fakeimg.pl/1200x520?text=create-81345',
+                    name: 'xxxx.png',
+                    size: 265678,
+                },
+                link: 'http://google.com.tw',
+                priority: 4,
             },
         ];
 
