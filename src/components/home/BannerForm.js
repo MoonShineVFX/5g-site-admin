@@ -32,7 +32,7 @@ const BannerForm = () => {
 
     // React Hook Form
     const {
-        // handleSubmit,
+        handleSubmit,
         register,
         formState: { errors },
     } = useForm();
@@ -58,7 +58,6 @@ const BannerForm = () => {
         };
 
         const limitSize = (reqData.image.size / 1024 / 1024) < 5;
-        const formData = new FormData();
 
         // 檢查圖片大小是否超過 5MB
         if (!limitSize) {
@@ -68,36 +67,14 @@ const BannerForm = () => {
 
         }
 
-        console.log('reqData:', reqData);
-
-        // append form data
-        for (const key in reqData) {
-
-            formData.append(key, reqData[key]);
-
-        }
-
-        if (currEvent === 'updateBanner') bannerUpdate(formData);
-        else bannerCreate(formData);
-
-    };
-
-    const handleSubmit = (e) => {
-
-        // console.log('form.current:', form.current)
-        e.preventDefault();
-        const formData = new FormData(form.current);
-
-        // Debug
-        if (currEvent === 'updateBanner') bannerUpdate(formData);
-        else bannerCreate(formData);
+        if (currEvent === 'updateBanner') bannerUpdate(reqData);
+        else bannerCreate(reqData);
 
     };
 
     return (
 
-        // <form onSubmit={handleSubmit(handleReqData)}>
-        <form ref={form} onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit(handleReqData)}>
             {(currEvent === 'updateBanner') && <p>id: {formStorageData.id}</p>}
 
             <div className="items">

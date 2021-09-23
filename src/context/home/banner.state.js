@@ -45,30 +45,13 @@ const BannerProvider = ({ children }) => {
     const bannerCreate = (reqData) => {
 
         // Fake
-        const resData = [
-            {
-                id: '81344',
-                title: 'create-81344',
-                image: {
-                    url: '//fakeimg.pl/1200x520?text=create-81344',
-                    name: 'xxxx.png',
-                    size: 265678,
-                },
-                link: 'http://google.com.tw',
-                priority: 3,
-            },
-            {
-                id: '81345',
-                title: 'create-81345',
-                image: {
-                    url: '//fakeimg.pl/1200x520?text=create-81345',
-                    name: 'xxxx.png',
-                    size: 265678,
-                },
-                link: 'http://google.com.tw',
-                priority: 4,
-            },
-        ];
+        const resData = {
+            id: '81344',
+            title: 'create-81344',
+            imgUrl: '//fakeimg.pl/1200x520?text=create-81344',
+            link: 'http://google.com.tw',
+            priority: 3,
+        };
 
         formStorageDispatch({ type: 'CLEAR' });
         bannerDispatch({ type: 'banner_create', payload: { resData, action: true } });

@@ -70,8 +70,6 @@ const Upload = ({ size }) => {
 
         if (target.files && target.files.length) {
 
-            // console.log('target:', target.files[0])
-
             setImgPreview(target.files[0]);
             formStorageDispatch({
                 type: 'COLLECT',
@@ -85,28 +83,6 @@ const Upload = ({ size }) => {
     // 觸發 input file
     const handleTriggerUpload = () => inputFileRef.current.click();
 
-    // 送資料
-    const handleUploadData = (param) => {
-
-        // console.log('param:', param)
-
-        const { file } = param;
-        const isLt10M = file.size / 1024 / 1024 < 10;
-        const formData = new FormData();
-
-        if (!isLt10M) {
-
-            message.error('檔案不能超過 5MB，請重新上傳!!!');
-            return;
-
-        }
-
-        // formData.append('pid', pid);
-        formData.append('file', file);
-        // uploadFile(formData);
-
-    };
-
     // console.log('imgPreview:', imgPreview);
 
     return (
@@ -115,6 +91,7 @@ const Upload = ({ size }) => {
             <div className="upload-action">
                 <input
                     type="file"
+                    name="image"
                     accept="image/*"
                     onChange={handleChangeInput}
                     ref={inputFileRef}
