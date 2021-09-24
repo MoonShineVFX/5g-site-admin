@@ -99,6 +99,19 @@ const util = {
 
     pathnameKey: (path) => path.split('/')[2] || 'banner',
 
+    /**
+     * @author Betty
+     * @param {object[]} array
+     * @return {object[] - 回傳陣列結構
+     */
+    antdTableFilter: (array) => array.reduce((acc, { key, name }) => {
+
+        const obj = { text: name, value: key };
+        acc.push(obj);
+        return acc;
+
+    }, []),
+
 };
 
 export default util;

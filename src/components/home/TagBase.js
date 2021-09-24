@@ -16,6 +16,7 @@ import { TagContext } from '../../context/home/tag.state';
 import admin from '../../utils/admin';
 import adminConst from '../../utils/admin.const';
 
+const { pathnameKey, antdTableFilter } = admin;
 const { lightboxTitle } = adminConst;
 
 const ColLayout = styled(Col)({
@@ -28,9 +29,6 @@ const TablesLayout = styled(Tables)({
         marginRight: '16px',
         padding: '2px 10px',
         cursor: 'default',
-    },
-    '.col-category span': {
-        fontWeight: 'bold',
     },
 });
 
@@ -89,7 +87,7 @@ const TagBase = ({ pageData }) => {
 
         globalDispatch({
             type: 'page',
-            payload: admin.pathnameKey(pathname),
+            payload: pathnameKey(pathname),
         });
 
         tagDispatch({
@@ -113,14 +111,15 @@ const TagBase = ({ pageData }) => {
         {
             title: '標籤名稱',
             dataIndex: 'name',
-            render: (name) => <Tag>{name}</Tag>,
+            render: (name) => name ? <Tag>{name}</Tag> : '--',
         },
         {
             title: '分類',
             dataIndex: 'categoryName',
-            className: 'col-category',
+            render: (categoryName, { category }) => (category === '') ? '--' : categoryName,
             sorter: (a, b) => a.category.length - b.category.length,
-            render: (categoryName, { category }) => (category === '') ? <span>未分類</span> : categoryName,
+            filters: antdTableFilter(pageData.data.category),
+            onFilter: (value, data) => (String(data.category).indexOf(String(value)) === 0),
         },
         {
             title: '操作',

@@ -41,7 +41,7 @@ const TagProvider = ({ children }) => {
             },
             {
                 id: '81345',
-                name: 'create-81345',
+                name: '',
                 category: 'newsIndustry',
                 categoryName: '產業訊息',
             },
