@@ -1,6 +1,7 @@
 import React, { useContext, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { UploadOutlined } from '@ant-design/icons';
+import { red } from '@ant-design/colors';
 import styled from 'styled-components';
 import Buttons from './Buttons';
 import { GlobalContext } from '../context/global.state';
@@ -39,6 +40,9 @@ const UploadLayout = styled.div.attrs(() => ({
     },
     '.upload-notice': {
         marginTop: '4px',
+    },
+    '.warning-text': {
+        color: red.primary,
     },
 }));
 
@@ -127,6 +131,7 @@ const Upload = ({ size }) => {
             </div>
 
              <ul className="upload-notice">
+                <li className="warning-text">圖片經上傳後將取代原圖，請小心使用</li>
                 <li>僅支援以下格式: jpg, png</li>
                 <li>檔案大小不得超過 5MB</li>
                 <li>圖片尺寸為: {size}</li>

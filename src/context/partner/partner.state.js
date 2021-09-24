@@ -1,5 +1,5 @@
 import { createContext, useContext, useReducer } from 'react';
-import { bannerReducer } from './banner.reducer';
+import { partnerReducer } from './partner.reducer';
 import Prompt from '../../components/Prompt';
 import { GlobalContext } from '../global.state';
 import Service from '../../utils/admin.service';
@@ -7,16 +7,15 @@ import Service from '../../utils/admin.service';
 // Init
 const initState = {
     action: false,
-    length: null,
     imageSize: '',
     lists: [],
 };
 
 // Create Context
-const BannerContext = createContext(null);
+const PartnerContext = createContext(null);
 
 // Provider
-const BannerProvider = ({ children }) => {
+const PartnerProvider = ({ children }) => {
 
     // Context
     const {
@@ -24,26 +23,13 @@ const BannerProvider = ({ children }) => {
         formStorageDispatch,
     } = useContext(GlobalContext);
 
-    const [bannerState, bannerDispatch] = useReducer(bannerReducer, initState);
+    const [partnerState, partnerDispatch] = useReducer(partnerReducer, initState);
 
-    const { action, length, imageSize, lists } = bannerState;
-    const { Provider } = BannerContext;
-
-    // 控制前台顯示筆數
-    const bannerLengthControl = (reqData) => {
-
-        // Fake
-        bannerDispatch({ type: 'banner_length', payload: { ...reqData, action: true } });
-
-        // Debug
-        return;
-        Service.bannerLengthControl(reqData)
-            .then((resData) => bannerDispatch({ type: 'banner_length', payload: { ...reqData, action: true } }));
-
-    };
+    const { action, imageSize, lists } = partnerState;
+    const { Provider } = PartnerContext;
 
     // 新增
-    const bannerCreate = (reqData) => {
+    const partnerCreate = (reqData) => {
 
         // Fake
         const resData = {
@@ -56,11 +42,11 @@ const BannerProvider = ({ children }) => {
 
         lightboxDispatch({ type: 'HIDE' });
         formStorageDispatch({ type: 'CLEAR' });
-        bannerDispatch({ type: 'banner_create', payload: { resData, action: true } });
+        partnerDispatch({ type: 'partner_create', payload: { resData, action: true } });
 
         // Debug
         return;
-        Service.bannerCreate(reqData)
+        Service.partnerCreate(reqData)
             .then((resData) => {
 
                 lightboxDispatch({ type: 'HIDE' });
@@ -68,7 +54,7 @@ const BannerProvider = ({ children }) => {
                     callback: () => {
 
                         formStorageDispatch({ type: 'CLEAR' });
-                        bannerDispatch({ type: 'banner_create', payload: { resData, action: true } });
+                        partnerDispatch({ type: 'partner_create', payload: { resData, action: true } });
 
                     },
                 });
@@ -78,7 +64,7 @@ const BannerProvider = ({ children }) => {
     };
 
     // 編輯
-    const bannerUpdate = (reqData) => {
+    const partnerUpdate = (reqData) => {
 
         // Fake
         const resData = {
@@ -91,11 +77,11 @@ const BannerProvider = ({ children }) => {
 
         lightboxDispatch({ type: 'HIDE' });
         formStorageDispatch({ type: 'CLEAR' });
-        bannerDispatch({ type: 'banner_update', payload: { resData, action: true } });
+        partnerDispatch({ type: 'partner_update', payload: { resData, action: true } });
 
         // Debug
         return;
-        Service.bannerUpdate(reqData)
+        Service.partnerUpdate(reqData)
             .then((resData) => {
 
                 lightboxDispatch({ type: 'HIDE' });
@@ -103,7 +89,7 @@ const BannerProvider = ({ children }) => {
                     callback: () => {
 
                         formStorageDispatch({ type: 'CLEAR' });
-                        bannerDispatch({ type: 'banner_update', payload: { resData, action: true } });
+                        partnerDispatch({ type: 'partner_update', payload: { resData, action: true } });
 
                     },
                 });
@@ -116,16 +102,14 @@ const BannerProvider = ({ children }) => {
 
         <Provider value={{
             action,
-            length,
             imageSize,
             lists,
 
-            bannerLengthControl,
-            bannerCreate,
-            bannerUpdate,
+            partnerCreate,
+            partnerUpdate,
 
             // Dispatch
-            bannerDispatch,
+            partnerDispatch,
         }}>
             {children}
         </Provider>
@@ -133,4 +117,4 @@ const BannerProvider = ({ children }) => {
 
 };
 
-export { BannerProvider, BannerContext };
+export { PartnerProvider, PartnerContext };

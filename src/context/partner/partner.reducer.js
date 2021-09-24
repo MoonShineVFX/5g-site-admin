@@ -1,27 +1,21 @@
-const bannerReducer = (state, { type, payload }) => {
+const partnerReducer = (state, { type, payload }) => {
 
     switch (type) {
-        case 'banner_length':
-            return {
-                ...state,
-                ...payload,
-            };
-
-        case 'banner_list':
+        case 'partner_list':
             return {
                 ...state,
                 imageSize: payload.imageSize,
                 lists: payload.lists,
             };
 
-        case 'banner_create':
+        case 'partner_create':
             return {
                 ...state,
                 action: payload.action,
                 lists: [{ ...payload.resData }, ...state.lists],
             };
 
-        case 'banner_update':
+        case 'partner_update':
             return {
                 ...state,
                 lists: state.lists.map((obj) => {
@@ -38,4 +32,4 @@ const bannerReducer = (state, { type, payload }) => {
 
 };
 
-export { bannerReducer };
+export { partnerReducer };

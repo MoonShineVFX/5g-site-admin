@@ -29,6 +29,14 @@ const GlobalStyle = createGlobalStyle`
     select {
         outline: 0
     }
+    .admin-tables {
+        .ant-image {
+            vertical-align: middle;
+        }
+        img {
+            width: 100%;
+        }
+    }
 `;
 
 export default GlobalStyle;

@@ -1,0 +1,74 @@
+{
+    "result": 1,
+    "message": "",
+    "errors": [],
+    "data": {
+        "tag": [
+            {
+                "id": "4544",
+                "name": "5G領域"
+            },
+            {
+                "id": "4545",
+                "name": "文化領域"
+            },
+            {
+                "id": "4546",
+                "name": "科技領域"
+            }
+        ],
+        "partner": [
+            {
+                "id": "156423",
+                "imgUrl": "//fakeimg.pl/200x150",
+                "link": "http://google.com.tw",
+                "name": "夥伴-156423",
+                "phone": "02-22222222",
+                "email": "service@xxx.com",
+                "description": "夥伴介紹-156423",
+                "tag": [
+                    "4544",
+                    "4545"
+                ]
+            },
+            {
+                "id": "156424",
+                "imgUrl": "//fakeimg.pl/200x150",
+                "link": "http://google.com.tw",
+                "name": "夥伴-156424",
+                "phone": "02-22222222",
+                "email": "service@xxx.com",
+                "description": "夥伴介紹-156424",
+                "tag": [
+                    "4544"
+                ]
+            },
+            {
+                "id": "156425",
+                "imgUrl": "//fakeimg.pl/200x150",
+                "link": "http://google.com.tw",
+                "name": "夥伴-156425",
+                "phone": "02-22222222",
+                "email": "service@xxx.com",
+                "description": "夥伴介紹-156425",
+                "tag": [
+                    "4546"
+                ]
+            },
+            {
+                "id": "156426",
+                "imgUrl": "//fakeimg.pl/200x150",
+                "link": "http://google.com.tw",
+                "name": "夥伴-156426",
+                "phone": "02-22222222",
+                "email": "service@xxx.com",
+                "description": "夥伴介紹-156426",
+                "tag": [
+                    "4544",
+                    "4545",
+                    "4546"
+                ]
+            }
+        ]
+    }
+}

@@ -1,4 +1,4 @@
-import { useContext, useRef } from 'react';
+import { useContext } from 'react';
 import { message } from 'antd';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
@@ -26,6 +26,7 @@ const BannerForm = () => {
     } = useContext(GlobalContext);
 
     const {
+        imageSize,
         bannerCreate,
         bannerUpdate,
     } = useContext(BannerContext);
@@ -38,9 +39,6 @@ const BannerForm = () => {
     } = useForm({
         defaultValues: { ...formStorageData },
     });
-
-    // Ref
-    const form = useRef(null);
 
     // 隱藏 Modal
     const hideModal = () => {
@@ -125,7 +123,7 @@ const BannerForm = () => {
             </div>
 
             <FormRow
-                labelTitle="外部連結(URL)"
+                labelTitle="外部網址(URL)"
                 required={true}
                 error={errors.link && true}
                 {...(errors.link?.type === 'pattern') && { errorMesg: '格式錯誤' }}
@@ -143,7 +141,7 @@ const BannerForm = () => {
             </FormRow>
 
             <RowUpload>
-                <Upload size="1200x520" />
+                <Upload size={imageSize} />
             </RowUpload>
 
             <div className="row row-btns">

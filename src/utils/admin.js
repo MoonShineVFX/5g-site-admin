@@ -97,12 +97,22 @@ const util = {
 
     },
 
-    pathnameKey: (path) => path.split('/')[2] || 'banner',
+    /**
+     * @author Betty
+     * @param {string} path
+     * @param {boolean} noSub 是否有子選單，預設 false
+     * @return {string} - 回傳文字 key
+     */
+    pathnameKey: (path, noSub = false) => {
+
+        return noSub ? path.split('/')[1] : (path.split('/')[2] || 'banner');
+
+    },
 
     /**
      * @author Betty
      * @param {object[]} array
-     * @return {object[] - 回傳陣列結構
+     * @return {object[]} - 回傳陣列結構
      */
     antdTableFilter: (array) => array.reduce((acc, { key, name }) => {
 
@@ -111,6 +121,13 @@ const util = {
         return acc;
 
     }, []),
+
+    /**
+     * @author Betty
+     * @param {string} value - 字串或元件
+     * @return {string}
+     */
+    renderWithoutValue: (value) => value ? value : '--',
 
 };
 

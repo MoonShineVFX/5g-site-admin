@@ -48,7 +48,7 @@ const Tables = ({
     return (
 
         <TablesLayout
-            className={`pmb-tables ${className} ${showTitle ? '' : 'withoutTitle'} ${showTableHeader ? '' : 'withoutTableHeader' } ${data.length ? '' : 'no-data'}`}
+            className={`admin-tables ${className} ${showTitle ? '' : 'withoutTitle'} ${showTableHeader ? '' : 'withoutTableHeader' } ${data.length ? '' : 'no-data'}`}
             columns={columns}
             dataSource={data.length ? data : null}
             rowClassName={rowClassName ? rowClassName : ''}

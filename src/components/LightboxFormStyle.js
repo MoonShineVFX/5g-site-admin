@@ -106,7 +106,7 @@ const LightboxFormStyle = createGlobalStyle`
         textarea {
             height: 100%;
             font-size: 15px;
-            color: ${({ theme }) => theme.palette.font}
+            color: ${({ theme }) => theme.palette.font};
             border: 1px solid ${({ theme }) => theme.palette.border};
             border-radius: 2px;
             padding: 8px 12px;
@@ -119,7 +119,7 @@ const LightboxFormStyle = createGlobalStyle`
         }
         &.textarea {
             .field {
-                min-height: 60px;
+                min-height: 70px;
             }
         }
     }

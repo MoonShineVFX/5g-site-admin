@@ -1,7 +1,7 @@
 import { Fragment, useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { Image } from 'antd';
-import styled, { createGlobalStyle } from 'styled-components';
+import styled from 'styled-components';
 
 import HeadTag from '../../../src/containers/HeadTag';
 import ContentHeader from '../../../src/containers/ContentHeader';
@@ -18,17 +18,11 @@ import adminConst from '../../../src/utils/admin.const';
 
 const { lightboxTitle } = adminConst;
 
-const BannerStyle = createGlobalStyle`
-    .col-image {
-        max-width: 80px;
-        .ant-image {
-            vertical-align: middle;
-        }
-        img {
-            width: 100%;
-        }
-    }
-`;
+const TablesLayout = styled(Tables)({
+    '.col-image': {
+        maxWidth: '80px',
+    },
+});
 
 const SelectOptLayout = styled.span(({ theme }) => ({
     marginTop: '2px',
@@ -75,7 +69,10 @@ const BannerBase = ({ pageData }) => {
 
         bannerDispatch({
             type: 'banner_list',
-            payload: pageData.data.banner,
+            payload: {
+                lists: pageData.data.banner,
+                imageSize: pageData.imageSize,
+            },
         });
 
     }, [globalDispatch, pathname, bannerDispatch]);
@@ -87,17 +84,17 @@ const BannerBase = ({ pageData }) => {
             dataIndex: 'id',
         },
         {
-            title: '標題',
-            dataIndex: 'title',
-        },
-        {
-            title: '圖片(1200x520)',
+            title: `圖片(${pageData.imageSize})`,
             dataIndex: 'imgUrl',
             className: 'col-image',
             render: (imgUrl, { title }) => <Image src={imgUrl} alt={title} />,
         },
         {
-            title: '外部連結',
+            title: '標題',
+            dataIndex: 'title',
+        },
+        {
+            title: '外部網址',
             dataIndex: 'link',
             render: (link) => <Links url={link} target="_blank">{link}</Links>,
         },
@@ -148,7 +145,6 @@ const BannerBase = ({ pageData }) => {
     return (
 
         <Fragment>
-            <BannerStyle />
             <HeadTag title={pageData.title} />
 
             <ContentHeader
@@ -176,10 +172,10 @@ const BannerBase = ({ pageData }) => {
                 </SelectOptLayout>
             </ContentHeader>
 
-            <Tables
+            <TablesLayout
+                rowKey="id"
                 columns={columns}
                 data={action ? lists : pageData.data.banner}
-                rowKey="id"
             />
 
             {

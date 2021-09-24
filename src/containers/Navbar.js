@@ -64,7 +64,7 @@ const Navbar = ({ width }) => {
                         ) : (
 
                             <Item key={pageKey}>
-                                <Links url={pageKey}>{name}</Links>
+                                <Links url={`/${pageKey}`}>{name}</Links>
                             </Item>
 
                         )

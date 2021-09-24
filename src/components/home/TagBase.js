@@ -16,7 +16,12 @@ import { TagContext } from '../../context/home/tag.state';
 import admin from '../../utils/admin';
 import adminConst from '../../utils/admin.const';
 
-const { pathnameKey, antdTableFilter } = admin;
+const {
+    pathnameKey,
+    antdTableFilter,
+    renderWithoutValue,
+} = admin;
+
 const { lightboxTitle } = adminConst;
 
 const ColLayout = styled(Col)({
@@ -111,15 +116,20 @@ const TagBase = ({ pageData }) => {
         {
             title: '標籤名稱',
             dataIndex: 'name',
-            render: (name) => name ? <Tag>{name}</Tag> : '--',
+            render: (name) => renderWithoutValue(name),
         },
         {
             title: '分類',
             dataIndex: 'categoryName',
-            render: (categoryName, { category }) => (category === '') ? '--' : categoryName,
+            render: (categoryName, { category }) => (category === '') ? '--' : `${categoryName}-${category}`,
             sorter: (a, b) => a.category.length - b.category.length,
             filters: antdTableFilter(pageData.data.category),
-            onFilter: (value, data) => (String(data.category).indexOf(String(value)) === 0),
+            onFilter: (value, { category }) => {
+
+                const regex = new RegExp(`^${value}$`);
+                return regex.test(category);
+
+            },
         },
         {
             title: '操作',
@@ -174,9 +184,9 @@ const TagBase = ({ pageData }) => {
 
                 <ColLayout flex="auto">
                     <TablesLayout
+                        rowKey="id"
                         columns={columns}
                         data={action ? lists : pageData.data.tag}
-                        rowKey="id"
                     />
                 </ColLayout>
             </Row>

@@ -42,7 +42,7 @@ const adminConst = {
         },
         {
             name: '合作夥伴',
-            pageKey: 'parner',
+            pageKey: 'partner',
             subItems: [],
         },
         {
@@ -85,6 +85,8 @@ const adminConst = {
         updateBanner: '編輯 Banner',
         createTag: '新增標籤',
         updateTag: '編輯標籤',
+        createPartner: '新增夥伴',
+        updatePartner: '編輯夥伴',
     },
 
     // Prompt type
