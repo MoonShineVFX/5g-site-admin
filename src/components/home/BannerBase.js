@@ -21,6 +21,9 @@ const { lightboxTitle } = adminConst;
 const BannerStyle = createGlobalStyle`
     .col-image {
         max-width: 80px;
+        .ant-image {
+            vertical-align: middle;
+        }
         img {
             width: 100%;
         }
@@ -58,6 +61,7 @@ const BannerBase = ({ pageData }) => {
     const {
         action,
         length,
+        lists,
         bannerLengthControl,
         bannerDispatch,
     } = useContext(BannerContext);
@@ -110,7 +114,7 @@ const BannerBase = ({ pageData }) => {
 
                 <Buttons
                     text="編輯"
-                    // onClick={(e) => btnUpdate(data,  currType, e)}
+                    onClick={() => btnUpdate(data)}
                 />
             ),
         },
@@ -120,7 +124,15 @@ const BannerBase = ({ pageData }) => {
     const btnCreate = () => lightboxDispatch({ type: 'SHOW', currEvent: 'createBanner' });
 
     // 編輯按鈕
-    const btnUpdate = () => {};
+    const btnUpdate = (data) => {
+
+        lightboxDispatch({ type: 'SHOW', currEvent: 'updateBanner' });
+        formStorageDispatch({
+            type: 'COLLECT',
+            payload: data,
+        });
+
+    };
 
     // 隱藏 Modal
     const hideModal = () => {
@@ -166,7 +178,7 @@ const BannerBase = ({ pageData }) => {
 
             <Tables
                 columns={columns}
-                data={pageData.data.banner}
+                data={action ? lists : pageData.data.banner}
                 rowKey="id"
             />
 

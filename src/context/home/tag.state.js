@@ -105,7 +105,7 @@ const TagProvider = ({ children }) => {
                     callback: () => {
 
                         formStorageDispatch({ type: 'CLEAR' });
-                        tagDispatch({ type: 'tag_update', payload: { resData, action: 'update' } });
+                        tagDispatch({ type: 'tag_update', payload: { resData, action: true } });
 
                     },
                 });

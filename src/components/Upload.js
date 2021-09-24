@@ -1,6 +1,5 @@
 import React, { useContext, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { message } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 import Buttons from './Buttons';
@@ -52,10 +51,13 @@ const ButtonsLayout = styled(Buttons)({
     },
 });
 
+const ImgPreview = ({ url }) => <img src={url} alt="thumb" />;
+
 const Upload = ({ size }) => {
 
     // Context
     const {
+        formStorageData,
         formStorageDispatch,
     } = useContext(GlobalContext);
 
@@ -73,7 +75,7 @@ const Upload = ({ size }) => {
             setImgPreview(target.files[0]);
             formStorageDispatch({
                 type: 'COLLECT',
-                payload: { files: target.files[0] },
+                payload: { ...formStorageData, files: target.files[0] },
             });
 
         }
@@ -82,8 +84,6 @@ const Upload = ({ size }) => {
 
     // 觸發 input file
     const handleTriggerUpload = () => inputFileRef.current.click();
-
-    // console.log('imgPreview:', imgPreview);
 
     return (
 
@@ -121,17 +121,9 @@ const Upload = ({ size }) => {
             </div>
 
             <div className="upload-preview">
-                {
-                    imgPreview ? (
-
-                        <img
-                            src={URL.createObjectURL(imgPreview)}
-                            alt="thumb"
-                        />
-
-                    ) : '圖片預覽'
-
-                }
+                <ImgPreview
+                    url={imgPreview ? URL.createObjectURL(imgPreview) : formStorageData?.imgUrl}
+                />
             </div>
 
              <ul className="upload-notice">

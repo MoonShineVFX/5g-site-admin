@@ -54,16 +54,20 @@ const BannerForm = () => {
         reqData = {
             ...reqData,
             priority: +reqData.priority,
-            image: formStorageData.files,
+            image: formStorageData?.files ? formStorageData.files : formStorageData.imgUrl,
         };
 
-        const limitSize = (reqData.image.size / 1024 / 1024) < 5;
+        if (formStorageData?.files) {
 
-        // 檢查圖片大小是否超過 5MB
-        if (!limitSize) {
+            const limitSize = (reqData.image.size / 1024 / 1024) < 5;
 
-            message.error('檔案不能超過 5MB，請重新上傳');
-            return;
+            // 檢查圖片大小是否超過 5MB
+            if (!limitSize) {
+
+                message.error('檔案不能超過 5MB，請重新上傳');
+                return;
+
+            }
 
         }
 
@@ -115,7 +119,7 @@ const BannerForm = () => {
             </div>
 
             <FormRow
-                labelTitle="外連網址"
+                labelTitle="外部連結(URL)"
                 required={true}
                 error={errors.link && true}
                 {...(errors.link?.type === 'pattern') && { errorMesg: '格式錯誤' }}
@@ -124,7 +128,7 @@ const BannerForm = () => {
                     type="text"
                     name="link"
                     defaultValue={formStorageData.link}
-                    placeholder="請輸入完整 URL"
+                    placeholder="請輸入完整連結 (https 或 http)"
                     {...register('link', {
                         required: true,
                         pattern: /^(https?|chrome):\/\/[^\s$.?#].[^\s]*$/g,

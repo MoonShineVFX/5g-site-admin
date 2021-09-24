@@ -53,6 +53,7 @@ const BannerProvider = ({ children }) => {
             priority: 3,
         };
 
+        lightboxDispatch({ type: 'HIDE' });
         formStorageDispatch({ type: 'CLEAR' });
         bannerDispatch({ type: 'banner_create', payload: { resData, action: true } });
 
@@ -61,8 +62,15 @@ const BannerProvider = ({ children }) => {
         Service.bannerCreate(reqData)
             .then((resData) => {
 
-                formStorageDispatch({ type: 'CLEAR' });
-                bannerDispatch({ type: 'banner_create', payload: { resData, action: true } });
+                lightboxDispatch({ type: 'HIDE' });
+                Prompt('success', {
+                    callback: () => {
+
+                        formStorageDispatch({ type: 'CLEAR' });
+                        bannerDispatch({ type: 'banner_create', payload: { resData, action: true } });
+
+                    },
+                });
 
             });
 
@@ -73,10 +81,11 @@ const BannerProvider = ({ children }) => {
 
         // Fake
         const resData = {
-            id: '156421',
-            name: 'update-11111',
-            category: 'news',
-            categoryName: '新聞快訊',
+            id: '156423',
+            title: 'update-156423',
+            imgUrl: '//fakeimg.pl/1200x520?text=update-156423',
+            link: 'http://yahoo.com.tw',
+            priority: 10,
         };
 
         lightboxDispatch({ type: 'HIDE' });
@@ -93,7 +102,7 @@ const BannerProvider = ({ children }) => {
                     callback: () => {
 
                         formStorageDispatch({ type: 'CLEAR' });
-                        bannerDispatch({ type: 'banner_update', payload: { resData, action: 'update' } });
+                        bannerDispatch({ type: 'banner_update', payload: { resData, action: true } });
 
                     },
                 });
