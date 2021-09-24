@@ -23,9 +23,9 @@ const BannerProvider = ({ children }) => {
         formStorageDispatch,
     } = useContext(GlobalContext);
 
-    const [tagState, bannerDispatch] = useReducer(bannerReducer, initState);
+    const [bannerState, bannerDispatch] = useReducer(bannerReducer, initState);
 
-    const { action, length, lists } = tagState;
+    const { action, length, lists } = bannerState;
     const { Provider } = BannerContext;
 
     // 控制前台顯示筆數

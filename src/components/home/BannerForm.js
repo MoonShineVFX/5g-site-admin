@@ -35,7 +35,9 @@ const BannerForm = () => {
         handleSubmit,
         register,
         formState: { errors },
-    } = useForm();
+    } = useForm({
+        defaultValues: { ...formStorageData },
+    });
 
     // Ref
     const form = useRef(null);
@@ -53,13 +55,14 @@ const BannerForm = () => {
 
         reqData = {
             ...reqData,
+            ...formStorageData?.file && { file: formStorageData?.file },
             priority: +reqData.priority,
-            image: formStorageData?.files ? formStorageData.files : formStorageData.imgUrl,
         };
 
-        if (formStorageData?.files) {
+        // 檢查: 圖片尺寸
+        if (formStorageData?.file) {
 
-            const limitSize = (reqData.image.size / 1024 / 1024) < 5;
+            const limitSize = (reqData.file.size / 1024 / 1024) < 5;
 
             // 檢查圖片大小是否超過 5MB
             if (!limitSize) {
@@ -70,6 +73,9 @@ const BannerForm = () => {
             }
 
         }
+
+        // 檢查: 編輯時未選檔案就濾掉此欄位
+        if (!reqData.file) return;
 
         if (currEvent === 'updateBanner') bannerUpdate(reqData);
         else bannerCreate(reqData);

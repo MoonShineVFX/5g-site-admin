@@ -75,7 +75,7 @@ const Upload = ({ size }) => {
             setImgPreview(target.files[0]);
             formStorageDispatch({
                 type: 'COLLECT',
-                payload: { ...formStorageData, files: target.files[0] },
+                payload: { ...formStorageData, file: target.files[0] },
             });
 
         }
@@ -91,7 +91,7 @@ const Upload = ({ size }) => {
             <div className="upload-action">
                 <input
                     type="file"
-                    name="image"
+                    name="file"
                     accept="image/*"
                     onChange={handleChangeInput}
                     ref={inputFileRef}
