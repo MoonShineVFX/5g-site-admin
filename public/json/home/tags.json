@@ -39,6 +39,18 @@
                 "name": "標題-156426",
                 "category": "",
                 "categoryName": ""
+            },
+            {
+                "id": "156427",
+                "name": "標題-156427",
+                "category": "local",
+                "categoryName": "地方資源"
+            },
+            {
+                "id": "156428",
+                "name": "標題-156428",
+                "category": "center",
+                "categoryName": "中央資源"
             }
         ],
         "category": [
@@ -53,6 +65,14 @@
             {
                 "key": "parner",
                 "name": "合作夥伴"
+            },
+            {
+                "key": "center",
+                "name": "中央資源"
+            },
+            {
+                "key": "local",
+                "name": "地方資源"
             }
         ]
     }

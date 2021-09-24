@@ -28,24 +28,6 @@ const TagProvider = ({ children }) => {
     const { action, lists, categoryOpt } = tagState;
     const { Provider } = TagContext;
 
-    // 整理標籤結構
-    const arrangeTagData = (data) => data.reduce((acc, obj) => {
-
-        const key = obj.category;
-        acc[key] = acc[key] || [];
-        acc[key].push(obj);
-        return acc;
-
-    }, {});
-
-    // 整理標籤類別結構
-    const arrangeTagCategory = (data) => data.reduce((acc, { key, name }) => {
-
-        acc[key] = name;
-        return acc;
-
-    }, {});
-
     // 新增
     const tagCreate = (reqData) => {
 
@@ -117,9 +99,6 @@ const TagProvider = ({ children }) => {
     return (
 
         <Provider value={{
-            arrangeTagData,
-            arrangeTagCategory,
-
             action,
             lists,
             categoryOpt,

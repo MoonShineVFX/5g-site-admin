@@ -51,7 +51,6 @@ const TagForm = () => {
     } = useContext(GlobalContext);
 
     const {
-        arrangeTagCategory,
         categoryOpt,
         tagCreate,
         tagUpdate,
@@ -138,13 +137,15 @@ const TagForm = () => {
                                     >
                                         <option value="">請選擇</option>
                                         {
-                                            Object.keys(arrangeTagCategory(categoryOpt)).map((key) => (
+                                            categoryOpt.map(({ key, name }) => (
+
                                                 <option
                                                     key={key}
                                                     value={key}
                                                 >
-                                                    {arrangeTagCategory(categoryOpt)[key]}
+                                                    {name}
                                                 </option>
+
                                             ))
                                         }
                                     </select>
