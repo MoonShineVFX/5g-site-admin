@@ -1,6 +1,6 @@
 import { Fragment, useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { Image } from 'antd';
+import { Image, Tag } from 'antd';
 import styled from 'styled-components';
 
 import HeadTag from '../../containers/HeadTag';
@@ -20,8 +20,8 @@ const { pathnameKey } = admin;
 const { lightboxTitle } = adminConst;
 
 const TablesLayout = styled(Tables)({
-    '.col-image': {
-        maxWidth: '120px',
+    '.col-tags > div': {
+        marginBottom: '6px',
     },
 });
 
@@ -43,6 +43,7 @@ const BannerBase = ({ pageData }) => {
         action,
         lists,
         imageSize,
+        tagOpt,
         partnerDispatch,
     } = useContext(PartnerContext);
 
@@ -51,6 +52,11 @@ const BannerBase = ({ pageData }) => {
         globalDispatch({
             type: 'page',
             payload: pathnameKey(pathname, true),
+        });
+
+        partnerDispatch({
+            type: 'tag_option',
+            payload: pageData.data.tag,
         });
 
         partnerDispatch({
@@ -72,6 +78,7 @@ const BannerBase = ({ pageData }) => {
         {
             title: `Logo(${imageSize})`,
             dataIndex: 'imgUrl',
+            width: 200,
             className: 'col-image',
             render: (imgUrl, { title }) => <Image src={imgUrl} alt={title} />,
         },
@@ -100,8 +107,23 @@ const BannerBase = ({ pageData }) => {
             render: (email) => <a href={`mailto:${email}`}>{email}</a>,
         },
         {
-            // title: '所屬標籤',
-            // dataIndex: 'tag',
+            title: '標籤',
+            dataIndex: 'tag',
+            className: 'col-tags',
+            render: (tag) => (
+
+                tag.length ? (
+
+                    tag.map((val) => (
+
+                        <div key={val}>
+                            <Tag>{mappingTagOpt(tagOpt)[val]}</Tag>
+                        </div>
+
+                    ))
+
+                ) : '--'
+            ),
         },
         {
             title: '操作',
@@ -116,6 +138,14 @@ const BannerBase = ({ pageData }) => {
             ),
         },
     ];
+
+    // Mapping
+    const mappingTagOpt = (opts) => opts.reduce((acc, { id, name }) => {
+
+        acc[id] = name;
+        return acc;
+
+    }, {});
 
     // 新增按鈕
     const btnCreate = () => lightboxDispatch({ type: 'SHOW', currEvent: 'createPartner' });
@@ -158,6 +188,7 @@ const BannerBase = ({ pageData }) => {
             {
                 visible &&
                     <LightboxForm
+                        width={600}
                         title={lightboxTitle[currEvent]}
                         visible={visible}
                         handleCancel={hideModal}

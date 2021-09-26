@@ -37,6 +37,12 @@ const GlobalStyle = createGlobalStyle`
             width: 100%;
         }
     }
+    .ant-tag {
+        font-size: 14px;
+        margin-right: 6px;
+        padding: 2px 10px;
+        cursor: default;
+    }
 `;
 
 export default GlobalStyle;

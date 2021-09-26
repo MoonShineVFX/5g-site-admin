@@ -3,6 +3,7 @@ import { message } from 'antd';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import Buttons from '../Buttons';
+import Checkbox from '../Checkbox';
 import Upload from '../Upload';
 import { FormRow } from '../LightboxForm';
 import { GlobalContext } from '../../context/global.state';
@@ -13,6 +14,13 @@ const RowUpload = styled.div.attrs(() => ({
 }))({
     marginTop: '30px',
     marginBottom: '40px',
+});
+
+const CheckboxWrapLayout = styled.div({
+    display: 'flex',
+    '.checkbox-item': {
+        flex: 1,
+    },
 });
 
 const PartnerForm = () => {
@@ -27,6 +35,7 @@ const PartnerForm = () => {
 
     const {
         imageSize,
+        tagOpt,
         partnerCreate,
         partnerUpdate,
     } = useContext(PartnerContext);
@@ -36,9 +45,7 @@ const PartnerForm = () => {
         handleSubmit,
         register,
         formState: { errors },
-    } = useForm({
-        defaultValues: { ...formStorageData },
-    });
+    } = useForm();
 
     // 隱藏 Modal
     const hideModal = () => {
@@ -54,9 +61,8 @@ const PartnerForm = () => {
         reqData = {
             ...reqData,
             ...formStorageData?.file && { file: formStorageData?.file },
+            tag: reqData.tag.filter((val) => val),
         };
-
-        console.log('reqData:', reqData)
 
         if (formStorageData?.files) {
 
@@ -72,7 +78,6 @@ const PartnerForm = () => {
 
         }
 
-        return;
         if (currEvent === 'updatePartner') partnerUpdate(reqData);
         else partnerCreate(reqData);
 
@@ -83,18 +88,38 @@ const PartnerForm = () => {
         <form onSubmit={handleSubmit(handleReqData)}>
             {(currEvent === 'updatePartner') && <p>id: {formStorageData.id}</p>}
 
-            <FormRow
-                labelTitle="夥伴名稱"
-                required={true}
-                error={errors.name && true}
-            >
-                <input
-                    type="text"
-                    name="name"
-                    defaultValue={formStorageData.name}
-                    {...register('name', { required: true })}
-                />
-            </FormRow>
+            <div className="items">
+                <FormRow
+                    labelTitle="夥伴名稱"
+                    required={true}
+                    error={errors.name && true}
+                >
+                    <input
+                        type="text"
+                        name="name"
+                        defaultValue={formStorageData.name}
+                        {...register('name', { required: true })}
+                    />
+                </FormRow>
+
+                <FormRow
+                    labelTitle="外部網址(URL)"
+                    required={true}
+                    error={errors.link && true}
+                    {...(errors.link?.type === 'pattern') && { errorMesg: '格式錯誤' }}
+                >
+                    <input
+                        type="text"
+                        name="link"
+                        defaultValue={formStorageData.link}
+                        placeholder="請輸入完整連結 (https 或 http)"
+                        {...register('link', {
+                            required: true,
+                            pattern: /^(https?|chrome):\/\/[^\s$.?#].[^\s]*$/g,
+                        })}
+                    />
+                </FormRow>
+            </div>
 
             <div className="items">
                 <FormRow
@@ -110,7 +135,7 @@ const PartnerForm = () => {
                         placeholder="02-22222222"
                         {...register('phone', {
                             required: true,
-                            pattern: /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/g,
+                            pattern: /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]*$/g,
                         })}
                     />
                 </FormRow>
@@ -134,23 +159,32 @@ const PartnerForm = () => {
                 </FormRow>
             </div>
 
-            <FormRow
-                labelTitle="外部網址(URL)"
-                required={true}
-                error={errors.link && true}
-                {...(errors.link?.type === 'pattern') && { errorMesg: '格式錯誤' }}
-            >
-                <input
-                    type="text"
-                    name="link"
-                    defaultValue={formStorageData.link}
-                    placeholder="請輸入完整連結 (https 或 http)"
-                    {...register('link', {
-                        required: true,
-                        pattern: /^(https?|chrome):\/\/[^\s$.?#].[^\s]*$/g,
-                    })}
-                />
-            </FormRow>
+            <div className="row">
+                <div className="title">標籤</div>
+                <div className="field noBorder">
+                    <CheckboxWrapLayout>
+                        {
+                            tagOpt.map(({ id, name }, idx) => (
+
+                                <div
+                                    key={idx}
+                                    className="checkbox-item"
+                                >
+                                    <Checkbox
+                                        name="tag"
+                                        value={id}
+                                        defaultChecked={formStorageData?.tag?.some((val) => val === id)}
+                                        register={register(`tag.${idx}`)}
+                                    >
+                                        {name}-{id}
+                                    </Checkbox>
+                                </div>
+
+                            ))
+                        }
+                    </CheckboxWrapLayout>
+                </div>
+            </div>
 
             <FormRow
                 labelTitle="夥伴介紹"
@@ -158,11 +192,16 @@ const PartnerForm = () => {
                 noBorder={true}
                 required={true}
                 error={errors.description && true}
+                {...(errors.description?.type === 'maxLength') && { errorMesg: '字數超過' }}
             >
                 <textarea
                     name="description"
+                    placeholder="限制 80 字內"
                     defaultValue={formStorageData.description}
-                    {...register('description', { required: true })}
+                    {...register('description', {
+                        required: true,
+                        maxLength: 80,
+                    })}
                 />
             </FormRow>
 

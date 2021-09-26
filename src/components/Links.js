@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 
-//
 const Links = ({ url, children, ...rest }) => (
 
     <Link href={url}>

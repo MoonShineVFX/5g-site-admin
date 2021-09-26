@@ -16,13 +16,8 @@ import { BannerContext } from '../../context/home/banner.state';
 import admin from '../../../src/utils/admin';
 import adminConst from '../../../src/utils/admin.const';
 
+const { pathnameKey, renderWithoutValue } = admin;
 const { lightboxTitle } = adminConst;
-
-const TablesLayout = styled(Tables)({
-    '.col-image': {
-        maxWidth: '80px',
-    },
-});
 
 const SelectOptLayout = styled.span(({ theme }) => ({
     marginTop: '2px',
@@ -64,7 +59,7 @@ const BannerBase = ({ pageData }) => {
 
         globalDispatch({
             type: 'page',
-            payload: admin.pathnameKey(pathname),
+            payload: pathnameKey(pathname),
         });
 
         bannerDispatch({
@@ -86,12 +81,13 @@ const BannerBase = ({ pageData }) => {
         {
             title: `圖片(${pageData.imageSize})`,
             dataIndex: 'imgUrl',
-            className: 'col-image',
+            width: 200,
             render: (imgUrl, { title }) => <Image src={imgUrl} alt={title} />,
         },
         {
             title: '標題',
             dataIndex: 'title',
+            render: (title) => renderWithoutValue(title),
         },
         {
             title: '外部網址',
@@ -172,7 +168,7 @@ const BannerBase = ({ pageData }) => {
                 </SelectOptLayout>
             </ContentHeader>
 
-            <TablesLayout
+            <Tables
                 rowKey="id"
                 columns={columns}
                 data={action ? lists : pageData.data.banner}

@@ -19,6 +19,16 @@ const Service = {
     tagUpdate: (reqData) => util.serviceProxy('/???', reqData),
 
     // 合作夥伴
+    partnerCreate: (reqData) => util.serviceProxy('/???', reqData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
+    }),
+    partnerUpdate: (reqData) => util.serviceProxy('/???', reqData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
+    }),
 };
 
 export default Service;

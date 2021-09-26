@@ -8,6 +8,7 @@ import Service from '../../utils/admin.service';
 const initState = {
     action: false,
     imageSize: '',
+    tagOpt: [],
     lists: [],
 };
 
@@ -25,7 +26,13 @@ const PartnerProvider = ({ children }) => {
 
     const [partnerState, partnerDispatch] = useReducer(partnerReducer, initState);
 
-    const { action, imageSize, lists } = partnerState;
+    const {
+        action,
+        imageSize,
+        tagOpt,
+        lists,
+    } = partnerState;
+
     const { Provider } = PartnerContext;
 
     // 新增
@@ -33,11 +40,14 @@ const PartnerProvider = ({ children }) => {
 
         // Fake
         const resData = {
-            id: '81344',
-            title: 'create-81344',
-            imgUrl: '//fakeimg.pl/1200x520?text=create-81344',
-            link: 'http://google.com.tw',
-            priority: 3,
+            "id": '81344',
+            "imgUrl": "//fakeimg.pl/200x150",
+            "link": "http://google.com.tw",
+            "name": "Create-81344",
+            "phone": "02-11111111",
+            "email": "service@xxx.com",
+            "description": "Create-81344",
+            "tag": ["4546", "4544"]
         };
 
         lightboxDispatch({ type: 'HIDE' });
@@ -68,11 +78,14 @@ const PartnerProvider = ({ children }) => {
 
         // Fake
         const resData = {
-            id: '156423',
-            title: 'update-156423',
-            imgUrl: '//fakeimg.pl/1200x520?text=update-156423',
-            link: 'http://yahoo.com.tw',
-            priority: 10,
+            "id": "156423",
+            "imgUrl": "//fakeimg.pl/200x150",
+            "link": "http://google.com.tw",
+            "name": "Edit-156423",
+            "phone": "02-11111111",
+            "email": "service@xxx.com",
+            "description": "Edit-156423",
+            "tag": ["4545"]
         };
 
         lightboxDispatch({ type: 'HIDE' });
@@ -103,6 +116,7 @@ const PartnerProvider = ({ children }) => {
         <Provider value={{
             action,
             imageSize,
+            tagOpt,
             lists,
 
             partnerCreate,

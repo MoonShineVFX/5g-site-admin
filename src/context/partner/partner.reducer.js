@@ -1,6 +1,12 @@
 const partnerReducer = (state, { type, payload }) => {
 
     switch (type) {
+        case 'tag_option':
+            return {
+                ...state,
+                tagOpt: payload,
+            };
+
         case 'partner_list':
             return {
                 ...state,

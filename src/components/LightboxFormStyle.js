@@ -105,6 +105,7 @@ const LightboxFormStyle = createGlobalStyle`
         }
         textarea {
             height: 100%;
+            line-height: 1.4;
             font-size: 15px;
             color: ${({ theme }) => theme.palette.font};
             border: 1px solid ${({ theme }) => theme.palette.border};

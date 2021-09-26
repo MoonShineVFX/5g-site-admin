@@ -16,25 +16,11 @@ import { TagContext } from '../../context/home/tag.state';
 import admin from '../../utils/admin';
 import adminConst from '../../utils/admin.const';
 
-const {
-    pathnameKey,
-    antdTableFilter,
-    renderWithoutValue,
-} = admin;
-
+const { pathnameKey, antdTableFilter } = admin;
 const { lightboxTitle } = adminConst;
 
 const ColLayout = styled(Col)({
     marginLeft: '10px',
-});
-
-const TablesLayout = styled(Tables)({
-    '.ant-tag': {
-        fontSize: '14px',
-        marginRight: '16px',
-        padding: '2px 10px',
-        cursor: 'default',
-    },
 });
 
 const TagFormLayout = styled.div(({ theme }) => ({
@@ -116,7 +102,7 @@ const TagBase = ({ pageData }) => {
         {
             title: '標籤名稱',
             dataIndex: 'name',
-            render: (name) => renderWithoutValue(name),
+            render: (name) => name ? <Tag>{name}</Tag> : '--',
         },
         {
             title: '分類',
@@ -183,7 +169,7 @@ const TagBase = ({ pageData }) => {
                 </Col>
 
                 <ColLayout flex="auto">
-                    <TablesLayout
+                    <Tables
                         rowKey="id"
                         columns={columns}
                         data={action ? lists : pageData.data.tag}
