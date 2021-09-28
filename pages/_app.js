@@ -17,11 +17,13 @@ const { Header, Content, Footer } = Layout;
 const navbarWidth = 240;
 
 const HeaderLayout = styled(Header)(({ theme }) => ({
+    height: 'auto',
+    lineHeight: '1',
     textAlign: 'right',
     backgroundColor: theme.palette.container,
-    padding: '0 20px',
+    padding: '16px 20px',
     'svg': {
-        fontSize: '1.4em',
+        fontSize: '1.1em',
     },
     '.account': {
         fontSize: '16px',
@@ -35,14 +37,19 @@ const HeaderLayout = styled(Header)(({ theme }) => ({
 }));
 
 const ContentLayout = styled(Content)({
-    minHeight: 'calc(100vh - 64px - 70px - 40px)', // header: 64px, footer: 70px, main margin bottom: 40px
-    marginBottom: '40px',
+    height: 'calc(100vh - 50px - 54px - 30px)', // header: 50px, footer: 54px, main margin bottom: 30px
+    marginBottom: '30px',
     padding: '30px 30px 20px',
+    '> section': {
+        height: '100%',
+    },
 });
 
 const FooterLayout = styled(Footer)(({ theme}) => ({
     textAlign: 'center',
     backgroundColor: theme.palette.container,
+    paddingTop: '16px',
+    paddingBottom: '16px',
 }));
 
 //
