@@ -29,6 +29,17 @@ const Service = {
             'Content-Type': 'multipart/form-data',
         },
     }),
+
+    // 上傳檔案 (圖片 > 編輯器用)
+    fileUploadEditor: (reqData) => util.serviceProxy('/???', reqData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
+    }),
+
+    // 關於我們
+    aboutDetail: (reqData) => util.serviceProxy('/???', reqData),
+    aboutUpdate: (reqData) => util.serviceProxy('/???', reqData),
 };
 
 export default Service;

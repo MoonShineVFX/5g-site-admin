@@ -1,8 +1,12 @@
+import { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { useForm, Controller } from 'react-hook-form';
+import { message } from 'antd';
+import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import Buttons from './Buttons';
 import TextEditor from './TextEditor';
+import { GlobalContext } from '../context/global.state';
+import Service from '../utils/admin.service';
 
 const TextEditorFormLayout = styled.form.attrs(() => ({
     className: 'textEditorForm',
@@ -15,31 +19,48 @@ const TextEditorFormLayout = styled.form.attrs(() => ({
     },
 });
 
-const TextEditorForm = ({ name, content }) => {
+const TextEditorForm = ({ name, content, serviceKey }) => {
+
+    // Context
+    const { formStorageData, formStorageDispatch } = useContext(GlobalContext);
 
     // React Hook Form
-    const { handleSubmit, control } = useForm();
+    const { handleSubmit, register } = useForm({
+        defaultValues: {
+            detail: content,
+        },
+    });
 
     const handleReqData = (reqData) => {
 
+        reqData = {
+            ...reqData,
+            detail: formStorageData.detail ? formStorageData.detail : reqData.detail,
+        };
+
         console.log('reqData:', reqData);
+
+        // Debug
+        return;
+        Service[serviceKey](reqData)
+            .then(({ data }) => {
+
+                formStorageDispatch({ type: 'CLEAR' });
+                message.success('更新成功');
+
+            });
 
     };
 
     return (
 
         <TextEditorFormLayout onSubmit={handleSubmit(handleReqData)}>
-            <Controller
+            <TextEditor content={content} />
+
+            <textarea
                 name={name}
-                control={control}
-                render={(({ field: { onChange } }) => (
-
-                    <TextEditor
-                        content={content}
-                        onChange={onChange}
-                    />
-
-                ))}
+                {...register(name)}
+                style={{ display: 'none' }}
             />
 
             <Buttons
@@ -54,7 +75,8 @@ const TextEditorForm = ({ name, content }) => {
 
 TextEditorForm.propTypes = {
     name: PropTypes.string.isRequired,
-    content: PropTypes.any, // html string
+    content: PropTypes.any.isRequired, // html string
+    serviceKey: PropTypes.string.isRequired,
 };
 
 export default TextEditorForm;

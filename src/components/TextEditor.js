@@ -1,19 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import dynamic from 'next/dynamic';
 import { blue } from '@ant-design/colors';
 import { EditorState, ContentState, convertToRaw } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
-
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import styled from 'styled-components';
+import { GlobalContext } from '../context/global.state';
+import Service from '../utils/admin.service';
 
 //
 const htmlToDraft = (typeof window === 'object') && require('html-to-draftjs').default;
 
 // 動態載入模組
 const Editor = dynamic(
-    () => import('react-draft-wysiwyg').then((mod) => mod.Editor),
+    () => import('react-draft-wysiwyg').then((module) => module.Editor),
     { ssr: false },
 );
 
@@ -58,7 +59,10 @@ const EditorLayout = styled.div(({ theme }) => ({
     },
 }));
 
-const TextEditor = (props) => {
+const TextEditor = ({ content }) => {
+
+    // Context
+    const { formStorageDispatch } = useContext(GlobalContext);
 
     // State
     const [editor, setEditor] = useState(false);
@@ -68,7 +72,7 @@ const TextEditor = (props) => {
 
         setEditor(true);
 
-        const contentBlock = htmlToDraft(props.content);
+        const contentBlock = htmlToDraft(content);
         if (contentBlock) {
 
             const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
@@ -77,38 +81,48 @@ const TextEditor = (props) => {
 
         }
 
-    }, [props.content]);
+    }, [content]);
 
+    //
     const handleEditorChange = (state) => {
 
         setEditorState(state);
-        return props.onChange(
-            draftToHtml(convertToRaw(editorState.getCurrentContent()))
-        );
+        formStorageDispatch({
+            type: 'COLLECT',
+            payload: {
+                detail: draftToHtml(convertToRaw(editorState.getCurrentContent())),
+            },
+        });
 
     };
 
+    // 上傳圖片
     const uploadImageCallBack = (file) => {
-        return new Promise(
-            (resolve, reject) => {
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', 'https://api.imgur.com/3/image');
-            xhr.setRequestHeader('Authorization', 'Client-ID ##clientid##');
-            const data = new FormData();
-            data.append('image', file);
-            xhr.send(data);
-            xhr.addEventListener('load', () => {
-                const response = JSON.parse(xhr.responseText);
-                console.log(response)
-                resolve(response);
+
+        // console.log('file:', file)
+
+        return new Promise((resolve, reject) => {
+
+            const reader = new FileReader();
+            reader.onload = (e) => resolve({ data: {
+                // link: e.target.result
+                link: '//fakeimg.pl/100x100?text=Betty'
+            }});
+            reader.onerror = (e) => reject(e);
+            reader.readAsDataURL(file);
+
+        });
+
+        Service.fileUploadEditor(file)
+            .then(({ data }) => {
+
+                const reader = new FileReader();
+                reader.onload = (e) => resolve({ data: { link: data.detail } });
+                reader.onerror = (e) => reject(e);
+                reader.readAsDataURL(file);
+
             });
-            xhr.addEventListener('error', () => {
-                const error = JSON.parse(xhr.responseText);
-                console.log(error)
-                reject(error);
-            });
-            }
-        );
+
     };
 
     return (
@@ -124,9 +138,10 @@ const TextEditor = (props) => {
                         onEditorStateChange={handleEditorChange}
                         toolbar={{
                             image: {
-                                // uploadCallback: uploadImageCallBack,
-                                // previewImage: true,
+                                uploadCallback: uploadImageCallBack,
+                                previewImage: true,
                                 alt: { present: true, mandatory: true },
+                                inputAccept: 'image/jpeg,image/jpg,image/png',
                             },
                         }}
                     />
@@ -138,7 +153,7 @@ const TextEditor = (props) => {
 };
 
 TextEditor.propTypes = {
-    onChange: PropTypes.func.isRequired,
+    content: PropTypes.any.isRequired,
 };
 
 export default TextEditor;
@@ -146,5 +161,6 @@ export default TextEditor;
 /**
  * Example
  * https://github.com/jpuri/react-draft-wysiwyg/tree/master/stories
+ * https://www.gyanblog.com/javascript/how-integrate-next-js-draft-js-strapi-create-article-upload-image-view-page/
  * https://www.gyanblog.com/javascript/how-integrate-next-js-draft-js-strapi-create-article-upload-image-view-page
  */
