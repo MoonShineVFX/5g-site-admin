@@ -71,7 +71,6 @@ export async function getStaticProps () {
         props: {
             pageData: {
                 title: '關於我們',
-                imageSize: '200x150',
                 data: data.data.detail,
             },
         },

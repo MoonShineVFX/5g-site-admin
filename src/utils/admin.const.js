@@ -29,16 +29,7 @@ const adminConst = {
         {
             name: '最新消息',
             pageKey: 'news',
-            subItems: [
-                {
-                    name: '新聞快訊',
-                    pageKey: 'news',
-                },
-                {
-                    name: '產業訊息',
-                    pageKey: 'industry',
-                },
-            ],
+            subItems: [],
         },
         {
             name: '合作夥伴',
