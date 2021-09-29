@@ -33,7 +33,7 @@ const Prompt = (type, obj) => {
 
         Modal[type]({
             title: prompts[type],
-            content: (obj && obj.mesg) ? obj.mesg : sendSuccessText,
+            content: obj?.mesg ? obj.mesg : sendSuccessText,
             okText: '確認',
             okType: 'primary',
             className: `prompt-wrap prompt-${type}`,

@@ -1,10 +1,11 @@
 import { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { message } from 'antd';
+import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import Buttons from './Buttons';
 import TextEditor from './TextEditor';
+import Prompt from './Prompt';
 import { GlobalContext } from '../context/global.state';
 import Service from '../utils/admin.service';
 
@@ -20,6 +21,9 @@ const TextEditorFormLayout = styled.form.attrs(() => ({
 });
 
 const TextEditorForm = ({ name, content, serviceKey }) => {
+
+    //
+    const router = useRouter();
 
     // Context
     const { formStorageData, formStorageDispatch } = useContext(GlobalContext);
@@ -40,13 +44,30 @@ const TextEditorForm = ({ name, content, serviceKey }) => {
 
         console.log('reqData:', reqData);
 
+        Prompt('success', {
+            mesg: '文章已更新，將重新整理頁面',
+            callback: () => {
+
+                formStorageDispatch({ type: 'CLEAR' });
+                router.reload();
+
+            },
+        });
+
         // Debug
         return;
         Service[serviceKey](reqData)
             .then(({ data }) => {
 
-                formStorageDispatch({ type: 'CLEAR' });
-                message.success('更新成功');
+                Prompt('success', {
+                    mesg: '文章已更新，將重新整理頁面',
+                    callback: () => {
+
+                        formStorageDispatch({ type: 'CLEAR' });
+                        router.reload();
+
+                    },
+                });
 
             });
 
