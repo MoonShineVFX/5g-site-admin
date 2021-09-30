@@ -10,6 +10,8 @@ import {
 // Global
 const globalInitState = {
     page: 'banner',
+    newsTag: [],
+    user: {},
 };
 
 // Form values
@@ -34,8 +36,8 @@ const GlobalProvider = ({ children }) => {
     const [lightboxState, lightboxDispatch] = useReducer(lightboxReducer, lightboxInitState);
     const {
         page,
-
-        // 全域資料
+        newsTag,
+        user,
     } = globalState;
 
     const { formStorageData } = formStorageState;
@@ -45,8 +47,19 @@ const GlobalProvider = ({ children }) => {
     // 取得全域資料
     const getGlobalData = () => {
 
-        Service.global()
-            .then((resData) => globalDispatch({ type: 'global_data', payload: resData }));
+        Service.common()
+            .then((resData) => {
+
+                const { tag, ...rest } = resData;
+                globalDispatch({
+                    type: 'global_data',
+                    payload: {
+                        tag,
+                        other: rest,
+                    },
+                });
+
+            });
 
     };
 
@@ -55,6 +68,9 @@ const GlobalProvider = ({ children }) => {
         <Provider value={{
             // 全域資料
             page,
+            newsTag,
+            user,
+            getGlobalData,
 
             // Form 表單暫存
             formStorageData,

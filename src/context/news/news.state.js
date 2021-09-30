@@ -7,7 +7,6 @@ import Service from '../../utils/admin.service';
 // Init
 const initState = {
     action: false,
-    tagOpt: [],
     lists: [],
 };
 
@@ -27,7 +26,6 @@ const NewsProvider = ({ children }) => {
 
     const {
         action,
-        tagOpt,
         lists,
     } = newsState;
 
@@ -113,7 +111,6 @@ const NewsProvider = ({ children }) => {
 
         <Provider value={{
             action,
-            tagOpt,
             lists,
 
             newsCreate,

@@ -23,17 +23,18 @@ const ContentHeader = ({ title, showButton, onClick, children }) => (
 
     <Fragment>
         <h1>{title}</h1>
-        {
-            showButton &&
-                <ContentHeaderLayout>
+
+        <ContentHeaderLayout>
+            {
+                showButton &&
                     <Buttons
                         text="新增"
                         className="btn-create"
                         onClick={onClick}
                     />
-                    {children && children}
-                </ContentHeaderLayout>
-        }
+            }
+            {children && children}
+        </ContentHeaderLayout>
     </Fragment>
 
 );

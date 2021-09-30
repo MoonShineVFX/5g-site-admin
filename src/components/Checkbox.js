@@ -64,7 +64,7 @@ const Checkbox = ({
 Checkbox.propTypes = {
     className: PropTypes.string,
     name: PropTypes.string,
-    register: PropTypes.object.isRequired,
+    register: PropTypes.object,
     children: PropTypes.any,
 };
 

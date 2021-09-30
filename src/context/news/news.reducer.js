@@ -1,12 +1,6 @@
 const newsReducer = (state, { type, payload }) => {
 
     switch (type) {
-        case 'tag_option':
-            return {
-                ...state,
-                tagOpt: payload,
-            };
-
         case 'news_list':
             return {
                 ...state,

@@ -5,18 +5,19 @@ import styled from 'styled-components';
 
 import HeadTag from '../../containers/HeadTag';
 import ContentHeader from '../../containers/ContentHeader';
+import Links from '../Links';
 import Tables from '../Tables';
 import Buttons from '../Buttons';
-import LightboxForm from '../LightboxForm';
-import NewsForm from '../news/NewsForm';
 
 import { GlobalContext } from '../../context/global.state';
 import { NewsContext } from '../../context/news/news.state';
 import admin from '../../utils/admin';
-import adminConst from '../../utils/admin.const';
 
 const { pathnameKey } = admin;
-const { lightboxTitle } = adminConst;
+
+const CreateBtnLayout = styled(Buttons)({
+    float: 'none',
+});
 
 const TablesLayout = styled(Tables)({
     '.col-tags > div': {
@@ -34,15 +35,14 @@ const antdTableFilter = (data) => data.reduce((acc, { category, categoryName }) 
 
 }, []);
 
-const BannerBase = ({ pageData }) => {
+const NewsBase = ({ pageData }) => {
 
     // console.log('pageData:', pageData);
     const { pathname } = useRouter();
 
     // Context
     const {
-        visible,
-        currEvent,
+        newsTag,
         globalDispatch,
         lightboxDispatch,
         formStorageDispatch,
@@ -51,7 +51,6 @@ const BannerBase = ({ pageData }) => {
     const {
         action,
         lists,
-        tagOpt,
         newsDispatch,
     } = useContext(NewsContext);
 
@@ -63,16 +62,13 @@ const BannerBase = ({ pageData }) => {
         });
 
         newsDispatch({
-            type: 'tag_option',
-            payload: pageData.data.tag,
-        });
-
-        newsDispatch({
             type: 'news_list',
             payload: {
                 lists: pageData.data.list,
             },
         });
+
+        console.log('newsTag:', newsTag)
 
     }, [globalDispatch, pathname, newsDispatch]);
 
@@ -96,7 +92,7 @@ const BannerBase = ({ pageData }) => {
             dataIndex: 'categoryName',
             render: (categoryName, { category }) => (category === '') ? '--' : `${categoryName}-${category}`,
             sorter: (a, b) => a.category.length - b.category.length,
-            filters: antdTableFilter(pageData.data.tag),
+            filters: antdTableFilter(newsTag),
             onFilter: (value, { category }) => {
 
                 const regex = new RegExp(`^${value}$`);
@@ -115,7 +111,7 @@ const BannerBase = ({ pageData }) => {
                     tag.map((val) => (
 
                         <div key={val}>
-                            <Tag>{mappingTagOpt(tagOpt)[val]}</Tag>
+                            <Tag>{mappingTagOpt(newsTag)[val]}</Tag>
                         </div>
 
                     ))
@@ -145,9 +141,6 @@ const BannerBase = ({ pageData }) => {
 
     }, {});
 
-    // 新增按鈕
-    const btnCreate = () => lightboxDispatch({ type: 'SHOW', currEvent: 'createNews' });
-
     // 編輯按鈕
     const btnUpdate = (data) => {
 
@@ -159,14 +152,6 @@ const BannerBase = ({ pageData }) => {
 
     };
 
-    // 隱藏 Modal
-    const hideModal = () => {
-
-        lightboxDispatch({ type: 'HIDE' });
-        formStorageDispatch({ type: 'CLEAR' });
-
-    };
-
     return (
 
         <Fragment>
@@ -174,30 +159,22 @@ const BannerBase = ({ pageData }) => {
 
             <ContentHeader
                 title={pageData.title}
-                onClick={btnCreate}
-            />
+                showButton={false}
+            >
+                <CreateBtnLayout className="btn-create">
+                    <Links url="/news/create">新增</Links>
+                </CreateBtnLayout>
+            </ContentHeader>
 
             <TablesLayout
                 rowKey="id"
                 columns={columns}
                 data={action ? lists : pageData.data.list}
             />
-
-            {
-                visible &&
-                    <LightboxForm
-                        width={600}
-                        title={lightboxTitle[currEvent]}
-                        visible={visible}
-                        handleCancel={hideModal}
-                    >
-                        <NewsForm />
-                    </LightboxForm>
-            }
         </Fragment>
 
     );
 
 };
 
-export default BannerBase;
+export default NewsBase;

@@ -3,26 +3,6 @@
     "message": "",
     "errors": [],
     "data": {
-        "tag": [
-            {
-                "id": "4544",
-                "name": "5G",
-                "category": "news",
-                "categoryName": "新聞快訊"
-            },
-            {
-                "id": "4545",
-                "name": "文化",
-                "category": "news",
-                "categoryName": "新聞快訊"
-            },
-            {
-                "id": "4546",
-                "name": "科技",
-                "category": "newsIndustry",
-                "categoryName": "產業訊息"
-            }
-        ],
         "list": [
             {
                 "id": "156423",

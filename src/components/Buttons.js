@@ -30,7 +30,7 @@ Buttons.defaultProps = {
 
 Buttons.propTypes = {
     type: PropTypes.string,
-    text: PropTypes.string.isRequired,
+    text: PropTypes.string,
 };
 
 export default Buttons;

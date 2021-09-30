@@ -2,6 +2,13 @@
 const globalReducer = (state, { type, payload }) => {
 
     switch (type) {
+        case 'global_data':
+            return {
+                ...state,
+                newsTag: payload.tag,
+                user: payload.other,
+            };
+
         case 'page':
             return {
                 ...state,

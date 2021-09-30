@@ -78,6 +78,7 @@ const adminConst = {
         updateTag: '編輯標籤',
         createPartner: '新增夥伴',
         updatePartner: '編輯夥伴',
+        settingTag: '設定標籤',
     },
 
     // Prompt type

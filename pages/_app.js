@@ -8,6 +8,7 @@ import HeadTag from '../src/containers/HeadTag';
 import GlobalStyle from '../src/containers/GlobalStyle';
 import theme from '../src/utils/theme';
 import Navbar from '../src/containers/Navbar';
+import MainContent from '../src/containers/MainContent';
 import FontIcon from '../src/components/FontIcon';
 
 // Context
@@ -37,7 +38,7 @@ const HeaderLayout = styled(Header)(({ theme }) => ({
 }));
 
 const ContentLayout = styled(Content)({
-    height: 'calc(100vh - 50px - 54px - 30px)', // header: 50px, footer: 54px, main margin bottom: 30px
+    minHeight: 'calc(100vh - 50px - 54px - 30px)', // header: 50px, footer: 54px, main margin bottom: 30px
     marginBottom: '30px',
     padding: '30px 30px 20px',
     '> section': {
@@ -90,9 +91,9 @@ const AdminSite = ({ Component, pageProps }) => {
                             </HeaderLayout>
 
                             <ContentLayout>
-                                <section>
+                                <MainContent>
                                     <Component {...pageProps} />
-                                </section>
+                                </MainContent>
                             </ContentLayout>
 
                             <FooterLayout>中華電信 5G ©2021 Created by MoonShine</FooterLayout>

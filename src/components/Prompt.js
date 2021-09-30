@@ -21,7 +21,6 @@ const Prompt = (type, obj) => {
             cancelText: '取消',
             className: `prompt-wrap prompt-confirm ${obj.className ? obj.className : ''}`,
             centered: true,
-            // maskClosable: true, // confirm 要允許使用者點 mask?
             onOk: () => {
 
                 if (obj.callback) obj.callback();
@@ -38,6 +37,7 @@ const Prompt = (type, obj) => {
             okType: 'primary',
             className: `prompt-wrap prompt-${type}`,
             centered: true,
+            keyboard: obj.enableEsc,
             ...obj && {
                 onOk: () => {
 
@@ -66,6 +66,7 @@ Prompt.propTypes = {
         PropTypes.element,
     ]),
     className: PropTypes.string,
+    enableEsc: PropTypes.bool,
     callback: PropTypes.func,
 };
 

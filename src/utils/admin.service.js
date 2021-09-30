@@ -1,6 +1,12 @@
 import util from './admin';
 
 const Service = {
+    // common
+    common: (reqData) => util.serviceProxy({
+        url: '/common.json',
+        method: 'get',
+    }, reqData),
+
     // Banner
     bannerLengthControl: (reqData) => util.serviceProxy('/???', reqData),
     bannerCreate: (reqData) => util.serviceProxy('/???', reqData, {
@@ -36,6 +42,11 @@ const Service = {
             'Content-Type': 'multipart/form-data',
         },
     }),
+
+    // 最新消息
+    newsDetail: (reqData) => util.serviceProxy('/???', reqData),
+    newsCreate: (reqData) => util.serviceProxy('/???', reqData),
+    newsUpdate: (reqData) => util.serviceProxy('/???', reqData),
 
     // 關於我們
     aboutDetail: (reqData) => util.serviceProxy('/???', reqData),

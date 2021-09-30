@@ -43,6 +43,11 @@ const GlobalStyle = createGlobalStyle`
         padding: 2px 10px;
         cursor: default;
     }
+    .admin-btn.ant-btn a {
+        letter-spacing: 0px;
+        display: inline-block;
+        margin-right: 0;
+    }
 `;
 
 export default GlobalStyle;

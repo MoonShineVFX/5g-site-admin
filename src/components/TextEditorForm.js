@@ -20,7 +20,12 @@ const TextEditorFormLayout = styled.form.attrs(() => ({
     },
 });
 
-const TextEditorForm = ({ name, content, serviceKey }) => {
+const TextEditorForm = ({
+    name,
+    content,
+    serviceKey,
+    children,
+}) => {
 
     //
     const router = useRouter();
@@ -46,6 +51,7 @@ const TextEditorForm = ({ name, content, serviceKey }) => {
 
         Prompt('success', {
             mesg: '文章已更新，將重新整理頁面',
+            enableEsc: false,
             callback: () => {
 
                 formStorageDispatch({ type: 'CLEAR' });
@@ -61,6 +67,7 @@ const TextEditorForm = ({ name, content, serviceKey }) => {
 
                 Prompt('success', {
                     mesg: '文章已更新，將重新整理頁面',
+                    enableEsc: false,
                     callback: () => {
 
                         formStorageDispatch({ type: 'CLEAR' });
@@ -76,6 +83,8 @@ const TextEditorForm = ({ name, content, serviceKey }) => {
     return (
 
         <TextEditorFormLayout onSubmit={handleSubmit(handleReqData)}>
+            {children}
+
             <TextEditor content={content} />
 
             <textarea
@@ -94,10 +103,15 @@ const TextEditorForm = ({ name, content, serviceKey }) => {
 
 };
 
+TextEditorForm.defaultProps = {
+    content: '',
+};
+
 TextEditorForm.propTypes = {
     name: PropTypes.string.isRequired,
     content: PropTypes.any.isRequired, // html string
     serviceKey: PropTypes.string.isRequired,
+    children: PropTypes.any,
 };
 
 export default TextEditorForm;
