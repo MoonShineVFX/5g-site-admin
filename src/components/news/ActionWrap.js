@@ -5,24 +5,24 @@ import {
     useState,
 } from 'react';
 
+import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import { Tag } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { blue } from '@ant-design/colors';
 import styled from 'styled-components';
 
-import ActionWrap from '../../src/components/news/ActionWrap';
-import HeadTag from '../../src/containers/HeadTag';
-import ContentHeader from '../../src/containers/ContentHeader';
-import LightboxForm from '../../src/components/LightboxForm';
-import TextEditorForm from '../../src/components/TextEditorForm';
-import TagsBox from '../../src/components/news/TagsBox';
+import HeadTag from '../../containers/HeadTag';
+import ContentHeader from '../../containers/ContentHeader';
+import LightboxForm from '../LightboxForm';
+import TextEditorForm from '../TextEditorForm';
+import TagsBox from '../news/TagsBox';
 
-import { GlobalContext } from '../../src/context/global.state';
-import adminConst from '../../src/utils/admin.const';
+import { GlobalContext } from '../../context/global.state';
+import adminConst from '../../utils/admin.const';
 
 const { lightboxTitle } = adminConst;
-const title = '新增文章';
+// const title = '新增文章';
 
 // Mapping
 const mappingTagOpt = (opts) => opts.reduce((acc, { id, name }) => {
@@ -69,7 +69,12 @@ const NewsTitleLayout = styled.div(({ theme }) => ({
     },
 }));
 
-const NewsCreate = () => {
+const ActionWrap = ({
+    title,
+    newsTitle,
+    content,
+    serviceKey,
+}) => {
 
     //
     const router = useRouter();
@@ -85,7 +90,7 @@ const NewsCreate = () => {
     } = useContext(GlobalContext);
 
     // State
-    const [newsTtitle, setNewsTitle] = useState('');
+    const [newsTtitleValue, setNewsTitleValue] = useState('');
 
     useEffect(() => {
 
@@ -103,16 +108,12 @@ const NewsCreate = () => {
     const targetTag = () => lightboxDispatch({ type: 'SHOW', currEvent: 'settingTag' });
 
     // 標題
-    const handleChange = ({ target: { value } }) => setNewsTitle(value);
+    const handleChange = ({ target: { value } }) => setNewsTitleValue(value);
 
     return (
 
         <Fragment>
-            <ActionWrap
-                title={title}
-                serviceKey="newsCreate"
-            />
-            {/* <HeadTag title={title} />
+            <HeadTag title={title} />
 
             <ContentHeader
                 title={title}
@@ -139,9 +140,10 @@ const NewsCreate = () => {
             </TagsWrapLayout>
 
             <TextEditorForm
-                serviceKey="newsCreate"
+                content={content}
+                serviceKey={serviceKey}
                 otherReqData={{
-                    title: newsTtitle,
+                    title: newsTtitleValue,
                     tag: formStorageData.selectedCheckbox ? Object.keys(formStorageData.selectedCheckbox).filter((val) => formStorageData.selectedCheckbox[val]) : []
                 }}
                 successCallback={() => router.push('/news')}
@@ -153,6 +155,7 @@ const NewsCreate = () => {
                             type="text"
                             placeholder="標題"
                             onChange={handleChange}
+                            defaultValue={newsTitle}
                         />
                     </span>
                 </NewsTitleLayout>
@@ -167,11 +170,24 @@ const NewsCreate = () => {
                     >
                         <TagsBox />
                     </LightboxForm>
-            } */}
+            }
         </Fragment>
 
     );
 
 };
 
-export default NewsCreate;
+ActionWrap.defaultProps = {
+    content: '',
+};
+
+ActionWrap.propTypes = {
+    // name: PropTypes.string.isRequired,
+    // content: PropTypes.any.isRequired, // html string
+    // serviceKey: PropTypes.string.isRequired,
+    // otherReqData: PropTypes.object,
+    // successCallback: PropTypes.func.isRequired,
+    // children: PropTypes.any,
+};
+
+export default ActionWrap;

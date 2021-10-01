@@ -125,7 +125,7 @@ const TagsBox = () => {
                 <div className="title">標籤</div>
                 <div className="checkboxItemWrap">
                     {
-                        arrangeCategory(newsTag)[formStorageData?.selectedCate ? formStorageData.selectedCate : currCate].tag.map(({ id, name }) => (
+                        arrangeCategory(newsTag)[formStorageData?.selectedCate ? formStorageData.selectedCate : currCate]?.tag.map(({ id, name }) => (
 
                             <Checkbox
                                 key={id}

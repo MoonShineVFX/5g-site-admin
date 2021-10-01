@@ -46,7 +46,7 @@ const antdTableFilter = (data) => data.reduce((acc, { category, categoryName }) 
 const NewsBase = ({ pageData }) => {
 
     // console.log('pageData:', pageData);
-    const { pathname } = useRouter();
+    const router = useRouter();
 
     // Context
     const {
@@ -66,7 +66,7 @@ const NewsBase = ({ pageData }) => {
 
         globalDispatch({
             type: 'page',
-            payload: pathnameKey(pathname, true),
+            payload: pathnameKey(router.pathname, true),
         });
 
         newsDispatch({
@@ -76,7 +76,7 @@ const NewsBase = ({ pageData }) => {
             },
         });
 
-    }, [globalDispatch, pathname, newsDispatch]);
+    }, [globalDispatch, router, newsDispatch]);
 
     // 表格欄位
     const columns = [
@@ -133,7 +133,7 @@ const NewsBase = ({ pageData }) => {
 
                 <Buttons
                     text="編輯"
-                    onClick={() => btnUpdate(data)}
+                    onClick={() => router.push(`/news/${data.id}`)}
                 />
             ),
         },

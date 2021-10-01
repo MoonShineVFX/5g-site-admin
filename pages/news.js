@@ -16,7 +16,7 @@ export async function getStaticProps () {
     // const res = await util.ServiceServer('api/user/userList');
     // const { data } = res;
 
-    const res = await fetch('http://localhost:1002/json/news.json');
+    const res = await fetch('http://localhost:1002/json/news/news.json');
     const data = await res.json();
 
     if (!data.result) {
