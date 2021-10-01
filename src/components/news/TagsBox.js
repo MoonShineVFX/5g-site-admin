@@ -1,15 +1,11 @@
-import { Fragment, useContext, useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import { Tag } from 'antd';
+import { useContext, useState } from 'react';
+import { Radio } from 'antd';
 import styled from 'styled-components';
-
-import { FormRow } from '../LightboxForm';
 import Checkbox from '../Checkbox';
 import Buttons from '../Buttons';
-
 import { GlobalContext } from '../../context/global.state';
-import { NewsContext } from '../../context/news/news.state';
-import admin from '../../utils/admin';
+
+const RadioGroup = Radio.Group;
 
 // 整理分類資料結構
 const arrangeCategory = (data) => data.reduce((acc, obj) => {
@@ -23,6 +19,27 @@ const arrangeCategory = (data) => data.reduce((acc, obj) => {
 
 }, {});
 
+const TagsBoxLayout = styled.div({
+    '*': {
+        fontSize: '15px',
+    },
+    '.ant-radio-wrapper': {
+        marginRight: '16px',
+    },
+    '.checkboxItemWrap': {
+        lineHeight: 1.2,
+        '&:after': {
+            content: '""',
+            display: 'block',
+            clear: 'both',
+        },
+        '> *': {
+            float: 'left',
+            margin: '0 20px 10px 0',
+        },
+    },
+});
+
 const TagsBox = () => {
 
     // Context
@@ -35,7 +52,6 @@ const TagsBox = () => {
 
     // State
     const [currCate, setCurrCate] = useState('news');
-    const [checkboxes, setCheckboxes] = useState({});
 
     // 隱藏 Modal
     const hideModal = () => lightboxDispatch({ type: 'HIDE' });
@@ -44,27 +60,26 @@ const TagsBox = () => {
     const handleChangeOpt = ({ target }) => {
 
         setCurrCate(target.value);
-        formStorageDispatch({ type: 'CLEAR' });
+        formStorageDispatch({
+            type: 'COLLECT',
+            payload: {
+                selectedCate: target.value,
+            },
+        });
 
     };
 
     // Checkbox
     const handleChangeCheckbox = ({ target: { value, checked } }) => {
 
-        setCheckboxes({ ...checkboxes, [value]: checked });
-
-        // let selected = {};
-        // selected = {
-        //     ...selected,
-        //     [value]: checked,
-        // };
-
-        // console.log('selected:', selected)
-
         formStorageDispatch({
             type: 'COLLECT',
             payload: {
-                selected: Object.keys(checkboxes).filter((val) => val),
+                ...formStorageData,
+                selectedCheckbox: {
+                    ...formStorageData.selectedCheckbox,
+                    [value]: checked,
+                },
             },
         });
 
@@ -80,49 +95,51 @@ const TagsBox = () => {
 
     return (
 
-        <Fragment>
+        <TagsBoxLayout>
             <div className="row">
                 <div className="title">新聞分類</div>
                 <div className="field noBorder">
-                    <select
+                    <RadioGroup
                         name="category"
-                        // defaultValue={formStorageData.priority}
+                        className="form-radios"
+                        defaultValue={formStorageData?.selectedCate ? formStorageData.selectedCate : currCate}
                         onChange={handleChangeOpt}
                     >
                         {
                             Object.keys(arrangeCategory(newsTag)).map((key) => (
-                                <option
+
+                                <Radio
                                     key={key}
                                     value={key}
                                 >
-                                    {arrangeCategory(newsTag)[currCate].label}
-                                </option>
+                                    {arrangeCategory(newsTag)[key].label}
+                                </Radio>
+
                             ))
                         }
-                    </select>
+                    </RadioGroup>
                 </div>
             </div>
 
             <div className="row">
-                {
-                    arrangeCategory(newsTag)[currCate].tag.map(({ id, name }, idx) => (
+                <div className="title">標籤</div>
+                <div className="checkboxItemWrap">
+                    {
+                        arrangeCategory(newsTag)[formStorageData?.selectedCate ? formStorageData.selectedCate : currCate].tag.map(({ id, name }) => (
 
-                        <div
-                            key={id}
-                            className="checkbox-item"
-                        >
                             <Checkbox
+                                key={id}
                                 name="tag"
                                 value={id}
-                                // defaultChecked={formStorageData?.tag?.some((val) => val === id)}
+                                defaultChecked={formStorageData?.selectedCheckbox ? formStorageData.selectedCheckbox[id] : ''}
                                 onChange={handleChangeCheckbox}
                             >
                                 {name}-{id}
                             </Checkbox>
-                        </div>
 
-                    ))
-                }
+                        ))
+                    }
+                </div>
             </div>
 
             <div className="row row-btns">
@@ -136,7 +153,7 @@ const TagsBox = () => {
                     onClick={hideModal}
                 />
             </div>
-        </Fragment>
+        </TagsBoxLayout>
 
     );
 

@@ -15,6 +15,14 @@ import admin from '../../utils/admin';
 
 const { pathnameKey } = admin;
 
+// Mapping
+const mappingTagOpt = (opts) => opts.reduce((acc, { id, name }) => {
+
+    acc[id] = name;
+    return acc;
+
+}, {});
+
 const CreateBtnLayout = styled(Buttons)({
     float: 'none',
 });
@@ -67,8 +75,6 @@ const NewsBase = ({ pageData }) => {
                 lists: pageData.data.list,
             },
         });
-
-        console.log('newsTag:', newsTag)
 
     }, [globalDispatch, pathname, newsDispatch]);
 
@@ -132,14 +138,6 @@ const NewsBase = ({ pageData }) => {
             ),
         },
     ];
-
-    // Mapping
-    const mappingTagOpt = (opts) => opts.reduce((acc, { id, name }) => {
-
-        acc[id] = name;
-        return acc;
-
-    }, {});
 
     // 編輯按鈕
     const btnUpdate = (data) => {

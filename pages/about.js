@@ -36,7 +36,6 @@ const About = ({ pageData }) => {
             />
 
             <TextEditorForm
-                name="detail"
                 content={pageData.data}
                 serviceKey="aboutUpdate"
             />

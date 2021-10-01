@@ -1,25 +1,36 @@
-import { Fragment, useContext, useEffect } from 'react';
+import {
+    Fragment,
+    useContext,
+    useEffect,
+    useState
+} from 'react';
+
+import { useRouter } from 'next/router';
 import { Tag } from 'antd';
-import { PlusOutlined, PlusCircleOutlined } from '@ant-design/icons';
+import { PlusOutlined } from '@ant-design/icons';
 import { blue } from '@ant-design/colors';
-import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
 import HeadTag from '../../src/containers/HeadTag';
 import ContentHeader from '../../src/containers/ContentHeader';
 import Buttons from '../../src/components/Buttons';
-import Checkbox from '../../src/components/Checkbox';
-import Links from '../../src/components/Links';
 import LightboxForm from '../../src/components/LightboxForm';
 import TextEditorForm from '../../src/components/TextEditorForm';
 import TagsBox from '../../src/components/news/TagsBox';
+
 import { GlobalContext } from '../../src/context/global.state';
-import admin from '../../src/utils/admin';
 import adminConst from '../../src/utils/admin.const';
 
 const { lightboxTitle } = adminConst;
-
 const title = '新增文章';
+
+// Mapping
+const mappingTagOpt = (opts) => opts.reduce((acc, { id, name }) => {
+
+    acc[id] = name;
+    return acc;
+
+}, {});
 
 const SettingTagLayout = styled.span({
     color: blue.primary,
@@ -31,20 +42,50 @@ const SettingTagLayout = styled.span({
     },
 });
 
+const TagsWrapLayout = styled.div({
+    minHeight: '27px',
+    marginBottom: '16px',
+});
+
+const NewsTitleLayout = styled.div(({ theme }) => ({
+    marginBottom: '16px',
+    '.field': {
+        minWidth: '300px',
+        height: '34px',
+        fontSize: '15px',
+        border: `1px solid ${theme.palette.border}`,
+        borderRadius: '2px',
+        display: 'inline-block',
+        marginLeft: '10px',
+        padding: '4px 8px',
+        transition: 'all .3s ease-in-out',
+        '&:hover': {
+            borderColor: blue.primary,
+        },
+    },
+    'input': {
+        width: '100%',
+        outline: 0,
+    },
+}));
+
 const NewsCreate = () => {
+
+    //
+    const router = useRouter();
 
     // Context
     const {
         visible,
         currEvent,
+        newsTag,
         formStorageData,
         globalDispatch,
         lightboxDispatch,
-        formStorageDispatch,
     } = useContext(GlobalContext);
 
-    // React Hook Form
-    const { handleSubmit, register } = useForm();
+    // State
+    const [newsTtitle, setNewsTitle] = useState('');
 
     useEffect(() => {
 
@@ -56,20 +97,13 @@ const NewsCreate = () => {
     }, [globalDispatch]);
 
     // 隱藏 Modal
-    const hideModal = () => {
+    const hideModal = () => lightboxDispatch({ type: 'HIDE' });
 
-        lightboxDispatch({ type: 'HIDE' });
-        formStorageDispatch({ type: 'CLEAR' });
+    // 設定標籤
+    const targetTag = () => lightboxDispatch({ type: 'SHOW', currEvent: 'settingTag' });
 
-    };
-
-    //
-    const targetTag = () => {
-
-        lightboxDispatch({ type: 'SHOW', currEvent: 'settingTag' });
-        formStorageDispatch({ type: 'CLEAR' });
-
-    };
+    // 標題
+    const handleChange = ({ target: { value } }) => setNewsTitle(value);
 
     return (
 
@@ -83,22 +117,42 @@ const NewsCreate = () => {
                 <SettingTagLayout onClick={targetTag}>
                     <PlusOutlined /> 設定標籤
                 </SettingTagLayout>
-
-                <div className="tagsWrap">
-                    {
-                        formStorageData.selected.map(() => (
-
-                            <Tag>{mappingTagOpt(newsTag)[val]}</Tag>
-
-                        ))
-                    }
-                </div>
             </ContentHeader>
 
+            <TagsWrapLayout>
+                {
+                    formStorageData.selectedCheckbox &&
+                        <Fragment>
+                            {
+                                Object.keys(formStorageData.selectedCheckbox).map((key) => (
+
+                                    formStorageData.selectedCheckbox[key] && <Tag key={key}>{mappingTagOpt(newsTag)[key]}</Tag>
+
+                                ))
+                            }
+                        </Fragment>
+                }
+            </TagsWrapLayout>
+
             <TextEditorForm
-                name="detail"
                 serviceKey="newsCreate"
-            />
+                otherReqData={{
+                    title: newsTtitle,
+                    tag: formStorageData.selectedCheckbox ? Object.keys(formStorageData.selectedCheckbox).filter((val) => formStorageData.selectedCheckbox[val]) : []
+                }}
+                successCallback={() => router.push('/news')}
+            >
+                <NewsTitleLayout>
+                    文章標題:
+                    <span className="field">
+                        <input
+                            type="text"
+                            placeholder="標題"
+                            onChange={handleChange}
+                        />
+                    </span>
+                </NewsTitleLayout>
+            </TextEditorForm>
 
             {
                 visible &&

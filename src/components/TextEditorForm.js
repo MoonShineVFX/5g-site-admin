@@ -1,6 +1,5 @@
 import { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import Buttons from './Buttons';
@@ -24,11 +23,10 @@ const TextEditorForm = ({
     name,
     content,
     serviceKey,
+    otherReqData,
+    successCallback,
     children,
 }) => {
-
-    //
-    const router = useRouter();
 
     // Context
     const { formStorageData, formStorageDispatch } = useContext(GlobalContext);
@@ -43,19 +41,21 @@ const TextEditorForm = ({
     const handleReqData = (reqData) => {
 
         reqData = {
+            ...otherReqData,
             ...reqData,
             detail: formStorageData.detail ? formStorageData.detail : reqData.detail,
         };
 
         console.log('reqData:', reqData);
 
+        // return;
         Prompt('success', {
             mesg: '文章已更新，將重新整理頁面',
             enableEsc: false,
             callback: () => {
 
                 formStorageDispatch({ type: 'CLEAR' });
-                router.reload();
+                successCallback();
 
             },
         });
@@ -71,7 +71,7 @@ const TextEditorForm = ({
                     callback: () => {
 
                         formStorageDispatch({ type: 'CLEAR' });
-                        router.reload();
+                        successCallback();
 
                     },
                 });
@@ -104,6 +104,7 @@ const TextEditorForm = ({
 };
 
 TextEditorForm.defaultProps = {
+    name: 'detail',
     content: '',
 };
 
@@ -111,6 +112,8 @@ TextEditorForm.propTypes = {
     name: PropTypes.string.isRequired,
     content: PropTypes.any.isRequired, // html string
     serviceKey: PropTypes.string.isRequired,
+    otherReqData: PropTypes.object,
+    successCallback: PropTypes.func.isRequired,
     children: PropTypes.any,
 };
 

@@ -41,9 +41,6 @@ const ContentLayout = styled(Content)({
     minHeight: 'calc(100vh - 50px - 54px - 30px)', // header: 50px, footer: 54px, main margin bottom: 30px
     marginBottom: '30px',
     padding: '30px 30px 20px',
-    '> section': {
-        height: '100%',
-    },
 });
 
 const FooterLayout = styled(Footer)(({ theme}) => ({

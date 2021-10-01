@@ -12,7 +12,7 @@ const MainContent = ({ children }) => {
 
     }, []);
 
-    return children;
+    return <section>{children}</section>;
 
 };
 

@@ -19,7 +19,7 @@ const Editor = dynamic(
 );
 
 const EditorLayout = styled.div(({ theme }) => ({
-    height: 'calc(100% - 58px)', // button: 58px
+    minHeight: '70vh',
     border: `1px solid ${theme.palette.border}`,
     overflow: 'hidden',
     '.adminEditor-wrapper, .DraftEditor-root': {
@@ -57,12 +57,20 @@ const EditorLayout = styled.div(({ theme }) => ({
             },
         },
     },
+    '.rdw-link-modal': {
+        '.rdw-link-modal-label': {
+            lineHeight: 1,
+        },
+        'input': {
+            padding: '4px 8px',
+        },
+    },
 }));
 
 const TextEditor = ({ content }) => {
 
     // Context
-    const { formStorageDispatch } = useContext(GlobalContext);
+    const { formStorageData, formStorageDispatch } = useContext(GlobalContext);
 
     // State
     const [editor, setEditor] = useState(false);
@@ -90,6 +98,7 @@ const TextEditor = ({ content }) => {
         formStorageDispatch({
             type: 'COLLECT',
             payload: {
+                ...formStorageData,
                 detail: draftToHtml(convertToRaw(editorState.getCurrentContent())),
             },
         });

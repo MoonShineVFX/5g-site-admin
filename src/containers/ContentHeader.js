@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Buttons from '../components/Buttons';
 
-const ContentHeaderLayout = styled.p({
+const ContentHeaderLayout = styled.div({
+    marginBottom: '16px',
     '> *': {
         float: 'right',
     },
