@@ -1,4 +1,4 @@
-import { Fragment, useContext } from 'react';
+import { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
@@ -82,24 +82,22 @@ const TextEditorForm = ({
 
     return (
 
-        <Fragment>
+        <TextEditorFormLayout onSubmit={handleSubmit(handleReqData)}>
+            {children}
+
             <TextEditor content={content} />
 
-            <TextEditorFormLayout onSubmit={handleSubmit(handleReqData)}>
-                {children}
+            <textarea
+                name={name}
+                {...register(name)}
+                style={{ display: 'none' }}
+            />
 
-                <textarea
-                    name={name}
-                    {...register(name)}
-                    style={{ display: 'none' }}
-                />
-
-                <Buttons
-                    text="儲存"
-                    htmlType="submit"
-                />
-            </TextEditorFormLayout>
-        </Fragment>
+            <Buttons
+                text="儲存"
+                htmlType="submit"
+            />
+        </TextEditorFormLayout>
 
     );
 
