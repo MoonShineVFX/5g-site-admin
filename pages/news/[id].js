@@ -18,7 +18,6 @@ const mappingCheckbox = (data, tags) => data.reduce((acc, curr) => {
 const NewsDetail = ({ pageData }) => {
 
     // console.log('pageData:', pageData)
-
     const router = useRouter();
 
     // Context

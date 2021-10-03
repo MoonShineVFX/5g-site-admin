@@ -81,6 +81,7 @@ const TextEditor = ({ content }) => {
         setEditor(true);
 
         const contentBlock = htmlToDraft(content);
+
         if (contentBlock) {
 
             const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
@@ -145,6 +146,7 @@ const TextEditor = ({ content }) => {
                         editorClassName="adminEditor-editor"
                         editorState={editorState}
                         onEditorStateChange={handleEditorChange}
+                        localization={{ locale: 'zh_tw' }}
                         toolbar={{
                             image: {
                                 uploadCallback: uploadImageCallBack,
