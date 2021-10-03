@@ -52,18 +52,21 @@ const TagsBox = () => {
 
     // State
     const [currCate, setCurrCate] = useState('news');
+    const [selected, setSelected] = useState({ ...formStorageData.selected });
 
     // 隱藏 Modal
     const hideModal = () => lightboxDispatch({ type: 'HIDE' });
 
-    // 下拉選單
-    const handleChangeOpt = ({ target }) => {
+    // Radio Button
+    const handleChangeCategory = ({ target }) => {
 
+        setSelected({}); // 更換類別時，需還原已選取的標籤
         setCurrCate(target.value);
         formStorageDispatch({
             type: 'COLLECT',
             payload: {
-                selectedCate: target.value,
+                ...formStorageData,
+                category: target.value,
             },
         });
 
@@ -72,26 +75,39 @@ const TagsBox = () => {
     // Checkbox
     const handleChangeCheckbox = ({ target: { value, checked } }) => {
 
-        formStorageDispatch({
-            type: 'COLLECT',
-            payload: {
-                ...formStorageData,
-                selectedCheckbox: {
-                    ...formStorageData.selectedCheckbox,
-                    [value]: checked,
-                },
+        setSelected({
+            ...selected,
+            [value]: {
+                isChecked: checked,
+                category: currCate,
             },
         });
 
     };
 
-    // Cancel
+    // Cancel: 還原全部
     const handleCancel = () => {
 
         hideModal();
-        formStorageDispatch({ type: 'CLEAR' });
+        setSelected({});
 
     };
+
+    // Submit
+    const handleSubmit = () => {
+
+        hideModal();
+        formStorageDispatch({
+            type: 'COLLECT',
+            payload: {
+                ...formStorageData,
+                selected,
+            },
+        });
+
+    };
+
+    // console.log('selected:', selected);
 
     return (
 
@@ -102,8 +118,8 @@ const TagsBox = () => {
                     <RadioGroup
                         name="category"
                         className="form-radios"
-                        defaultValue={formStorageData?.selectedCate ? formStorageData.selectedCate : currCate}
-                        onChange={handleChangeOpt}
+                        defaultValue={formStorageData.category ? formStorageData.category : currCate}
+                        onChange={handleChangeCategory}
                     >
                         {
                             Object.keys(arrangeCategory(newsTag)).map((key) => (
@@ -125,13 +141,13 @@ const TagsBox = () => {
                 <div className="title">標籤</div>
                 <div className="checkboxItemWrap">
                     {
-                        arrangeCategory(newsTag)[formStorageData?.selectedCate ? formStorageData.selectedCate : currCate]?.tag.map(({ id, name }) => (
+                        arrangeCategory(newsTag)[formStorageData.category ? formStorageData.category : currCate].tag.map(({ id, name }) => (
 
                             <Checkbox
                                 key={id}
                                 name="tag"
                                 value={id}
-                                defaultChecked={formStorageData?.selectedCheckbox ? formStorageData.selectedCheckbox[id] : ''}
+                                defaultChecked={selected ? selected[id]?.isChecked : ''}
                                 onChange={handleChangeCheckbox}
                             >
                                 {name}-{id}
@@ -150,7 +166,7 @@ const TagsBox = () => {
                 />
                 <Buttons
                     text="送出"
-                    onClick={hideModal}
+                    onClick={handleSubmit}
                 />
             </div>
         </TagsBoxLayout>

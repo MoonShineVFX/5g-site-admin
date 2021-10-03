@@ -1,26 +1,16 @@
-import { Fragment, useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import ActionWrap from '../../src/components/news/ActionWrap';
 import { GlobalContext } from '../../src/context/global.state';
 
 // Mapping
-const mappingCheckbox = (data) => data.reduce((acc, curr) => {
+const mappingCheckbox = (data, tags) => data.reduce((acc, curr) => {
 
-    acc[curr] = true;
-    return acc;
-
-}, {});
-
-// 整理分類資料結構
-const arrangeCategory = (data) => data.reduce((acc, obj) => {
-
-    const key = obj.id;
-    acc[key] = acc[key] || {};
-    // acc[key].tag = acc[key].tag || [];
-    acc[key].name = obj.name;
-    acc[key].category = obj.category;
-    acc[key].categoryName = obj.categoryName;
-    // acc[key].tag.push(obj);
+    // 先找到對應的
+    let temp = tags.find((obj) => obj.id === curr);
+    acc[curr] = acc[curr] || {};
+    acc[curr].isChecked = true;
+    acc[curr].category = temp?.category;
     return acc;
 
 }, {});
@@ -29,8 +19,15 @@ const NewsDetail = ({ pageData }) => {
 
     // console.log('pageData:', pageData)
 
+    const router = useRouter();
+
     // Context
-    const { newsTag, globalDispatch, formStorageDispatch } = useContext(GlobalContext);
+    const {
+        newsTag,
+        formStorageData,
+        globalDispatch,
+        formStorageDispatch,
+    } = useContext(GlobalContext);
 
     useEffect(() => {
 
@@ -42,16 +39,12 @@ const NewsDetail = ({ pageData }) => {
         formStorageDispatch({
             type: 'COLLECT',
             payload: {
-                selectedCheckbox: mappingCheckbox(pageData.data.tag),
-                // selectedCate: Object.keys(mappingCheckbox(pageData.data.tag)).map((key) => arrangeCategory(newsTag)[key].category),
+                selected: mappingCheckbox(pageData.data.tag, newsTag),
+                category: formStorageData.selected && Object.keys(mappingCheckbox(pageData.data.tag, newsTag)).map((key) => mappingCheckbox(pageData.data.tag, newsTag)[key].category)[0],
             },
         });
 
-    }, [globalDispatch]);
-
-    console.log('selectedCate:', arrangeCategory(newsTag))
-    console.log('selectedCheckbox:', mappingCheckbox(pageData.data.tag))
-    // console.log('check:', Object.keys(mappingCheckbox(pageData.data.tag)).map((key) => arrangeCategory(newsTag)[key]))
+    }, [globalDispatch, formStorageDispatch, newsTag]);
 
     return (
 
@@ -60,6 +53,7 @@ const NewsDetail = ({ pageData }) => {
             newsTitle={pageData.data.title}
             content={pageData.data.detail}
             serviceKey="newsUpdate"
+            successCallback={() => router.reload()}
         />
 
     );

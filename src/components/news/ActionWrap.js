@@ -74,6 +74,7 @@ const ActionWrap = ({
     newsTitle,
     content,
     serviceKey,
+    successCallback,
 }) => {
 
     //
@@ -90,7 +91,7 @@ const ActionWrap = ({
     } = useContext(GlobalContext);
 
     // State
-    const [newsTtitleValue, setNewsTitleValue] = useState('');
+    const [newsTtitleValue, setNewsTitleValue] = useState(newsTitle);
 
     useEffect(() => {
 
@@ -126,12 +127,12 @@ const ActionWrap = ({
 
             <TagsWrapLayout>
                 {
-                    formStorageData.selectedCheckbox &&
+                    formStorageData.selected &&
                         <Fragment>
                             {
-                                Object.keys(formStorageData.selectedCheckbox).map((key) => (
+                                Object.keys(formStorageData.selected).map((key) => (
 
-                                    formStorageData.selectedCheckbox[key] && <Tag key={key}>{mappingTagOpt(newsTag)[key]}</Tag>
+                                    formStorageData.selected[key].isChecked && <Tag key={key}>{mappingTagOpt(newsTag)[key]}</Tag>
 
                                 ))
                             }
@@ -144,9 +145,9 @@ const ActionWrap = ({
                 serviceKey={serviceKey}
                 otherReqData={{
                     title: newsTtitleValue,
-                    tag: formStorageData.selectedCheckbox ? Object.keys(formStorageData.selectedCheckbox).filter((val) => formStorageData.selectedCheckbox[val]) : []
+                    tag: formStorageData.selected ? Object.keys(formStorageData.selected).filter((val) => formStorageData.selected[val].isChecked) : []
                 }}
-                successCallback={() => router.push('/news')}
+                successCallback={successCallback}
             >
                 <NewsTitleLayout>
                     文章標題:
@@ -182,12 +183,11 @@ ActionWrap.defaultProps = {
 };
 
 ActionWrap.propTypes = {
-    // name: PropTypes.string.isRequired,
-    // content: PropTypes.any.isRequired, // html string
-    // serviceKey: PropTypes.string.isRequired,
-    // otherReqData: PropTypes.object,
-    // successCallback: PropTypes.func.isRequired,
-    // children: PropTypes.any,
+    title: PropTypes.string,
+    newsTitle: PropTypes.string,
+    content: PropTypes.any.isRequired, // html string
+    serviceKey: PropTypes.string.isRequired,
+    successCallback: PropTypes.func.isRequired,
 };
 
 export default ActionWrap;
