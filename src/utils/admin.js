@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { Modal } from 'antd';
 
+// console.log('HOST:', process.env.HOST)
+
 const util = {
     /**
      * @author Betty
@@ -29,8 +31,8 @@ const util = {
                 }
 
                 return {
-                    // url: `/api${url}`,
-                    url: `/json${url}`,
+                    // url: `/json${url}.json`,
+                    url: (process.env.NODE_ENV === 'development') ? `//${process.env.HOST}/api${url}` : `/api${url}`,
                     method,
                 };
 
@@ -54,7 +56,13 @@ const util = {
         // 回傳 promise
         return new Promise((resolve, reject) => {
 
-            axios[CONFIG().method](CONFIG().url, reqData, { withCredentials: true, ...option })
+            axios[CONFIG().method](CONFIG().url, reqData, {
+                ...option,
+                headers: {
+                    // 驗證(新增、編輯需要)
+                    'Authorization': 'Basic c3RhZmZAbW9vbnNoaW5lLnR3OkFETSFOQE0wMG5zaGluZQ==',
+                },
+            })
                 .then(
                     // result: 1
                     ({ data }) => {
@@ -92,9 +100,12 @@ const util = {
 
     },
 
-    serviceServer: (url, reqData = {}) => {
+    serviceServer: ({ method = 'post', url }, reqData = {}) => {
 
-        return axios.post(`http://localhost:8080/${url}`, reqData);
+        console.log('url:', url)
+
+        return axios[method]((process.env.NODE_ENV === 'development') ? `http://${process.env.HOST}/api${url}` : `/api${url}`, reqData);
+        // return axios.post(`http://localhost:8080/${url}`, reqData);
 
     },
 

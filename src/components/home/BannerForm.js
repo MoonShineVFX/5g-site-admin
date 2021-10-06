@@ -72,8 +72,9 @@ const BannerForm = () => {
 
         }
 
+        console.log('reqData:', reqData)
         // 檢查: 編輯時未選檔案就濾掉此欄位
-        if (!reqData.file) return;
+        // if (!reqData.file) return;
 
         if (currEvent === 'updateBanner') bannerUpdate(reqData);
         else bannerCreate(reqData);

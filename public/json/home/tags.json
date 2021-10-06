@@ -5,49 +5,49 @@
     "data": {
         "tag": [
             {
-                "id": "156421",
+                "id": 156421,
                 "name": "標題-156421",
                 "category": "partner",
                 "categoryName": "合作夥伴"
             },
             {
-                "id": "156422",
+                "id": 156422,
                 "name": "標題-156422",
                 "category": "news",
                 "categoryName": "新聞快訊"
             },
             {
-                "id": "156423",
+                "id": 156423,
                 "name": "標題-156423",
                 "category": "newsIndustry",
                 "categoryName": "產業訊息"
             },
             {
-                "id": "156424",
+                "id": 156424,
                 "name": "標題-156424",
                 "category": "news",
                 "categoryName": "新聞快訊"
             },
             {
-                "id": "156425",
+                "id": 156425,
                 "name": "標題-156425",
                 "category": "partner",
                 "categoryName": "合作夥伴"
             },
             {
-                "id": "156426",
+                "id": 156426,
                 "name": "標題-156426",
                 "category": "",
                 "categoryName": ""
             },
             {
-                "id": "156427",
+                "id": 156427,
                 "name": "標題-156427",
                 "category": "local",
                 "categoryName": "地方資源"
             },
             {
-                "id": "156428",
+                "id": 156428,
                 "name": "標題-156428",
                 "category": "center",
                 "categoryName": "中央資源"

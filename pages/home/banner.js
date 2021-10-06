@@ -1,5 +1,6 @@
 import BannerBase from '../../src/components/home/BannerBase';
 import { BannerProvider } from '../../src/context/home/banner.state';
+import admin from '../../src/utils/admin';
 
 const Banner = ({ pageData }) => (
 
@@ -13,11 +14,12 @@ export default Banner;
 
 export async function getStaticProps () {
 
-    // const res = await util.ServiceServer('api/user/userList');
-    // const { data } = res;
+    const res = await admin.serviceServer({
+        method: 'get',
+        url: '/banners',
+    });
 
-    const res = await fetch('http://localhost:1002/json/home/banner.json');
-    const data = await res.json();
+    const { data } = res;
 
     if (!data.result) {
 

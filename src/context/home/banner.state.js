@@ -32,13 +32,8 @@ const BannerProvider = ({ children }) => {
     // 控制前台顯示筆數
     const bannerLengthControl = (reqData) => {
 
-        // Fake
-        bannerDispatch({ type: 'banner_length', payload: { ...reqData, action: true } });
-
-        // Debug
-        return;
         Service.bannerLengthControl(reqData)
-            .then((resData) => bannerDispatch({ type: 'banner_length', payload: { ...reqData, action: true } }));
+            .then(() => bannerDispatch({ type: 'banner_length', payload: reqData }));
 
     };
 
@@ -81,20 +76,20 @@ const BannerProvider = ({ children }) => {
     const bannerUpdate = (reqData) => {
 
         // Fake
-        const resData = {
-            id: '156423',
-            title: 'update-156423',
-            imgUrl: '//fakeimg.pl/1200x520?text=update-156423',
-            link: 'http://yahoo.com.tw',
-            priority: 10,
-        };
+        // const resData = {
+        //     id: '156423',
+        //     title: 'update-156423',
+        //     imgUrl: '//fakeimg.pl/1200x520?text=update-156423',
+        //     link: 'http://yahoo.com.tw',
+        //     priority: 10,
+        // };
 
-        lightboxDispatch({ type: 'HIDE' });
-        formStorageDispatch({ type: 'CLEAR' });
-        bannerDispatch({ type: 'banner_update', payload: { resData, action: true } });
+        // lightboxDispatch({ type: 'HIDE' });
+        // formStorageDispatch({ type: 'CLEAR' });
+        // bannerDispatch({ type: 'banner_update', payload: { resData, action: true } });
 
         // Debug
-        return;
+        // return;
         Service.bannerUpdate(reqData)
             .then((resData) => {
 

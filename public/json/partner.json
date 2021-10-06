@@ -5,21 +5,21 @@
     "data": {
         "tag": [
             {
-                "id": "4544",
+                "id": 4544,
                 "name": "5G領域"
             },
             {
-                "id": "4545",
+                "id": 4545,
                 "name": "文化領域"
             },
             {
-                "id": "4546",
+                "id": 4546,
                 "name": "科技領域"
             }
         ],
         "partner": [
             {
-                "id": "156423",
+                "id": 156423,
                 "imgUrl": "//fakeimg.pl/200x150",
                 "link": "http://google.com.tw",
                 "name": "夥伴-156423",
@@ -27,12 +27,12 @@
                 "email": "service@xxx.com",
                 "description": "夥伴介紹-156423",
                 "tag": [
-                    "4544",
-                    "4545"
+                    4544,
+                    4545
                 ]
             },
             {
-                "id": "156424",
+                "id": 156424,
                 "imgUrl": "//fakeimg.pl/200x150",
                 "link": "http://google.com.tw",
                 "name": "夥伴-156424",
@@ -40,11 +40,11 @@
                 "email": "service@xxx.com",
                 "description": "夥伴介紹-156424",
                 "tag": [
-                    "4544"
+                    4544
                 ]
             },
             {
-                "id": "156425",
+                "id": 156425,
                 "imgUrl": "//fakeimg.pl/200x150",
                 "link": "http://google.com.tw",
                 "name": "夥伴-156425",
@@ -56,7 +56,7 @@
                 ]
             },
             {
-                "id": "156426",
+                "id": 156426,
                 "imgUrl": "//fakeimg.pl/200x150",
                 "link": "http://google.com.tw",
                 "name": "夥伴-156426",
@@ -70,7 +70,7 @@
                 ]
             },
             {
-                "id": "156427",
+                "id": 156427,
                 "imgUrl": "//fakeimg.pl/200x150",
                 "link": "http://google.com.tw",
                 "name": "夥伴-156427",
@@ -80,7 +80,7 @@
                 "tag": []
             },
             {
-                "id": "156428",
+                "id": 156428,
                 "imgUrl": "//fakeimg.pl/200x150",
                 "link": "http://google.com.tw",
                 "name": "夥伴-156428",
@@ -88,12 +88,12 @@
                 "email": "service@xxx.com",
                 "description": "夥伴介紹-156428",
                 "tag": [
-                    "4545",
-                    "4546"
+                    4545,
+                    4546
                 ]
             },
             {
-                "id": "156429",
+                "id": 156429,
                 "imgUrl": "//fakeimg.pl/200x150",
                 "link": "http://google.com.tw",
                 "name": "夥伴-156429",
@@ -101,8 +101,8 @@
                 "email": "service@xxx.com",
                 "description": "夥伴介紹-156429",
                 "tag": [
-                    "4544",
-                    "4546"
+                    4544,
+                    4546
                 ]
             }
         ]
