@@ -16,7 +16,13 @@ import { TagContext } from '../../context/home/tag.state';
 import admin from '../../utils/admin';
 import adminConst from '../../utils/admin.const';
 
-const { pathnameKey, antdTableFilter } = admin;
+const {
+    pathnameKey,
+    antdTableFilter,
+    renderWithoutValue,
+    renderDateTime,
+} = admin;
+
 const { lightboxTitle } = adminConst;
 
 const ColLayout = styled(Col)({
@@ -54,9 +60,17 @@ const UpdateTagFormLayout = styled(LightboxForm).attrs(() => ({
     },
 });
 
+const TablesLayout = styled(Tables)(() => ({
+    '*': {
+        fontSize: '15px',
+    },
+    '.ant-tag': {
+        fontSize: '14px',
+    },
+}));
+
 const TagBase = ({ pageData }) => {
 
-    // console.log('pageData:', pageData.data);
     const { pathname } = useRouter();
 
     // Context
@@ -83,12 +97,12 @@ const TagBase = ({ pageData }) => {
 
         tagDispatch({
             type: 'category_option',
-            payload: pageData.data.category,
+            payload: pageData.data.categories,
         });
 
         tagDispatch({
             type: 'tag_list',
-            payload: pageData.data.tag,
+            payload: pageData.data.tags,
         });
 
     }, [pathname, globalDispatch, tagDispatch]);
@@ -107,15 +121,25 @@ const TagBase = ({ pageData }) => {
         {
             title: '分類',
             dataIndex: 'categoryName',
-            render: (categoryName, { category }) => (category === '') ? '--' : `${categoryName}-${category}`,
-            sorter: (a, b) => a.category.length - b.category.length,
-            filters: antdTableFilter(pageData.data.category),
-            onFilter: (value, { category }) => {
+            render: (categoryName, { categoryId }) => categoryId ? `${categoryName}-${categoryId}` : renderWithoutValue(categoryName),
+            sorter: (a, b) => a.categoryId - b.categoryId,
+            filters: antdTableFilter(pageData.data.categories),
+            onFilter: (value, { categoryId }) => {
 
                 const regex = new RegExp(`^${value}$`);
-                return regex.test(category);
+                return regex.test(categoryId);
 
             },
+        },
+        {
+            title: '新增 / 編輯時間',
+            dataIndex: '',
+            render: ({ createTime, updateTime }) => `${renderDateTime(createTime)} / ${renderDateTime(updateTime)}`,
+        },
+        {
+            title: '新增 / 編輯者',
+            dataIndex: '',
+            render: ({ creator, updater }) => `${renderWithoutValue(creator)} / ${renderWithoutValue(updater)}`,
         },
         {
             title: '操作',
@@ -140,12 +164,12 @@ const TagBase = ({ pageData }) => {
     };
 
     // 編輯按鈕
-    const btnUpdate = (data) => {
+    const btnUpdate = ({ id, name, categoryId }) => {
 
         lightboxDispatch({ type: 'SHOW', currEvent: 'updateTag' });
         formStorageDispatch({
             type: 'COLLECT',
-            payload: data,
+            payload: { id, name, categoryId },
         });
 
     };
@@ -168,11 +192,11 @@ const TagBase = ({ pageData }) => {
                     </TagFormLayout>
                 </Col>
 
-                <ColLayout flex="auto">
-                    <Tables
+                <ColLayout flex="1">
+                    <TablesLayout
                         rowKey="id"
                         columns={columns}
-                        data={action ? lists : pageData.data.tag}
+                        data={action ? lists : pageData.data.tags}
                     />
                 </ColLayout>
             </Row>

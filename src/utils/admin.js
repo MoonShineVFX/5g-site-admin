@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { Modal } from 'antd';
+import dayjs from 'dayjs';
 
 // console.log('HOST:', process.env.HOST)
 
@@ -56,45 +57,42 @@ const util = {
         // 回傳 promise
         return new Promise((resolve, reject) => {
 
-            axios[CONFIG().method](CONFIG().url, reqData, {
-                ...option,
+            const authHeader = (process.env.NODE_ENV === 'production') ? {} : {
                 headers: {
                     // 驗證(新增、編輯需要)
                     'Authorization': 'Basic c3RhZmZAbW9vbnNoaW5lLnR3OkFETSFOQE0wMG5zaGluZQ==',
                 },
+            };
+
+            axios[CONFIG().method](CONFIG().url, reqData, {
+                ...option,
+                ...authHeader,
             })
-                .then(
-                    // result: 1
-                    ({ data }) => {
+            .then(
+                // result: 1
+                ({ data }) => {
 
-                        // localhost 才有此情境
-                        // if (!data.result && (process.env.NODE_ENV !== 'production')) {
+                    resolve(data.data);
 
-                        //     reject(showErrorMesg('請先登入'));
+                },
+                // result: 0
+                ({ response }) => {
 
-                        // }
+                    const {
+                        // status,
+                        data: { message },
+                    } = response;
 
-                        resolve(data.data);
+                    reject(showErrorMesg(message));
 
-                    },
-                    // result: 0
-                    ({ response }) => {
+                    // reject(showErrorMesg(message, () => {
 
-                        const {
-                            // status,
-                            data: { message },
-                        } = response;
+                    //     window.location = `/error`;
 
-                        reject(showErrorMesg(message));
+                    // }));
 
-                        // reject(showErrorMesg(message, () => {
-
-                        //     window.location = `/error`;
-
-                        // }));
-
-                    },
-                )
+                },
+            )
 
         });
 
@@ -102,7 +100,7 @@ const util = {
 
     serviceServer: ({ method = 'post', url }, reqData = {}) => {
 
-        console.log('url:', url)
+        // console.log('url:', url)
 
         return axios[method]((process.env.NODE_ENV === 'development') ? `http://${process.env.HOST}/api${url}` : `/api${url}`, reqData);
         // return axios.post(`http://localhost:8080/${url}`, reqData);
@@ -126,9 +124,9 @@ const util = {
      * @param {object[]} array
      * @return {object[]} - 回傳陣列結構
      */
-    antdTableFilter: (array) => array.reduce((acc, { key, name }) => {
+    antdTableFilter: (array) => array.reduce((acc, { id, name }) => {
 
-        const obj = { text: name, value: key };
+        const obj = { text: name, value: id };
         acc.push(obj);
         return acc;
 
@@ -140,6 +138,13 @@ const util = {
      * @return {string}
      */
     renderWithoutValue: (value) => value ? value : '--',
+
+    /**
+     * @author Betty
+     * @param {string} date - 日期
+     * @return {string}
+     */
+    renderDateTime: (date) => dayjs(date).format('YYYY-MM-DD') || '--',
 
 };
 

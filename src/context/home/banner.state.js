@@ -40,21 +40,6 @@ const BannerProvider = ({ children }) => {
     // 新增
     const bannerCreate = (reqData) => {
 
-        // Fake
-        const resData = {
-            id: '81344',
-            title: 'create-81344',
-            imgUrl: '//fakeimg.pl/1200x520?text=create-81344',
-            link: 'http://google.com.tw',
-            priority: 3,
-        };
-
-        lightboxDispatch({ type: 'HIDE' });
-        formStorageDispatch({ type: 'CLEAR' });
-        bannerDispatch({ type: 'banner_create', payload: { resData, action: true } });
-
-        // Debug
-        return;
         Service.bannerCreate(reqData)
             .then((resData) => {
 
@@ -75,21 +60,6 @@ const BannerProvider = ({ children }) => {
     // 編輯
     const bannerUpdate = (reqData) => {
 
-        // Fake
-        // const resData = {
-        //     id: '156423',
-        //     title: 'update-156423',
-        //     imgUrl: '//fakeimg.pl/1200x520?text=update-156423',
-        //     link: 'http://yahoo.com.tw',
-        //     priority: 10,
-        // };
-
-        // lightboxDispatch({ type: 'HIDE' });
-        // formStorageDispatch({ type: 'CLEAR' });
-        // bannerDispatch({ type: 'banner_update', payload: { resData, action: true } });
-
-        // Debug
-        // return;
         Service.bannerUpdate(reqData)
             .then((resData) => {
 

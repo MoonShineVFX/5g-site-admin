@@ -18,12 +18,13 @@ const bannerReducer = (state, { type, payload }) => {
             return {
                 ...state,
                 action: payload.action,
-                lists: [{ ...payload.resData }, ...state.lists],
+                lists: [...state.lists, { ...payload.resData }],
             };
 
         case 'banner_update':
             return {
                 ...state,
+                action: payload.action,
                 lists: state.lists.map((obj) => {
 
                     if (obj.id === payload.resData.id) obj = payload.resData;

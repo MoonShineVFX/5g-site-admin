@@ -13,7 +13,7 @@ import { GlobalContext } from '../../context/global.state';
 import { NewsContext } from '../../context/news/news.state';
 import admin from '../../utils/admin';
 
-const { pathnameKey } = admin;
+const { pathnameKey, renderWithoutValue, renderDateTime } = admin;
 
 // Mapping
 const mappingTagOpt = (opts) => opts.reduce((acc, { id, name }) => {
@@ -45,16 +45,11 @@ const antdTableFilter = (data) => data.reduce((acc, { category, categoryName }) 
 
 const NewsBase = ({ pageData }) => {
 
-    // console.log('pageData:', pageData);
+    console.log('pageData:', pageData);
     const router = useRouter();
 
     // Context
-    const {
-        newsTag,
-        globalDispatch,
-        lightboxDispatch,
-        formStorageDispatch,
-    } = useContext(GlobalContext);
+    const { newsTags, globalDispatch } = useContext(GlobalContext);
 
     const {
         action,
@@ -87,43 +82,55 @@ const NewsBase = ({ pageData }) => {
         {
             title: '標題',
             dataIndex: 'title',
+            render: (title) => renderWithoutValue(title),
         },
         {
             title: '簡述',
             dataIndex: 'description',
             width: 300,
+            render: (description) => renderWithoutValue(description),
         },
         {
             title: '新聞分類',
             dataIndex: 'categoryName',
-            render: (categoryName, { category }) => (category === '') ? '--' : `${categoryName}-${category}`,
-            sorter: (a, b) => a.category.length - b.category.length,
-            filters: antdTableFilter(newsTag),
-            onFilter: (value, { category }) => {
+            render: (categoryName, { categoryId }) => categoryId ? `${categoryName}-${categoryId}` : renderWithoutValue(categoryName),
+            sorter: (a, b) => a.categoryId - b.categoryId,
+            filters: antdTableFilter(newsTags),
+            onFilter: (value, { categoryId }) => {
 
                 const regex = new RegExp(`^${value}$`);
-                return regex.test(category);
+                return regex.test(categoryId);
 
             },
         },
         {
             title: '標籤',
-            dataIndex: 'tag',
+            dataIndex: 'tags',
             className: 'col-tags',
-            render: (tag) => (
+            render: (tags) => (
 
-                tag.length ? (
+                (tags.length && newsTags.length) ? (
 
-                    tag.map((val) => (
+                    tags.map((val) => (
 
                         <div key={val}>
-                            <Tag>{mappingTagOpt(newsTag)[val]}</Tag>
+                            <Tag>{mappingTagOpt(newsTags)[val]}</Tag>
                         </div>
 
                     ))
 
                 ) : '--'
             ),
+        },
+        {
+            title: '新增 / 編輯時間',
+            dataIndex: '',
+            render: ({ createTime, updateTime }) => `${renderDateTime(createTime)} / ${renderDateTime(updateTime)}`,
+        },
+        {
+            title: '新增 / 編輯者',
+            dataIndex: '',
+            render: ({ creator, updater }) => `${renderWithoutValue(creator)} / ${renderWithoutValue(updater)}`,
         },
         {
             title: '操作',
@@ -138,17 +145,6 @@ const NewsBase = ({ pageData }) => {
             ),
         },
     ];
-
-    // 編輯按鈕
-    const btnUpdate = (data) => {
-
-        lightboxDispatch({ type: 'SHOW', currEvent: 'updateNews' });
-        formStorageDispatch({
-            type: 'COLLECT',
-            payload: data,
-        });
-
-    };
 
     return (
 

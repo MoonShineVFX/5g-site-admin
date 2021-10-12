@@ -5,7 +5,7 @@ const globalReducer = (state, { type, payload }) => {
         case 'global_data':
             return {
                 ...state,
-                newsTag: payload.tag,
+                newsTags: payload.newsTags,
                 user: payload.other,
             };
 

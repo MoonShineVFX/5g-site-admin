@@ -16,7 +16,7 @@ import { BannerContext } from '../../context/home/banner.state';
 import admin from '../../../src/utils/admin';
 import adminConst from '../../../src/utils/admin.const';
 
-const { pathnameKey, renderWithoutValue } = admin;
+const { pathnameKey, renderWithoutValue, renderDateTime } = admin;
 const { lightboxTitle } = adminConst;
 
 const SelectOptLayout = styled.span(({ theme }) => ({
@@ -35,7 +35,6 @@ const SelectOptLayout = styled.span(({ theme }) => ({
 
 const BannerBase = ({ pageData }) => {
 
-    // console.log('pageData:', pageData);
     const { pathname } = useRouter();
 
     // Context
@@ -81,8 +80,9 @@ const BannerBase = ({ pageData }) => {
         {
             title: `圖片(${pageData.imageSize})`,
             dataIndex: 'imgUrl',
+            className: 'col-thumb',
             width: 200,
-            render: (imgUrl, { title }) => <Image src={imgUrl} alt={title} />,
+            render: (imgUrl, { title }) => imgUrl ? <Image src={imgUrl} alt={title} /> : '--',
         },
         {
             title: '標題',
@@ -98,6 +98,16 @@ const BannerBase = ({ pageData }) => {
             title: '優先度',
             dataIndex: 'priority',
             sorter: (a, b) => a.priority - b.priority,
+        },
+        {
+            title: '新增 / 編輯時間',
+            dataIndex: '',
+            render: ({ createTime, updateTime }) => `${renderDateTime(createTime)} / ${renderDateTime(updateTime)}`,
+        },
+        {
+            title: '新增 / 編輯者',
+            dataIndex: '',
+            render: ({ creator, updater }) => `${renderWithoutValue(creator)} / ${renderWithoutValue(updater)}`,
         },
         {
             title: '操作',

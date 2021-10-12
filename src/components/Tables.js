@@ -56,7 +56,6 @@ const Tables = ({
             pagination={
                 showPage ? {
                     pageSize,
-                    // position: ['topCenter', 'bottomCenter'],
                     className: `pagination`,
                     showTotal,
                     onChange: () => handleChange,
@@ -67,7 +66,6 @@ const Tables = ({
             {...expandData ? { expandable: expandData } : {}}
             {...onExpand ? { onExpand } : {}}
             locale={{
-                // emptyText: <EmptyData description={emptyText} />,
                 emptyText: '沒有資料...',
                 filterReset: '清除',
                 filterConfirm: '確認',

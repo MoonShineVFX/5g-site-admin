@@ -107,31 +107,24 @@ const TextEditor = ({ content }) => {
     };
 
     // 上傳圖片
-    const uploadImageCallBack = (file) => {
+    const uploadImageCallBack = async (file) => {
 
-        // console.log('file:', file)
+        // FormData 上傳圖片
+        const formData = new FormData();
+        formData.append('file', file);
 
+        const res = await Service.fileUploadEditor(formData);
+        const { imgUrl } = res;
+
+        // 預覽已上傳圖片
         return new Promise((resolve, reject) => {
 
             const reader = new FileReader();
-            reader.onload = (e) => resolve({ data: {
-                // link: e.target.result
-                link: '//fakeimg.pl/100x100?text=Betty'
-            }});
+            reader.onload = () => resolve({ data: { link: imgUrl }});
             reader.onerror = (e) => reject(e);
             reader.readAsDataURL(file);
 
         });
-
-        Service.fileUploadEditor(file)
-            .then(({ data }) => {
-
-                const reader = new FileReader();
-                reader.onload = (e) => resolve({ data: { link: data.detail } });
-                reader.onerror = (e) => reject(e);
-                reader.readAsDataURL(file);
-
-            });
 
     };
 
@@ -149,10 +142,14 @@ const TextEditor = ({ content }) => {
                         localization={{ locale: 'zh_tw' }}
                         toolbar={{
                             image: {
-                                uploadCallback: uploadImageCallBack,
                                 previewImage: true,
-                                alt: { present: true, mandatory: true },
                                 inputAccept: 'image/jpeg,image/jpg,image/png',
+                                // 先註解，若覺得圖片太大需要 default 再拔掉
+                                // defaultSize: {
+                                //     width: '300',
+                                //     height: 'auto',
+                                // },
+                                uploadCallback: uploadImageCallBack,
                             },
                         }}
                     />
@@ -172,6 +169,5 @@ export default TextEditor;
 /**
  * Example
  * https://github.com/jpuri/react-draft-wysiwyg/tree/master/stories
- * https://www.gyanblog.com/javascript/how-integrate-next-js-draft-js-strapi-create-article-upload-image-view-page/
  * https://www.gyanblog.com/javascript/how-integrate-next-js-draft-js-strapi-create-article-upload-image-view-page
  */

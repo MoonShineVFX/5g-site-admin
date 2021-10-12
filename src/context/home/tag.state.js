@@ -31,27 +31,6 @@ const TagProvider = ({ children }) => {
     // 新增
     const tagCreate = (reqData) => {
 
-        // Fake
-        const resData = [
-            {
-                id: '81344',
-                name: 'create-81344',
-                category: '',
-                categoryName: '',
-            },
-            {
-                id: '81345',
-                name: '',
-                category: 'newsIndustry',
-                categoryName: '產業訊息',
-            },
-        ];
-
-        formStorageDispatch({ type: 'CLEAR' });
-        tagDispatch({ type: 'tag_create', payload: { resData, action: true } });
-
-        // Debug
-        return;
         Service.tagCreate(reqData)
             .then((resData) => {
 
@@ -65,20 +44,6 @@ const TagProvider = ({ children }) => {
     // 編輯
     const tagUpdate = (reqData) => {
 
-        // Fake
-        const resData = {
-            id: '156421',
-            name: 'update-11111',
-            category: 'news',
-            categoryName: '新聞快訊',
-        };
-
-        lightboxDispatch({ type: 'HIDE' });
-        formStorageDispatch({ type: 'CLEAR' });
-        tagDispatch({ type: 'tag_update', payload: { resData, action: true } });
-
-        // Debug
-        return;
         Service.tagUpdate(reqData)
             .then((resData) => {
 

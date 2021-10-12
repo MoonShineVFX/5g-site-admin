@@ -10,11 +10,15 @@ const RadioGroup = Radio.Group;
 // 整理分類資料結構
 const arrangeCategory = (data) => data.reduce((acc, obj) => {
 
-    const key = obj.category;
+    // console.log('obj:', obj)
+
+    const key = obj.categoryKey;
     acc[key] = acc[key] || {};
-    acc[key].tag = acc[key].tag || [];
+    acc[key].tags = acc[key].tags || [];
     acc[key].label = obj.categoryName;
-    acc[key].tag.push(obj);
+    acc[key].tags.push(obj);
+
+    // console.log('acc:', acc)
     return acc;
 
 }, {});
@@ -44,7 +48,7 @@ const TagsBox = () => {
 
     // Context
     const {
-        newsTag,
+        newsTags,
         formStorageData,
         lightboxDispatch,
         formStorageDispatch,
@@ -122,13 +126,13 @@ const TagsBox = () => {
                         onChange={handleChangeCategory}
                     >
                         {
-                            Object.keys(arrangeCategory(newsTag)).map((key) => (
+                            Object.keys(arrangeCategory(newsTags)).map((key) => (
 
                                 <Radio
                                     key={key}
                                     value={key}
                                 >
-                                    {arrangeCategory(newsTag)[key].label}
+                                    {arrangeCategory(newsTags)[key].label}
                                 </Radio>
 
                             ))
@@ -141,11 +145,11 @@ const TagsBox = () => {
                 <div className="title">標籤</div>
                 <div className="checkboxItemWrap">
                     {
-                        arrangeCategory(newsTag)[formStorageData.category ? formStorageData.category : currCate].tag.map(({ id, name }) => (
+                        arrangeCategory(newsTags)[formStorageData.category ? formStorageData.category : currCate].tags.map(({ id, name }) => (
 
                             <Checkbox
                                 key={id}
-                                name="tag"
+                                name="tags"
                                 value={id}
                                 defaultChecked={selected ? selected[id]?.isChecked : ''}
                                 onChange={handleChangeCheckbox}

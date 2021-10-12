@@ -46,24 +46,8 @@ const TextEditorForm = ({
             detail: formStorageData.detail ? formStorageData.detail : reqData.detail,
         };
 
-        console.log('reqData:', reqData);
-
-        // return;
-        Prompt('success', {
-            mesg: '文章已更新，將重新整理頁面',
-            enableEsc: false,
-            callback: () => {
-
-                formStorageDispatch({ type: 'CLEAR' });
-                successCallback();
-
-            },
-        });
-
-        // Debug
-        return;
         Service[serviceKey](reqData)
-            .then(({ data }) => {
+            .then(() => {
 
                 Prompt('success', {
                     mesg: '文章已更新，將重新整理頁面',

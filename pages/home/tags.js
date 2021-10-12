@@ -1,5 +1,6 @@
 import TagBase from '../../src/components/home/TagBase';
 import { TagProvider } from '../../src/context/home/tag.state';
+import admin from '../../src/utils/admin';
 
 const Tags = ({ pageData }) => (
 
@@ -13,11 +14,8 @@ export default Tags;
 
 export async function getStaticProps () {
 
-    // const res = await util.ServiceServer('api/user/userList');
-    // const { data } = res;
-
-    const res = await fetch('http://localhost:1002/json/home/tags.json');
-    const data = await res.json();
+    const res = await admin.serviceServer({ url: '/tags_and_categories' });
+    const { data } = res;
 
     if (!data.result) {
 

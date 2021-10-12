@@ -1,5 +1,6 @@
 import PartnerBase from '../src/components/partner/PartnerBase';
 import { PartnerProvider } from '../src/context/partner/partner.state';
+import admin from '../src/utils/admin';
 
 const Partner = ({ pageData }) => (
 
@@ -13,11 +14,8 @@ export default Partner;
 
 export async function getStaticProps () {
 
-    // const res = await util.ServiceServer('api/user/userList');
-    // const { data } = res;
-
-    const res = await fetch('http://localhost:1002/json/partner.json');
-    const data = await res.json();
+    const res = await admin.serviceServer({ url: '/partners' });
+    const { data } = res;
 
     if (!data.result) {
 

@@ -10,8 +10,7 @@ const { pathnameKey } = admin;
 
 const About = ({ pageData }) => {
 
-    // console.log('pageData:', pageData);
-    const { pathname } = useRouter();
+    const router = useRouter();
 
     // Context
     const { globalDispatch } = useContext(GlobalContext);
@@ -20,10 +19,10 @@ const About = ({ pageData }) => {
 
         globalDispatch({
             type: 'page',
-            payload: pathnameKey(pathname, true),
+            payload: pathnameKey(router.pathname, true),
         });
 
-    }, [globalDispatch, pathname]);
+    }, [globalDispatch, router.pathname]);
 
     return (
 
@@ -38,6 +37,7 @@ const About = ({ pageData }) => {
             <TextEditorForm
                 content={pageData.data}
                 serviceKey="aboutUpdate"
+                successCallback={() => router.reload()}
             />
         </Fragment>
 
@@ -49,11 +49,8 @@ export default About;
 
 export async function getStaticProps () {
 
-    // const res = await util.ServiceServer('api/user/userList');
-    // const { data } = res;
-
-    const res = await fetch('http://localhost:1002/json/about.json');
-    const data = await res.json();
+    const res = await admin.serviceServer({ url: '/about' });
+    const { data } = res;
 
     if (!data.result) {
 

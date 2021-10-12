@@ -2,6 +2,7 @@ import { useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import ActionWrap from '../../src/components/news/ActionWrap';
 import { GlobalContext } from '../../src/context/global.state';
+import admin from '../../src/utils/admin';
 
 // Mapping
 const mappingCheckbox = (data, tags) => data.reduce((acc, curr) => {
@@ -10,19 +11,19 @@ const mappingCheckbox = (data, tags) => data.reduce((acc, curr) => {
     let temp = tags.find((obj) => obj.id === curr);
     acc[curr] = acc[curr] || {};
     acc[curr].isChecked = true;
-    acc[curr].category = temp?.category;
+    acc[curr].category = temp?.categoryKey;
     return acc;
 
 }, {});
 
 const NewsDetail = ({ pageData }) => {
 
-    // console.log('pageData:', pageData)
+    console.log('pageData:', pageData)
     const router = useRouter();
 
     // Context
     const {
-        newsTag,
+        newsTags,
         formStorageData,
         globalDispatch,
         formStorageDispatch,
@@ -38,15 +39,16 @@ const NewsDetail = ({ pageData }) => {
         formStorageDispatch({
             type: 'COLLECT',
             payload: {
-                selected: mappingCheckbox(pageData.data.tag, newsTag),
-                category: formStorageData.selected && Object.keys(mappingCheckbox(pageData.data.tag, newsTag)).map((key) => mappingCheckbox(pageData.data.tag, newsTag)[key].category)[0],
+                selected: mappingCheckbox(pageData.data.tags, newsTags),
+                category: formStorageData.selected && Object.keys(mappingCheckbox(pageData.data.tags, newsTags)).map((key) => mappingCheckbox(pageData.data.tags, newsTags)[key].category)[0],
             },
         });
 
-    }, [globalDispatch, formStorageDispatch, newsTag]);
+    }, [globalDispatch, formStorageDispatch, newsTags]);
 
     return (
 
+        // 123
         <ActionWrap
             title={pageData.title}
             newsTitle={pageData.data.title}
@@ -63,10 +65,10 @@ export default NewsDetail;
 
 export async function getStaticPaths () {
 
-    const res = await fetch('http://localhost:1002/json/news/news.json');
-    const data = await res.json();
+    const res = await admin.serviceServer({ url: '/news' });
+    const { data } = res;
     const paths = data.data.list.map((obj) => ({
-        params: { id: obj.id },
+        params: { id: String(obj.id) },
     }));
 
     return { paths, fallback: false };
@@ -75,8 +77,12 @@ export async function getStaticPaths () {
 
 export async function getStaticProps ({ params }) {
 
-    const res = await fetch(`http://localhost:1002/json/news/${params.id}.json`);
-    const data = await res.json();
+    const res = await admin.serviceServer({
+        method: 'get',
+        url: `/news/${params.id}`,
+    });
+
+    const { data } = res;
 
     if (!data.result) {
 

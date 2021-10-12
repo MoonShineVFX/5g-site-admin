@@ -10,7 +10,7 @@ import {
 // Global
 const globalInitState = {
     page: 'banner',
-    newsTag: [],
+    newsTags: [],
     user: {},
 };
 
@@ -36,7 +36,7 @@ const GlobalProvider = ({ children }) => {
     const [lightboxState, lightboxDispatch] = useReducer(lightboxReducer, lightboxInitState);
     const {
         page,
-        newsTag,
+        newsTags,
         user,
     } = globalState;
 
@@ -50,11 +50,11 @@ const GlobalProvider = ({ children }) => {
         Service.common()
             .then((resData) => {
 
-                const { tag, ...rest } = resData;
+                const { newsTags, ...rest } = resData;
                 globalDispatch({
                     type: 'global_data',
                     payload: {
-                        tag,
+                        newsTags,
                         other: rest,
                     },
                 });
@@ -68,7 +68,7 @@ const GlobalProvider = ({ children }) => {
         <Provider value={{
             // 全域資料
             page,
-            newsTag,
+            newsTags,
             user,
             getGlobalData,
 

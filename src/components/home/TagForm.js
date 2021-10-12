@@ -64,13 +64,13 @@ const TagForm = () => {
         control,
     } = useForm({
         defaultValues: {
-            tag: formStorageData ? [{ ...formStorageData }] : [{ name: '', category: '' }],
+            tags: formStorageData ? [{ ...formStorageData }] : [{ name: '', categoryId: '' }],
         },
     });
 
     const { fields, append, remove } = useFieldArray({
         control,
-        name: 'tag',
+        name: 'tags',
     });
 
     // 隱藏 Modal
@@ -85,20 +85,37 @@ const TagForm = () => {
     const targetRemove = (index) => remove(index);
 
     // append
-    const targetAppend = () => append({ name: '', category: '' });
+    const targetAppend = () => append({ name: '', categoryId: '' });
 
     // reset
     const targetReset = () => reset({
-        tag: [{ name: '', category: '' }],
+        tags: [{ name: '', categoryId: '' }],
     });
 
     // 送資料
     const handleReqData = (reqData) => {
 
-        reqData = (currEvent === 'updateTag') ? [...reqData.tag][0] : reqData;
+        // 將 categoryId 轉為 number
+        if (currEvent === 'updateTag') {
+
+            reqData = [...reqData.tags][0];
+            reqData.categoryId = +reqData.categoryId;
+
+        }
+        else {
+
+            reqData.tags.map((obj) => {
+
+                obj.categoryId = obj.categoryId ? +obj.categoryId : null;
+                return obj;
+
+            });
+
+        }
 
         if (currEvent === 'updateTag') tagUpdate(reqData);
         else tagCreate(reqData);
+        targetReset();
 
     };
 
@@ -122,7 +139,7 @@ const TagForm = () => {
                                     name="name"
                                     control={control}
                                     defaultValue={item.name}
-                                    {...register(`tag.${idx}.name`)}
+                                    {...register(`tags.${idx}.name`)}
                                 />
                             </FormRow>
 
@@ -130,18 +147,18 @@ const TagForm = () => {
                                 <div className="title">標籤類別</div>
                                 <div className="field noBorder">
                                     <select
-                                        name="category"
+                                        name="categoryId"
                                         control={control}
-                                        defaultValue={item.category}
-                                        {...register(`tag.${idx}.category`)}
+                                        defaultValue={item.categoryId}
+                                        {...register(`tags.${idx}.categoryId`)}
                                     >
                                         <option value="">請選擇</option>
                                         {
-                                            categoryOpt.map(({ key, name }) => (
+                                            categoryOpt.map(({ id, name }) => (
 
                                                 <option
-                                                    key={key}
-                                                    value={key}
+                                                    key={id}
+                                                    value={id}
                                                 >
                                                     {name}
                                                 </option>

@@ -84,7 +84,7 @@ const ActionWrap = ({
     const {
         visible,
         currEvent,
-        newsTag,
+        newsTags,
         formStorageData,
         globalDispatch,
         lightboxDispatch,
@@ -132,7 +132,7 @@ const ActionWrap = ({
                             {
                                 Object.keys(formStorageData.selected).map((key) => (
 
-                                    formStorageData.selected[key].isChecked && <Tag key={key}>{mappingTagOpt(newsTag)[key]}</Tag>
+                                    formStorageData.selected[key].isChecked && <Tag key={key}>{mappingTagOpt(newsTags)[key]}</Tag>
 
                                 ))
                             }
@@ -145,7 +145,7 @@ const ActionWrap = ({
                 serviceKey={serviceKey}
                 otherReqData={{
                     title: newsTtitleValue,
-                    tag: formStorageData.selected ? Object.keys(formStorageData.selected).filter((val) => formStorageData.selected[val].isChecked) : []
+                    tags: formStorageData.selected ? Object.keys(formStorageData.selected).filter((val) => +formStorageData.selected[val].isChecked) : []
                 }}
                 successCallback={successCallback}
             >
