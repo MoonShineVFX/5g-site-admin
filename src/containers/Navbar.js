@@ -15,8 +15,9 @@ const SiderLayout = styled(Sider)({
     textAlign: 'center',
     padding: '20px 0',
     position: 'fixed',
-    left: 0,
+    left: '0',
     overflow: 'auto',
+    zIndex: '1',
     '.logo': {
         display: 'inline-block',
         marginBottom: '20px',

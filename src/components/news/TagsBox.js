@@ -10,15 +10,11 @@ const RadioGroup = Radio.Group;
 // 整理分類資料結構
 const arrangeCategory = (data) => data.reduce((acc, obj) => {
 
-    // console.log('obj:', obj)
-
     const key = obj.categoryKey;
     acc[key] = acc[key] || {};
     acc[key].tags = acc[key].tags || [];
     acc[key].label = obj.categoryName;
     acc[key].tags.push(obj);
-
-    // console.log('acc:', acc)
     return acc;
 
 }, {});
@@ -110,8 +106,6 @@ const TagsBox = () => {
         });
 
     };
-
-    // console.log('selected:', selected);
 
     return (
 

@@ -18,8 +18,10 @@ const RowUpload = styled.div.attrs(() => ({
 
 const CheckboxWrapLayout = styled.div({
     display: 'flex',
+    flexWrap: 'wrap',
     '.checkbox-item': {
-        flex: 1,
+        flex: '0 0 calc(100% / 3)',
+        marginBottom: '8px',
     },
 });
 
@@ -58,12 +60,15 @@ const PartnerForm = () => {
     // 送資料
     const handleReqData = (reqData) => {
 
+        const formData = new FormData();
+
         reqData = {
             ...reqData,
             ...formStorageData?.file && { file: formStorageData?.file },
-            tag: reqData.tag.filter((val) => val),
+            tags: reqData.tags.filter((val) => val).map((val) => +val),
         };
 
+        // 檢查: 圖片尺寸
         if (formStorageData?.files) {
 
             const limitSize = (reqData.image.size / 1024 / 1024) < 5;
@@ -78,8 +83,14 @@ const PartnerForm = () => {
 
         }
 
-        if (currEvent === 'updatePartner') partnerUpdate(reqData);
-        else partnerCreate(reqData);
+        for (let key in reqData) {
+
+            formData.append(key, reqData[key]);
+
+        }
+
+        if (currEvent === 'updatePartner') partnerUpdate(formData);
+        else partnerCreate(formData);
 
     };
 
@@ -161,7 +172,7 @@ const PartnerForm = () => {
 
             <div className="row">
                 <div className="title">標籤</div>
-                <div className="field noBorder">
+                <div>
                     <CheckboxWrapLayout>
                         {
                             tagOpt.map(({ id, name }, idx) => (
@@ -171,10 +182,10 @@ const PartnerForm = () => {
                                     className="checkbox-item"
                                 >
                                     <Checkbox
-                                        name="tag"
+                                        name="tags"
                                         value={id}
-                                        defaultChecked={formStorageData?.tag?.some((val) => val === id)}
-                                        register={register(`tag.${idx}`)}
+                                        defaultChecked={formStorageData?.tags?.some((val) => val === id)}
+                                        register={register(`tags.${idx}`)}
                                     >
                                         {name}-{id}
                                     </Checkbox>

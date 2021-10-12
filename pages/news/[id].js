@@ -18,7 +18,6 @@ const mappingCheckbox = (data, tags) => data.reduce((acc, curr) => {
 
 const NewsDetail = ({ pageData }) => {
 
-    console.log('pageData:', pageData)
     const router = useRouter();
 
     // Context
@@ -48,10 +47,11 @@ const NewsDetail = ({ pageData }) => {
 
     return (
 
-        // 123
         <ActionWrap
             title={pageData.title}
+            id={pageData.data.id}
             newsTitle={pageData.data.title}
+            description={pageData.data.description}
             content={pageData.data.detail}
             serviceKey="newsUpdate"
             successCallback={() => router.reload()}

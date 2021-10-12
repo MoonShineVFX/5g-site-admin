@@ -6,7 +6,6 @@ import {
 } from 'react';
 
 import PropTypes from 'prop-types';
-import { useRouter } from 'next/router';
 import { Tag } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { blue } from '@ant-design/colors';
@@ -56,6 +55,7 @@ const NewsTitleLayout = styled.div(({ theme }) => ({
         border: `1px solid ${theme.palette.border}`,
         borderRadius: '2px',
         display: 'inline-block',
+        verticalAlign: 'middle',
         marginLeft: '10px',
         padding: '4px 8px',
         transition: 'all .3s ease-in-out',
@@ -69,16 +69,22 @@ const NewsTitleLayout = styled.div(({ theme }) => ({
     },
 }));
 
+const NewsDescritptionLayout = styled(NewsTitleLayout)(() => ({
+    '.field': {
+        height: '100px',
+        verticalAlign: 'top',
+    },
+}));
+
 const ActionWrap = ({
     title,
+    id,
     newsTitle,
+    description,
     content,
     serviceKey,
     successCallback,
 }) => {
-
-    //
-    const router = useRouter();
 
     // Context
     const {
@@ -91,14 +97,12 @@ const ActionWrap = ({
     } = useContext(GlobalContext);
 
     // State
-    const [newsTtitleValue, setNewsTitleValue] = useState(newsTitle);
+    const [newsTtitle, setNewsTitle] = useState(newsTitle);
+    const [newsDescription, setNewsDescription] = useState(description);
 
     useEffect(() => {
 
-        globalDispatch({
-            type: 'page',
-            payload: 'news',
-        });
+        globalDispatch({ type: 'page', payload: 'news' });
 
     }, [globalDispatch]);
 
@@ -108,8 +112,13 @@ const ActionWrap = ({
     // 設定標籤
     const targetTag = () => lightboxDispatch({ type: 'SHOW', currEvent: 'settingTag' });
 
-    // 標題
-    const handleChange = ({ target: { value } }) => setNewsTitleValue(value);
+    // 標題與簡述
+    const handleChange = ({ target }) => {
+
+        if (target.name === 'title') setNewsTitle(target.value);
+        else setNewsDescription(target.value);
+
+    };
 
     return (
 
@@ -144,8 +153,10 @@ const ActionWrap = ({
                 content={content}
                 serviceKey={serviceKey}
                 otherReqData={{
-                    title: newsTtitleValue,
-                    tags: formStorageData.selected ? Object.keys(formStorageData.selected).filter((val) => +formStorageData.selected[val].isChecked) : []
+                    id,
+                    title: newsTtitle,
+                    description: newsDescription,
+                    tags: formStorageData.selected ? Object.keys(formStorageData.selected).filter((val) => formStorageData.selected[val].isChecked).map((val) => +val) : []
                 }}
                 successCallback={successCallback}
             >
@@ -154,12 +165,25 @@ const ActionWrap = ({
                     <span className="field">
                         <input
                             type="text"
+                            name="title"
                             placeholder="標題"
                             onChange={handleChange}
                             defaultValue={newsTitle}
                         />
                     </span>
                 </NewsTitleLayout>
+
+                <NewsDescritptionLayout>
+                    文章簡述:
+                    <span className="field">
+                        <textarea
+                            name="description"
+                            placeholder="請輸入簡述"
+                            onChange={handleChange}
+                            defaultValue={description}
+                        />
+                    </span>
+                </NewsDescritptionLayout>
             </TextEditorForm>
 
             {
@@ -184,7 +208,9 @@ ActionWrap.defaultProps = {
 
 ActionWrap.propTypes = {
     title: PropTypes.string,
+    id: PropTypes.number,
     newsTitle: PropTypes.string,
+    description: PropTypes.string,
     content: PropTypes.any.isRequired, // html string
     serviceKey: PropTypes.string.isRequired,
     successCallback: PropTypes.func.isRequired,

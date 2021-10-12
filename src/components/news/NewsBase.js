@@ -27,25 +27,32 @@ const CreateBtnLayout = styled(Buttons)({
     float: 'none',
 });
 
-const TablesLayout = styled(Tables)({
+const TablesLayout = styled(Tables)(({ theme }) => ({
     '.col-tags > div': {
         marginBottom: '6px',
     },
-});
+    '.col-description': {
+        '.field': {
+            height: '80px',
+            border: `1px solid ${theme.palette.border}`,
+            borderRadius: '2px',
+            padding: '4px 8px',
+        },
+    },
+}));
 
-const antdTableFilter = (data) => data.reduce((acc, { category, categoryName }) => {
+const antdTableFilter = (data) => data.reduce((acc, { categoryId, categoryName }) => {
 
-    const obj = { text: categoryName, value: category };
+    const obj = { text: categoryName, value: categoryId };
 
     // 檢查是否重複
-    if (!acc.some((obj) => obj.value === category)) acc.push(obj);
+    if (!acc.some((obj) => obj.value === categoryId)) acc.push(obj);
     return acc;
 
 }, []);
 
 const NewsBase = ({ pageData }) => {
 
-    console.log('pageData:', pageData);
     const router = useRouter();
 
     // Context
@@ -87,8 +94,19 @@ const NewsBase = ({ pageData }) => {
         {
             title: '簡述',
             dataIndex: 'description',
-            width: 300,
-            render: (description) => renderWithoutValue(description),
+            width: 320,
+            className: 'col-description',
+            render: (description) => (
+
+                description ? (
+
+                    <div className="field">
+                        <textarea readOnly defaultValue={description} />
+                    </div>
+
+                ) : '--'
+
+            ),
         },
         {
             title: '新聞分類',

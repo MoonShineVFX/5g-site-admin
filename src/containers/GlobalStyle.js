@@ -20,14 +20,19 @@ const GlobalStyle = createGlobalStyle`
     ul {
         padding-inline-start: 20px;
     }
-    input {
+    input, textarea {
         background-color: transparent;
         border: none;
         box-shadow: none;
         outline: 0;
     }
-    select {
-        outline: 0
+    select, textarea {
+        outline: 0;
+    }
+    textarea {
+        width: 100%;
+        height: 100%;
+        resize: none;
     }
     .admin-tables {
         .ant-image {

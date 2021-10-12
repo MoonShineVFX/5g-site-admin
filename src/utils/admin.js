@@ -144,7 +144,7 @@ const util = {
      * @param {string} date - 日期
      * @return {string}
      */
-    renderDateTime: (date) => dayjs(date).format('YYYY-MM-DD') || '--',
+    renderDateTime: (date) => date ? dayjs(date).format('YYYY-MM-DD') : '--',
 
 };
 

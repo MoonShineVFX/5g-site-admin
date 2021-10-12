@@ -16,7 +16,7 @@ import { PartnerContext } from '../../context/partner/partner.state';
 import admin from '../../utils/admin';
 import adminConst from '../../utils/admin.const';
 
-const { pathnameKey } = admin;
+const { pathnameKey, renderWithoutValue, renderDateTime } = admin;
 const { lightboxTitle } = adminConst;
 
 const TablesLayout = styled(Tables)({
@@ -27,7 +27,6 @@ const TablesLayout = styled(Tables)({
 
 const BannerBase = ({ pageData }) => {
 
-    // console.log('pageData:', pageData);
     const { pathname } = useRouter();
 
     // Context
@@ -90,6 +89,17 @@ const BannerBase = ({ pageData }) => {
             title: '夥伴介紹',
             dataIndex: 'description',
             width: 300,
+            render: (description) => (
+
+                description ? (
+
+                    <div className="field">
+                        <textarea readOnly defaultValue={description} />
+                    </div>
+
+                ) : '--'
+
+            ),
         },
         {
             title: '外部網址(URL)',
@@ -108,13 +118,13 @@ const BannerBase = ({ pageData }) => {
         },
         {
             title: '標籤',
-            dataIndex: 'tag',
+            dataIndex: 'tags',
             className: 'col-tags',
-            render: (tag) => (
+            render: (tags) => (
 
-                tag.length ? (
+                tags.length ? (
 
-                    tag.map((val) => (
+                    tags.map((val) => (
 
                         <div key={val}>
                             <Tag>{mappingTagOpt(tagOpt)[val]}</Tag>
@@ -126,9 +136,19 @@ const BannerBase = ({ pageData }) => {
             ),
         },
         {
-            title: '操作',
+            title: '新增 / 編輯時間',
             dataIndex: '',
             width: 200,
+            render: ({ createTime, updateTime }) => `${renderDateTime(createTime)} / ${renderDateTime(updateTime)}`,
+        },
+        {
+            title: '新增 / 編輯者',
+            dataIndex: '',
+            render: ({ creator, updater }) => `${renderWithoutValue(creator)} / ${renderWithoutValue(updater)}`,
+        },
+        {
+            title: '操作',
+            dataIndex: '',
             render: (data) => (
 
                 <Buttons
