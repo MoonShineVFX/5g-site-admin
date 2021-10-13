@@ -1,0 +1,19 @@
+env: standard
+runtime: nodejs16
+service: frontend-admin
+handlers:
+  - url: /admin/(.*\..+)
+    static_files: build/admin/\1
+    upload: build/admin/(.*)
+
+  - url: /admin/.*
+    static_files: build/admin/index.html
+    upload: build/admin/index.html
+
+  - url: /(.*\..+)
+    static_files: build/\1
+    upload: build/(.*)
+
+  - url: /.*
+    static_files: build/index.html
+    upload: build/index.html

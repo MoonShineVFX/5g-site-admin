@@ -1,0 +1,53 @@
+name: Build and Deploy to Google APP Engine
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    env:
+      CI: false
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - uses: borales/actions-yarn@v2.3.0
+        name: Yarn install
+        with:
+          cmd: install
+      - uses: borales/actions-yarn@v2.3.0
+        name: Yarn build
+        with:
+          cmd: build
+      - name: Archive
+        uses: actions/upload-artifact@v2
+        with:
+          name: web
+          path: build
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Download web artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: web
+          path: build
+      - name: Deploy to App Engine
+        uses: google-github-actions/deploy-appengine@v0.2.0
+        with:
+          deliverables: app.yaml
+          project_id: ${{ secrets.CHT_FIVEG_PROJECT_ID }}
+          credentials: ${{ secrets.CHT_FIVEG_GCP_SA_KEY }}
+          promote: false
+          version: v1
