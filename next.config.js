@@ -6,7 +6,7 @@ module.exports = {
         return [
             {
                 source: '/index',
-                destination: '/home/banner',
+                destination: '/admin/home/banner',
                 permanent: true,
             },
         ]

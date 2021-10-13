@@ -1,10 +1,10 @@
 import { Fragment, useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import HeadTag from '../src/containers/HeadTag';
-import ContentHeader from '../src/containers/ContentHeader';
-import TextEditorForm from '../src/components/TextEditorForm';
-import { GlobalContext } from '../src/context/global.state';
-import admin from '../src/utils/admin';
+import HeadTag from '../../src/containers/HeadTag';
+import ContentHeader from '../../src/containers/ContentHeader';
+import TextEditorForm from '../../src/components/TextEditorForm';
+import { GlobalContext } from '../../src/context/global.state';
+import admin from '../../src/utils/admin';
 
 const { pathnameKey } = admin;
 

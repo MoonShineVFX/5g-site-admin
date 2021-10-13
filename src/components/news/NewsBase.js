@@ -158,7 +158,7 @@ const NewsBase = ({ pageData }) => {
 
                 <Buttons
                     text="編輯"
-                    onClick={() => router.push(`/news/${data.id}`)}
+                    onClick={() => router.push(`/admin/news/${data.id}`)}
                 />
             ),
         },
@@ -174,7 +174,7 @@ const NewsBase = ({ pageData }) => {
                 showButton={false}
             >
                 <CreateBtnLayout className="btn-create">
-                    <Links url="/news/create">新增</Links>
+                    <Links url="/admin/news/create">新增</Links>
                 </CreateBtnLayout>
             </ContentHeader>
 

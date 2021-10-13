@@ -1,6 +1,6 @@
-import BannerBase from '../../src/components/home/BannerBase';
-import { BannerProvider } from '../../src/context/home/banner.state';
-import admin from '../../src/utils/admin';
+import BannerBase from '../../../src/components/home/BannerBase';
+import { BannerProvider } from '../../../src/context/home/banner.state';
+import admin from '../../../src/utils/admin';
 
 const Banner = ({ pageData }) => (
 

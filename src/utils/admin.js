@@ -115,7 +115,7 @@ const util = {
      */
     pathnameKey: (path, noSub = false) => {
 
-        return noSub ? path.split('/')[1] : (path.split('/')[2] || 'banner');
+        return noSub ? path.split('/')[2] : (path.split('/')[3] || 'banner');
 
     },
 

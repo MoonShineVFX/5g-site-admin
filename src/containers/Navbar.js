@@ -55,7 +55,7 @@ const Navbar = ({ width }) => {
                                     subItems.map((obj) => (
 
                                         <Item key={obj.pageKey}>
-                                            <Links url={`/${pageKey}/${obj.pageKey}`}>{obj.name}</Links>
+                                            <Links url={`/admin/${pageKey}/${obj.pageKey}`}>{obj.name}</Links>
                                         </Item>
 
                                     ))
@@ -65,7 +65,7 @@ const Navbar = ({ width }) => {
                         ) : (
 
                             <Item key={pageKey}>
-                                <Links url={`/${pageKey}`}>{name}</Links>
+                                <Links url={`/admin/${pageKey}`}>{name}</Links>
                             </Item>
 
                         )

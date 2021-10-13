@@ -6,7 +6,7 @@ export async function getStaticProps () {
 
     return {
         redirect: {
-            destination: '/home/banner',
+            destination: '/admin/home/banner',
             permanent: false,
         },
     };
