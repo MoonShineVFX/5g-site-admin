@@ -138,7 +138,6 @@ const BannerBase = ({ pageData }) => {
         {
             title: '新增 / 編輯時間',
             dataIndex: '',
-            width: 200,
             render: ({ createTime, updateTime }) => `${renderDateTime(createTime)} / ${renderDateTime(updateTime)}`,
         },
         {
