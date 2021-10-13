@@ -87,10 +87,7 @@ export async function getStaticProps ({ params }) {
     if (!data.result) {
 
         return {
-            redirect: {
-                destination: '/news',
-                permanent: false,
-            },
+            notFound: true,
         };
 
     }

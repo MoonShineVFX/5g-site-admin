@@ -24,10 +24,7 @@ export async function getStaticProps () {
     if (!data.result) {
 
         return {
-            redirect: {
-                destination: '/',
-                permanent: false,
-            },
+            notFound: true,
         };
 
     }

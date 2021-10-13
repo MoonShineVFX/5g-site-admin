@@ -35,7 +35,7 @@ const Navbar = ({ width }) => {
     return (
 
         <SiderLayout width={width}>
-            <Links url="/" className="logo">
+            <Links url="/admin/home/banner" className="logo">
                 <img src="//fakeimg.pl/200x60?text=LOGO" alt="LOGO" />
             </Links>
 
