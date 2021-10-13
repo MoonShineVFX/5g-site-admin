@@ -100,9 +100,7 @@ const util = {
 
     serviceServer: ({ method = 'post', url }, reqData = {}) => {
 
-        // console.log('url:', url)
-
-        return axios[method]((process.env.NODE_ENV === 'development') ? `http://${process.env.HOST}/api${url}` : `/api${url}`, reqData);
+        return axios[method](`http://${process.env.HOST}/api${url}`, reqData);
         // return axios.post(`http://localhost:8080/${url}`, reqData);
 
     },
