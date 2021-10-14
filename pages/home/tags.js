@@ -1,6 +1,6 @@
-import TagBase from '../../../src/components/home/TagBase';
-import { TagProvider } from '../../../src/context/home/tag.state';
-import admin from '../../../src/utils/admin';
+import TagBase from '../../src/components/home/TagBase';
+import { TagProvider } from '../../src/context/home/tag.state';
+import admin from '../../src/utils/admin';
 
 const Tags = ({ pageData }) => (
 
