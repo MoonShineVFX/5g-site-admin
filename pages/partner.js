@@ -1,6 +1,6 @@
-import PartnerBase from '../../src/components/partner/PartnerBase';
-import { PartnerProvider } from '../../src/context/partner/partner.state';
-import admin from '../../src/utils/admin';
+import PartnerBase from '../src/components/partner/PartnerBase';
+import { PartnerProvider } from '../src/context/partner/partner.state';
+import admin from '../src/utils/admin';
 
 const Partner = ({ pageData }) => (
 

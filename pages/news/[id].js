@@ -1,8 +1,8 @@
 import { useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import ActionWrap from '../../../src/components/news/ActionWrap';
-import { GlobalContext } from '../../../src/context/global.state';
-import admin from '../../../src/utils/admin';
+import ActionWrap from '../../src/components/news/ActionWrap';
+import { GlobalContext } from '../../src/context/global.state';
+import admin from '../../src/utils/admin';
 
 // Mapping
 const mappingCheckbox = (data, tags) => data.reduce((acc, curr) => {

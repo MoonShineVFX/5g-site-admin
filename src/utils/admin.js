@@ -57,7 +57,7 @@ const util = {
         // 回傳 promise
         return new Promise((resolve, reject) => {
 
-            const authHeader = (process.env.NODE_ENV === 'production') ? {} : {
+            const authHeader = {
                 headers: {
                     // 驗證(新增、編輯需要)
                     'Authorization': 'Basic c3RhZmZAbW9vbnNoaW5lLnR3OkFETSFOQE0wMG5zaGluZQ==',
@@ -113,7 +113,7 @@ const util = {
      */
     pathnameKey: (path, noSub = false) => {
 
-        return noSub ? path.split('/')[2] : (path.split('/')[3] || 'banner');
+        return noSub ? path.split('/')[1] : (path.split('/')[2] || 'banner');
 
     },
 
