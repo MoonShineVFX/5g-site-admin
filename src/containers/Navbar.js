@@ -35,7 +35,7 @@ const Navbar = ({ width }) => {
     return (
 
         <SiderLayout width={width}>
-            <Links url="/admin/home/banner" className="logo">
+            <Links url="/home/banner" className="logo">
                 <img src="//fakeimg.pl/200x60?text=LOGO" alt="LOGO" />
             </Links>
 
@@ -55,7 +55,7 @@ const Navbar = ({ width }) => {
                                     subItems.map((obj) => (
 
                                         <Item key={obj.pageKey}>
-                                            <Links url={`/admin/${pageKey}/${obj.pageKey}`}>{obj.name}</Links>
+                                            <Links url={`/${pageKey}/${obj.pageKey}`}>{obj.name}</Links>
                                         </Item>
 
                                     ))
@@ -65,7 +65,7 @@ const Navbar = ({ width }) => {
                         ) : (
 
                             <Item key={pageKey}>
-                                <Links url={`/admin/${pageKey}`}>{name}</Links>
+                                <Links url={`/${pageKey}`}>{name}</Links>
                             </Item>
 
                         )
