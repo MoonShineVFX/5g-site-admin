@@ -7,12 +7,12 @@ module.exports = {
         return [
             {
                 source: '/',
-                destination: '/admin/home/banner',
+                destination: '/home/banner',
                 permanent: false,
             },
             {
                 source: '/index',
-                destination: '/admin/home/banner',
+                destination: '/home/banner',
                 permanent: false,
             },
         ]
