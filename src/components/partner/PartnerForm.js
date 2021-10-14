@@ -65,8 +65,8 @@ const PartnerForm = () => {
         reqData = {
             ...reqData,
             ...formStorageData?.file && { file: formStorageData?.file },
-            id: formStorageData.id,
             tags: reqData.tags.filter((val) => val).map((val) => +val),
+            ...formStorageData.id ? { id: formStorageData.id } : null,
         };
 
         // 檢查: 圖片尺寸
@@ -94,7 +94,7 @@ const PartnerForm = () => {
         // 為了 tags 陣列而轉格式
         for (let i = 0; i < reqData.tags.length; i++) {
 
-            formData.append('tags[]', reqData.tags[i]);
+            formData.append('tags', reqData.tags[i]);
 
         }
 
