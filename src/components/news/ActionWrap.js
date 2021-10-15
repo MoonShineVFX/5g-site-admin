@@ -48,6 +48,9 @@ const TagsWrapLayout = styled.div({
 
 const IsHotLayout = styled.div({
     marginBottom: '16px',
+    '.checkmark': {
+        top: '2px',
+    },
 });
 
 const NewsTitleLayout = styled.div(({ theme }) => ({
@@ -170,7 +173,7 @@ const ActionWrap = ({
                 content={content}
                 serviceKey={serviceKey}
                 otherReqData={{
-                    ...id && id,
+                    ...id && { id },
                     title: newsTtitle || '',
                     description: newsDescription || '',
                     isHot: isHotChecked || false,

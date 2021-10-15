@@ -26,6 +26,7 @@ export async function getStaticProps () {
     }
 
     return {
+        revalidate: 3,
         props: {
             pageData: {
                 title: '合作夥伴',

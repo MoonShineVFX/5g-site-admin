@@ -55,7 +55,7 @@ const NewsDetail = ({ pageData }) => {
             content={pageData.data.detail}
             isHot={pageData.data.isHot}
             serviceKey="newsUpdate"
-            successCallback={() => router.reload()}
+            successCallback={() => router.push('/news')}
         />
 
     );
@@ -95,6 +95,7 @@ export async function getStaticProps ({ params }) {
 
     return {
         props: {
+            revalidate: 3,
             pageData: {
                 title: '編輯文章',
                 data: data.data,
