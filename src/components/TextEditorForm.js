@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { Fragment, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
@@ -50,7 +50,12 @@ const TextEditorForm = ({
             .then(() => {
 
                 Prompt('success', {
-                    mesg: '文章已更新，將重新整理頁面',
+                    mesg: (
+                        <Fragment>
+                            文章已更新，將於 3 秒後導回列表頁!
+                            <p>備註: 前台文章將於 30 秒後更新!</p>
+                        </Fragment>
+                    ),
                     enableEsc: false,
                     callback: () => {
 

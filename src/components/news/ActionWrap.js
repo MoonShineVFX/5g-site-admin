@@ -173,7 +173,7 @@ const ActionWrap = ({
                 content={content}
                 serviceKey={serviceKey}
                 otherReqData={{
-                    ...id && id,
+                    ...id && { id },
                     title: newsTtitle || '',
                     description: newsDescription || '',
                     isHot: isHotChecked || false,

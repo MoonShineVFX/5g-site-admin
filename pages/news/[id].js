@@ -55,7 +55,7 @@ const NewsDetail = ({ pageData }) => {
             content={pageData.data.detail}
             isHot={pageData.data.isHot}
             serviceKey="newsUpdate"
-            successCallback={() => router.reload()}
+            successCallback={() => router.push('/news')}
         />
 
     );
