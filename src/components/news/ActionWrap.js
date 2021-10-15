@@ -48,6 +48,9 @@ const TagsWrapLayout = styled.div({
 
 const IsHotLayout = styled.div({
     marginBottom: '16px',
+    '.checkmark': {
+        top: '2px',
+    },
 });
 
 const NewsTitleLayout = styled.div(({ theme }) => ({
