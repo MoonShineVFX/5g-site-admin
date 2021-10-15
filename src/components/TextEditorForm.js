@@ -50,13 +50,7 @@ const TextEditorForm = ({
             .then(() => {
 
                 Prompt('success', {
-                    mesg: (
-                        <Fragment>
-                            文章已更新，將於 3 秒後導回列表頁!
-                            <p>備註: 前台文章將於 30 秒後更新!</p>
-                        </Fragment>
-                    ),
-                    enableEsc: false,
+                    mesg: '備註: 前台資料將在 30 秒後生效!',
                     callback: () => {
 
                         formStorageDispatch({ type: 'CLEAR' });
