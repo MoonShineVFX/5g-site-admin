@@ -1,6 +1,7 @@
 import { Fragment, useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { Tag } from 'antd';
+import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 
 import HeadTag from '../../containers/HeadTag';
@@ -38,6 +39,9 @@ const TablesLayout = styled(Tables)(({ theme }) => ({
             borderRadius: '2px',
             padding: '4px 8px',
         },
+    },
+    '.col-isHot .anticon-check': {
+        color: 'red',
     },
 }));
 
@@ -122,6 +126,12 @@ const NewsBase = ({ pageData }) => {
             },
         },
         {
+            title: '熱門文章?',
+            dataIndex: 'isHot',
+            className: 'col-isHot',
+            render: (isHot) => isHot ? <CheckOutlined /> : <CloseOutlined />,
+        },
+        {
             title: '標籤',
             dataIndex: 'tags',
             className: 'col-tags',
@@ -132,7 +142,9 @@ const NewsBase = ({ pageData }) => {
                     tags.map((val) => (
 
                         <div key={val}>
-                            <Tag>{mappingTagOpt(newsTags)[val]}</Tag>
+                            {
+                                mappingTagOpt(newsTags)[val] ? <Tag>{mappingTagOpt(newsTags)[val]}</Tag> : '--'
+                            }
                         </div>
 
                     ))
