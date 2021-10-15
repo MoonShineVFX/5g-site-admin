@@ -2,8 +2,6 @@ import axios from 'axios';
 import { Modal } from 'antd';
 import dayjs from 'dayjs';
 
-// console.log('HOST:', process.env.HOST)
-
 const util = {
     /**
      * @author Betty
@@ -32,7 +30,6 @@ const util = {
                 }
 
                 return {
-                    // url: `/json${url}.json`,
                     url: (process.env.NODE_ENV === 'development') ? `//${process.env.HOST}/api${url}` : `/api${url}`,
                     method,
                 };
@@ -79,17 +76,12 @@ const util = {
                 ({ response }) => {
 
                     const {
-                        // status,
-                        data: { message },
+                        data: { errors },
                     } = response;
 
-                    reject(showErrorMesg(message));
-
-                    // reject(showErrorMesg(message, () => {
-
-                    //     window.location = `/error`;
-
-                    // }));
+                    reject(showErrorMesg(
+                        Object.keys(errors).map((key) => `${key}: ${errors[key]}`)
+                    ));
 
                 },
             )
@@ -101,7 +93,6 @@ const util = {
     serviceServer: ({ method = 'post', url }, reqData = {}) => {
 
         return axios[method](`http://${process.env.HOST}/api${url}`, reqData);
-        // return axios.post(`http://localhost:8080/${url}`, reqData);
 
     },
 
