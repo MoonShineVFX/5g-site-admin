@@ -53,6 +53,7 @@ const NewsDetail = ({ pageData }) => {
             newsTitle={pageData.data.title}
             description={pageData.data.description}
             content={pageData.data.detail}
+            isHot={pageData.data.isHot}
             serviceKey="newsUpdate"
             successCallback={() => router.reload()}
         />
