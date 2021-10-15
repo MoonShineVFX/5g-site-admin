@@ -27,7 +27,7 @@ const NewsCreate = () => {
         <ActionWrap
             title={title}
             serviceKey="newsCreate"
-            successCallback={() => router.push('/admin/news')}
+            successCallback={() => router.push('/news')}
         />
 
     );

@@ -15,13 +15,13 @@ import HeadTag from '../../containers/HeadTag';
 import ContentHeader from '../../containers/ContentHeader';
 import LightboxForm from '../LightboxForm';
 import TextEditorForm from '../TextEditorForm';
+import Checkbox from '../Checkbox';
 import TagsBox from '../news/TagsBox';
 
 import { GlobalContext } from '../../context/global.state';
 import adminConst from '../../utils/admin.const';
 
 const { lightboxTitle } = adminConst;
-// const title = '新增文章';
 
 // Mapping
 const mappingTagOpt = (opts) => opts.reduce((acc, { id, name }) => {
@@ -43,6 +43,10 @@ const SettingTagLayout = styled.span({
 
 const TagsWrapLayout = styled.div({
     minHeight: '27px',
+    marginBottom: '16px',
+});
+
+const IsHotLayout = styled.div({
     marginBottom: '16px',
 });
 
@@ -82,6 +86,7 @@ const ActionWrap = ({
     newsTitle,
     description,
     content,
+    isHot,
     serviceKey,
     successCallback,
 }) => {
@@ -99,6 +104,7 @@ const ActionWrap = ({
     // State
     const [newsTtitle, setNewsTitle] = useState(newsTitle);
     const [newsDescription, setNewsDescription] = useState(description);
+    const [isHotChecked, setIsHotChecked] = useState(isHot);
 
     useEffect(() => {
 
@@ -115,8 +121,19 @@ const ActionWrap = ({
     // 標題與簡述
     const handleChange = ({ target }) => {
 
-        if (target.name === 'title') setNewsTitle(target.value);
-        else setNewsDescription(target.value);
+        switch (target.name) {
+            case 'title':
+                setNewsTitle(target.value);
+                break;
+
+            case 'isHot':
+                setIsHotChecked(target.checked);
+                break;
+
+            default:
+                setNewsDescription(target.value);
+                break;
+        }
 
     };
 
@@ -153,13 +170,25 @@ const ActionWrap = ({
                 content={content}
                 serviceKey={serviceKey}
                 otherReqData={{
-                    id,
-                    title: newsTtitle,
-                    description: newsDescription,
+                    ...id && id,
+                    title: newsTtitle || '',
+                    description: newsDescription || '',
+                    isHot: isHotChecked || false,
                     tags: formStorageData.selected ? Object.keys(formStorageData.selected).filter((val) => formStorageData.selected[val].isChecked).map((val) => +val) : []
                 }}
                 successCallback={successCallback}
             >
+                <IsHotLayout>
+                    <Checkbox
+                        name="isHot"
+                        value={isHot}
+                        defaultChecked={isHotChecked}
+                        onChange={handleChange}
+                    >
+                        設為熱門文章
+                    </Checkbox>
+                </IsHotLayout>
+
                 <NewsTitleLayout>
                     文章標題:
                     <span className="field">
