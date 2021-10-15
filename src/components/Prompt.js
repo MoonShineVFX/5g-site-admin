@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Modal } from 'antd';
 import { ExclamationCircleOutlined  } from '@ant-design/icons';
@@ -32,18 +33,29 @@ const Prompt = (type, obj) => {
 
         Modal[type]({
             title: prompts[type],
-            content: obj?.mesg ? obj.mesg : sendSuccessText,
+            content: obj?.mesg ? (
+                <Fragment>
+                    {sendSuccessText}
+                    <p>{obj.mesg}</p>
+                </Fragment>
+            ) : sendSuccessText,
             okText: '確認',
             okType: 'primary',
             className: `prompt-wrap prompt-${type}`,
             centered: true,
-            keyboard: obj.enableEsc,
-            ...obj && {
-                onOk: () => {
+            keyboard: !(type === 'success'),
+            ...obj?.callback && {
+                onOk: () => new Promise((resolve) => {
 
-                    if (obj.callback) obj.callback();
+                    setTimeout(() => {
 
-                },
+                        obj.callback();
+                        resolve();
+
+                    }, 3000);
+
+                })
+                .catch(() => console.log('Oops errors!')),
             },
         })
 

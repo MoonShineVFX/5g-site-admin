@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 const adminConst = {
     mobileWidth: 768,
     today: dayjs().format('YYYY-MM-DD'),
-    sendSuccessText: '資料已成功送出',
+    sendSuccessText: '資料已成功送出，將於 3 秒後更新。',
     emptyText: '目前沒有資料...',
     errorText: '此欄位為必填!',
     startDateText: '開始時間',
