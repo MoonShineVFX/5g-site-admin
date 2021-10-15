@@ -95,6 +95,7 @@ export async function getStaticProps ({ params }) {
 
     return {
         props: {
+            revalidate: 3,
             pageData: {
                 title: '編輯文章',
                 data: data.data,
