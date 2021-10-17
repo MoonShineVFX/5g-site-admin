@@ -47,7 +47,7 @@ const About = ({ pageData }) => {
 
 export default About;
 
-export async function getStaticProps () {
+export async function getServerSideProps () {
 
     const res = await admin.serviceServer({ url: '/about' });
     const { data } = res;
@@ -61,7 +61,6 @@ export async function getStaticProps () {
     }
 
     return {
-        revalidate: 3,
         props: {
             pageData: {
                 title: '關於我們',

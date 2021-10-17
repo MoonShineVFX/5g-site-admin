@@ -12,7 +12,7 @@ const News = ({ pageData }) => (
 
 export default News;
 
-export async function getStaticProps () {
+export async function getServerSideProps () {
 
     const res = await admin.serviceServer({ url: '/news' });
     const { data } = res;
@@ -26,7 +26,6 @@ export async function getStaticProps () {
     }
 
     return {
-        revalidate: 3,
         props: {
             pageData: {
                 title: '最新消息',

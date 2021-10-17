@@ -12,7 +12,7 @@ const Partner = ({ pageData }) => (
 
 export default Partner;
 
-export async function getStaticProps () {
+export async function getServerSideProps () {
 
     const res = await admin.serviceServer({ url: '/partners' });
     const { data } = res;
@@ -26,7 +26,6 @@ export async function getStaticProps () {
     }
 
     return {
-        revalidate: 3,
         props: {
             pageData: {
                 title: '合作夥伴',

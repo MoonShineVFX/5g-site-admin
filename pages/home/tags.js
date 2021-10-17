@@ -12,7 +12,7 @@ const Tags = ({ pageData }) => (
 
 export default Tags;
 
-export async function getStaticProps () {
+export async function getServerSideProps () {
 
     const res = await admin.serviceServer({ url: '/tags_and_categories' });
     const { data } = res;
@@ -26,7 +26,6 @@ export async function getStaticProps () {
     }
 
     return {
-        revalidate: 3,
         props: {
             pageData: {
                 title: '標籤管理',
