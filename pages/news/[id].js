@@ -64,26 +64,14 @@ const NewsDetail = ({ pageData }) => {
 
 export default NewsDetail;
 
-export async function getStaticPaths () {
+export async function getServerSideProps ({ params }) {
 
-    const res = await admin.serviceServer({ url: '/news' });
-    const { data } = res;
-    const paths = data.data.list.map((obj) => ({
-        params: { id: String(obj.id) },
-    }));
-
-    return { paths, fallback: false };
-
-}
-
-export async function getStaticProps ({ params }) {
-
-    const res = await admin.serviceServer({
+    const response = await admin.serviceServer({
         method: 'get',
-        url: `/news/${params.id}`,
+        url: `/news/${+params.id}`,
     });
 
-    const { data } = res;
+    const { data } = response;
 
     if (!data.result) {
 
@@ -95,7 +83,6 @@ export async function getStaticProps ({ params }) {
 
     return {
         props: {
-            revalidate: 3,
             pageData: {
                 title: '編輯文章',
                 data: data.data,

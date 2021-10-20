@@ -12,7 +12,7 @@ const Banner = ({ pageData }) => (
 
 export default Banner;
 
-export async function getStaticProps () {
+export async function getServerSideProps () {
 
     const res = await admin.serviceServer({
         method: 'get',
@@ -30,7 +30,6 @@ export async function getStaticProps () {
     }
 
     return {
-        revalidate: 3,
         props: {
             pageData: {
                 title: 'Banner輪播設定',
