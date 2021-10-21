@@ -55,13 +55,13 @@ const BannerBase = ({ pageData }) => {
 
         partnerDispatch({
             type: 'tag_option',
-            payload: pageData.data.tag,
+            payload: pageData.data.tags,
         });
 
         partnerDispatch({
             type: 'partner_list',
             payload: {
-                lists: pageData.data.partner,
+                lists: pageData.data.partners,
                 imageSize: pageData.imageSize,
             },
         });
@@ -201,7 +201,7 @@ const BannerBase = ({ pageData }) => {
             <TablesLayout
                 rowKey="id"
                 columns={columns}
-                data={action ? lists : pageData.data.partner}
+                data={action ? lists : pageData.data.partners}
             />
 
             {
