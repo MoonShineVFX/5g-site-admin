@@ -23,7 +23,6 @@ const NewsDetail = ({ pageData }) => {
     // Context
     const {
         newsTags,
-        formStorageData,
         globalDispatch,
         formStorageDispatch,
     } = useContext(GlobalContext);
@@ -39,7 +38,7 @@ const NewsDetail = ({ pageData }) => {
             type: 'COLLECT',
             payload: {
                 selected: mappingCheckbox(pageData.data.tags, newsTags),
-                category: formStorageData.selected && Object.keys(mappingCheckbox(pageData.data.tags, newsTags)).map((key) => mappingCheckbox(pageData.data.tags, newsTags)[key].category)[0],
+                category: Object.keys(mappingCheckbox(pageData.data.tags, newsTags)).map((key) => mappingCheckbox(pageData.data.tags, newsTags)[key].category)[0],
             },
         });
 

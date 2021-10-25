@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 
-const Links = ({ url, children, ...rest }) => (
+const Links = ({ url, children }) => (
 
-    <Link href={url}>
-        <a href={url} {...rest}>{children}</a>
+    <Link href={url} as={url} passHref>
+        <a href={url}>{children}</a>
     </Link>
 
 );

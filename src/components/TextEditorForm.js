@@ -50,7 +50,6 @@ const TextEditorForm = ({
             .then(() => {
 
                 Prompt('success', {
-                    mesg: '備註: 前台資料將在 30 秒後生效!',
                     callback: () => {
 
                         formStorageDispatch({ type: 'CLEAR' });
