@@ -24,6 +24,7 @@ const partnerReducer = (state, { type, payload }) => {
         case 'partner_update':
             return {
                 ...state,
+                action: payload.action,
                 lists: state.lists.map((obj) => {
 
                     if (obj.id === payload.resData.id) obj = payload.resData;

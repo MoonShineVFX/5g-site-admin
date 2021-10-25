@@ -29,7 +29,7 @@ export async function getServerSideProps () {
         props: {
             pageData: {
                 title: '合作夥伴',
-                imageSize: '200x150',
+                imageSize: '152x114',
                 data: data.data,
             },
         },

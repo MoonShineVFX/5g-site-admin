@@ -11,7 +11,7 @@ const NewsCreate = () => {
     const router = useRouter();
 
     // Context
-    const { globalDispatch } = useContext(GlobalContext);
+    const { globalDispatch, formStorageDispatch } = useContext(GlobalContext);
 
     useEffect(() => {
 
@@ -20,7 +20,9 @@ const NewsCreate = () => {
             payload: 'news',
         });
 
-    }, [globalDispatch]);
+        formStorageDispatch({ type: 'CLEAR' });
+
+    }, [globalDispatch, formStorageDispatch]);
 
     return (
 
