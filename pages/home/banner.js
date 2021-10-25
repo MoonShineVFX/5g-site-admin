@@ -33,7 +33,7 @@ export async function getServerSideProps () {
         props: {
             pageData: {
                 title: 'Banner輪播設定',
-                imageSize: '1200x520',
+                imageSize: '1140x428',
                 data: data.data,
             },
         },
