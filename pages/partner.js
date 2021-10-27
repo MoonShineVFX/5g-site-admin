@@ -28,7 +28,7 @@ export async function getServerSideProps () {
     return {
         props: {
             pageData: {
-                title: '合作夥伴',
+                title: '策略夥伴',
                 imageSize: '152x114',
                 data: data.data,
             },

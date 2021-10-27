@@ -1,12 +1,15 @@
 import React, { useContext, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { UploadOutlined } from '@ant-design/icons';
+import { Upload, message } from 'antd';
+import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
 import { red } from '@ant-design/colors';
 import styled from 'styled-components';
 import Buttons from './Buttons';
 import { GlobalContext } from '../context/global.state';
+import Service from '../utils/admin.service';
 
-const UploadLayout = styled.div.attrs(() => ({
+//
+const UploadSingleLayout = styled.div.attrs(() => ({
     className: 'fileUploadWrap',
 }))(({ theme }) => ({
     '.upload-action': {
@@ -36,6 +39,7 @@ const UploadLayout = styled.div.attrs(() => ({
         },
         'img': {
             maxHeight: '100%',
+            maxWidth: '100%',
         },
     },
     '.upload-notice': {
@@ -46,6 +50,7 @@ const UploadLayout = styled.div.attrs(() => ({
     },
 }));
 
+//
 const ButtonsLayout = styled(Buttons)({
     fontSize: '14px',
     marginRight: '12px',
@@ -55,9 +60,11 @@ const ButtonsLayout = styled(Buttons)({
     },
 });
 
+// 圖片預覽
 const ImgPreview = ({ url }) => <img src={url} alt="thumb" />;
 
-const Upload = ({ size }) => {
+// 單張
+const UploadSingle = ({ size }) => {
 
     // Context
     const {
@@ -79,7 +86,10 @@ const Upload = ({ size }) => {
             setImgPreview(target.files[0]);
             formStorageDispatch({
                 type: 'COLLECT',
-                payload: { ...formStorageData, file: target.files[0] },
+                payload: {
+                    ...formStorageData,
+                    file: target.files[0],
+                },
             });
 
         }
@@ -91,7 +101,7 @@ const Upload = ({ size }) => {
 
     return (
 
-        <UploadLayout>
+        <UploadSingleLayout>
             <div className="upload-action">
                 <input
                     type="file"
@@ -137,14 +147,15 @@ const Upload = ({ size }) => {
                 <li>檔案大小不得超過 5MB</li>
                 <li>圖片尺寸為: {size}</li>
             </ul>
-        </UploadLayout>
+        </UploadSingleLayout>
 
     );
 
 };
 
-Upload.propTypes = {
+UploadSingle.propTypes = {
     size: PropTypes.string, // 1200x520
+    multiple: PropTypes.bool, // 1200x520
 };
 
-export default Upload;
+export default UploadSingle;

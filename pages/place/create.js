@@ -1,10 +1,8 @@
 import { useContext, useEffect } from 'react';
-import ActionWrap from '../../src/components/news/ActionWrap';
+import ActionWrap from '../../src/components/place/ActionWrap';
 import { GlobalContext } from '../../src/context/global.state';
 
-const title = '新增文章';
-
-const NewsCreate = () => {
+const PlaceCreate = () => {
 
     // Context
     const { globalDispatch, formStorageDispatch } = useContext(GlobalContext);
@@ -13,7 +11,7 @@ const NewsCreate = () => {
 
         globalDispatch({
             type: 'page',
-            payload: 'news',
+            payload: 'place',
         });
 
         formStorageDispatch({ type: 'CLEAR' });
@@ -23,12 +21,12 @@ const NewsCreate = () => {
     return (
 
         <ActionWrap
-            title={title}
-            serviceKey="newsCreate"
+            title="新增示範場域"
+            serviceKey="demoPlaceCreate"
         />
 
     );
 
 };
 
-export default NewsCreate;
+export default PlaceCreate;

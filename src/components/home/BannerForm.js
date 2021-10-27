@@ -3,7 +3,7 @@ import { message } from 'antd';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import Buttons from '../../components/Buttons';
-import Upload from '../Upload';
+import UploadSingle from '../Upload';
 import { FormRow, ErrorMesg } from '../../components/LightboxForm';
 import { GlobalContext } from '../../context/global.state';
 import { BannerContext } from '../../context/home/banner.state';
@@ -146,7 +146,7 @@ const BannerForm = () => {
             </FormRow>
 
             <RowUpload>
-                <Upload size={imageSize} />
+                <UploadSingle size={imageSize} />
             </RowUpload>
 
             <div className="row row-btns">

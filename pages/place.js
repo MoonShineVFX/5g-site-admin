@@ -1,17 +1,17 @@
-import NewsBase from '../src/components/news/NewsBase';
+import PlaceBase from '../src/components/place/PlaceBase';
 import admin from '../src/utils/admin';
 
-const News = ({ pageData }) => (
+const Place = ({ pageData }) => (
 
-    <NewsBase pageData={pageData} />
+    <PlaceBase pageData={pageData} />
 
 );
 
-export default News;
+export default Place;
 
 export async function getServerSideProps () {
 
-    const res = await admin.serviceServer({ url: '/news' });
+    const res = await admin.serviceServer({ url: '/demo_places' });
     const { data } = res;
 
     if (!data.result) {
@@ -25,7 +25,8 @@ export async function getServerSideProps () {
     return {
         props: {
             pageData: {
-                title: '最新消息',
+                title: '場域空間',
+                imageSize: '563x312',
                 data: data.data,
             },
         },

@@ -32,7 +32,7 @@ const adminConst = {
             subItems: [],
         },
         {
-            name: '合作夥伴',
+            name: '策略夥伴',
             pageKey: 'partner',
             subItems: [],
         },
@@ -44,30 +44,12 @@ const adminConst = {
         {
             name: '政策資源',
             pageKey: 'policy',
-            subItems: [
-                {
-                    name: '中央資源',
-                    pageKey: 'center',
-                },
-                {
-                    name: '地方資源',
-                    pageKey: 'local',
-                },
-            ],
+            subItems: [],
         },
         {
             name: '場域空間',
-            pageKey: 'area',
-            subItems: [
-                {
-                    name: '5G示範場域',
-                    pageKey: '5g',
-                },
-                {
-                    name: '互動科技示範場域',
-                    pageKey: 'tech',
-                },
-            ],
+            pageKey: 'place',
+            subItems: [],
         },
     ],
 
@@ -79,6 +61,11 @@ const adminConst = {
         createPartner: '新增夥伴',
         updatePartner: '編輯夥伴',
         settingTag: '設定標籤',
+    },
+
+    placeConfig: {
+        '5g': '5G',
+        'tech': '互動科技',
     },
 
     // Prompt type
