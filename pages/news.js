@@ -1,12 +1,9 @@
 import NewsBase from '../src/components/news/NewsBase';
-import { NewsProvider } from '../src/context/news/news.state';
 import admin from '../src/utils/admin';
 
 const News = ({ pageData }) => (
 
-    <NewsProvider>
-        <NewsBase pageData={pageData} />
-    </NewsProvider>
+    <NewsBase pageData={pageData} />
 
 );
 

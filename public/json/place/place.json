@@ -1,0 +1,99 @@
+{
+    "result": 1,
+    "message": "",
+    "errors": {},
+    "data": {
+        "list": [
+            {
+                "id": 8313,
+                "title": "標題-8313",
+                "imgUrl": "//fakeimg.pl/563x312",
+                "address": "台北市南港區忠孝東路四段",
+                "type": "5g",
+                "contact": {
+                    "unit": "中華民國創業投資商業同業公會",
+                    "name": "曾炫誠",
+                    "phone": "(02)2546-5336",
+                    "fax": "(02)2389-0636",
+                    "email": "owen.tzeng@tvca.org.tw"
+                },
+                "createTime": "2021-10-01T09:19:00",
+                "updateTime": "2021-10-01T09:19:00",
+                "creator": "新增者",
+                "updater": "編輯者"
+            },
+            {
+                "id": 48912322,
+                "title": "標題-48912322",
+                "imgUrl": "//fakeimg.pl/563x312",
+                "address": "台北市南港區忠孝東路四段",
+                "type": "tech",
+                "contact": {
+                    "unit": "中華民國創業投資商業同業公會",
+                    "name": "曾炫誠",
+                    "phone": "(02)2546-5336",
+                    "fax": "(02)2389-0636",
+                    "email": "owen.tzeng@tvca.org.tw"
+                },
+                "createTime": "2021-10-01T09:19:00",
+                "updateTime": "2021-10-01T09:19:00",
+                "creator": "新增者",
+                "updater": "編輯者"
+            },
+            {
+                "id": 48912323,
+                "title": "標題-48912323",
+                "imgUrl": "//fakeimg.pl/563x312",
+                "address": "台北市南港區忠孝東路四段",
+                "type": "tech",
+                "contact": {
+                    "unit": "中華民國創業投資商業同業公會",
+                    "name": "曾炫誠",
+                    "phone": "(02)2546-5336",
+                    "fax": "(02)2389-0636",
+                    "email": "owen.tzeng@tvca.org.tw"
+                },
+                "createTime": "2021-10-01T09:19:00",
+                "updateTime": "2021-10-01T09:19:00",
+                "creator": "新增者",
+                "updater": "編輯者"
+            },
+            {
+                "id": 48912324,
+                "title": "標題-48912324",
+                "imgUrl": "//fakeimg.pl/563x312",
+                "address": "台北市南港區忠孝東路四段",
+                "type": "5g",
+                "contact": {
+                    "unit": "中華民國創業投資商業同業公會",
+                    "name": "曾炫誠",
+                    "phone": "(02)2546-5336",
+                    "fax": "(02)2389-0636",
+                    "email": "owen.tzeng@tvca.org.tw"
+                },
+                "createTime": "2021-10-01T09:19:00",
+                "updateTime": "2021-10-01T09:19:00",
+                "creator": "新增者",
+                "updater": "編輯者"
+            },
+            {
+                "id": 48912325,
+                "title": "標題-48912325",
+                "imgUrl": "//fakeimg.pl/563x312",
+                "address": "台北市南港區忠孝東路四段",
+                "type": "5g",
+                "contact": {
+                    "unit": "中華民國創業投資商業同業公會",
+                    "name": "曾炫誠",
+                    "phone": "(02)2546-5336",
+                    "fax": "(02)2389-0636",
+                    "email": "owen.tzeng@tvca.org.tw"
+                },
+                "createTime": "2021-10-01T09:19:00",
+                "updateTime": "2021-10-01T09:19:00",
+                "creator": "新增者",
+                "updater": "編輯者"
+            }
+        ]
+    }
+}

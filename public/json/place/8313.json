@@ -1,0 +1,46 @@
+{
+    "result": 1,
+    "message": "",
+    "errors": {},
+    "data": {
+        "id": 54897,
+        "title": "駁二大義區C7動漫倉庫",
+        "address": "台北市南港區忠孝東路四段",
+        "locationUrl": "https://www.google.com.tw/maps/place/%E5%A4%A2%E6%83%B3%E5%8B%95%E7%95%AB/@25.0510988,121.5928083,17z/data=!3m2!4b1!5s0x3442ab6558ba3521:0xbe34660725096e72!4m5!3m4!1s0x3442aba32bd21781:0x592cb0b7781a69d3!8m2!3d25.051094!4d121.594997",
+        "description": "PAIR位於大義區C9倉庫，有8間10坪的駐村藝術家創作工作室，以及一間共同交流空間，具備如講座、交誼、廚房、會議、洗衣等複合功能，提供進駐藝術家及團隊一個充滿藝文能量的展演及交流平台。",
+        "type": "5g",
+        "imgUrl": "/domain/path/xxx.jpg",
+        "images": [
+            {
+                "id": 54897,
+                "imgUrl": "/domain/path/xxx.jpg"
+            }
+        ],
+        "contact": {
+            "unit": "中華民國創業投資商業同業公會",
+            "name": "曾炫誠",
+            "phone": "(02)2546-5336",
+            "fax": "(02)2389-0636",
+            "email": "owen.tzeng@tvca.org.tw"
+        },
+        "links": [
+            {
+                "name": "駁二共創基地網",
+                "url": "https://beboss.wda.gov.tw"
+            }
+        ],
+        "files": [
+            {
+                "name": "L1490507.pdf",
+                "size": 215714,
+                "type": "application/pdf",
+                "url": "/domain/path/L1490507.pdf"
+            }
+        ],
+        "videoIframe": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/sqgxcCjD04s\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>",
+        "createTime": "2021-10-01T09:19:00",
+        "updateTime": "2021-10-01T09:19:00",
+        "creator": "新增者",
+        "updater": "編輯者"
+    }
+}

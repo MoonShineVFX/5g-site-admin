@@ -9,9 +9,7 @@ import ContentHeader from '../../containers/ContentHeader';
 import Links from '../Links';
 import Tables from '../Tables';
 import Buttons from '../Buttons';
-
 import { GlobalContext } from '../../context/global.state';
-import { NewsContext } from '../../context/news/news.state';
 import admin from '../../utils/admin';
 
 const { pathnameKey, renderWithoutValue, renderDateTime } = admin;
@@ -57,16 +55,11 @@ const antdTableFilter = (data) => data.reduce((acc, { categoryId, categoryName }
 
 const NewsBase = ({ pageData }) => {
 
+    // Router
     const router = useRouter();
 
     // Context
     const { newsTags, globalDispatch } = useContext(GlobalContext);
-
-    const {
-        action,
-        lists,
-        newsDispatch,
-    } = useContext(NewsContext);
 
     useEffect(() => {
 
@@ -75,14 +68,7 @@ const NewsBase = ({ pageData }) => {
             payload: pathnameKey(router.pathname, true),
         });
 
-        newsDispatch({
-            type: 'news_list',
-            payload: {
-                lists: pageData.data.list,
-            },
-        });
-
-    }, [globalDispatch, router, newsDispatch]);
+    }, [globalDispatch, router]);
 
     // 表格欄位
     const columns = [
@@ -193,7 +179,7 @@ const NewsBase = ({ pageData }) => {
             <TablesLayout
                 rowKey="id"
                 columns={columns}
-                data={action ? lists : pageData.data.list}
+                data={pageData.data.list}
             />
         </Fragment>
 
