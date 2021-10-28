@@ -1,50 +1,24 @@
-import {
-    Fragment,
-    useContext,
-    useEffect,
-    useState,
-} from 'react';
-
+import { Fragment, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
-import { useForm, useFieldArray } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { Row, Col, message } from 'antd';
-import { CloseCircleOutlined } from '@ant-design/icons';
 
 import LightboxFormStyle from '../LightboxFormStyle';
 import Buttons from '../Buttons';
 import { FormRow, ErrorMesg } from '../LightboxForm';
-import Upload from '../Upload';
-import {
-    FormWrap,
-    ActionLayout,
-    CreateFieldLayout,
-} from './PlaceFormLayout';
+import Prompt from '../Prompt';
+import UploadSingle from '../Upload';
+import { FormWrap } from './PlaceFormLayout';
 
 import { GlobalContext } from '../../context/global.state';
 import adminConst from '../../utils/admin.const';
+import Service from '../../utils/admin.service';
 
 const { placeConfig } = adminConst;
 
-// Mapping
-const mappingTagOpt = (opts) => opts.reduce((acc, { id, name }) => {
-
-    acc[id] = name;
-    return acc;
-
-}, {});
-
 //
-const PlaceForm = ({
-    title,
-    id,
-    newsTitle,
-    description,
-    content,
-    isHot,
-    serviceKey,
-    successCallback,
-}) => {
+const PlaceForm = ({ serviceKey }) => {
 
     // Router
     const router = useRouter();
@@ -52,6 +26,7 @@ const PlaceForm = ({
     // Context
     const {
         formStorageData,
+        formStorageDispatch,
         globalDispatch,
         lightboxDispatch,
     } = useContext(GlobalContext);
@@ -61,24 +36,7 @@ const PlaceForm = ({
         handleSubmit,
         register,
         formState: { errors },
-        control,
-    } = useForm({
-        defaultValues: {
-            ...formStorageData,
-            links: formStorageData ? [{ ...formStorageData }] : [{ name: '', url: '' }],
-        },
-    });
-
-    const { fields, append, remove } = useFieldArray({
-        control,
-        name: 'links',
-    });
-
-    // remove
-    const targetRemove = (index) => remove(index);
-
-    // append
-    const targetAppend = () => append({ name: '', url: '' });
+    } = useForm();
 
     // 送資料
     const handleReqData = (reqData) => {
@@ -87,118 +45,92 @@ const PlaceForm = ({
 
         reqData = {
             ...reqData,
-            ...formStorageData?.file && { file: formStorageData?.file },
+            ...formStorageData?.file && { thumb: formStorageData?.file },
             ...formStorageData.id ? { id: formStorageData.id } : null,
         };
 
-        console.log('reqData:', reqData)
-
         // 檢查: 圖片尺寸
-        // if (formStorageData?.files) {
+        if (formStorageData?.files) {
 
-        //     const limitSize = (reqData.image.size / 1024 / 1024) < 5;
+            const limitSize = (reqData.image.size / 1024 / 1024) < 5;
 
-        //     // 檢查圖片大小是否超過 5MB
-        //     if (!limitSize) {
+            // 檢查圖片大小是否超過 5MB
+            if (!limitSize) {
 
-        //         message.error('檔案不能超過 5MB，請重新上傳');
-        //         return;
+                message.error('檔案不能超過 5MB，請重新上傳');
+                return;
 
-        //     }
+            }
 
-        // }
+        }
 
-        // 先排除 tags
-        // for (let key in reqData) {
+        for (let key in reqData) {
 
-        //     if (key !== 'tags') formData.append(key, reqData[key]);
+            formData.append(key, reqData[key]);
 
-        // }
+        }
 
-        // // 為了 tags 陣列而轉格式
-        // for (let i = 0; i < reqData.tags.length; i++) {
+        Service[serviceKey](formData)
+            .then(() => {
 
-        //     formData.append('tags', reqData.tags[i]);
+                Prompt('success', {
+                    callback: () => {
 
-        // }
+                        formStorageDispatch({ type: 'CLEAR' });
 
-        // if (currEvent === 'updatePartner') partnerUpdate(formData);
-        // else partnerCreate(formData);
+                        // Betty: 先暫時註解
+                        // router.push('/place');
+
+                    },
+                });
+
+            });
 
     };
-
-    console.log('errors:', errors)
 
     return (
 
         <Fragment>
             <LightboxFormStyle />
 
-            <FormWrap onSubmit={handleSubmit(handleReqData)}>
+            <FormWrap
+                onSubmit={handleSubmit(handleReqData)}
+                className={(serviceKey === 'demoPlaceUpdate') ? 'with-thumb' : ''}
+            >
                 <Row>
                     <Col span={12} className="left">
                         <div className="row row-thumb">
-                            <h3>列表頁縮圖</h3>
-                            <Upload size="563x312" />
-                        </div>
-
-                        <hr />
-
-                        <div className="row">
-                            <h3>
-                                相關連結
-                                <CreateFieldLayout onClick={targetAppend}>
-                                    增加欄位
-                                </CreateFieldLayout>
-                            </h3>
-
-                            {
-                                fields.map((item, idx) => (
-
-                                    <Fragment key={item.id}>
-                                        <div className="items">
-                                            <FormRow labelTitle="名稱">
-                                                <input
-                                                    type="text"
-                                                    name="name"
-                                                    control={control}
-                                                    defaultValue={item.name}
-                                                    {...register(`links.${idx}.name`)}
-                                                />
-                                            </FormRow>
-
-                                            <FormRow
-                                                labelTitle="連結(URL)"
-                                                error={errors.links && errors.links[idx]?.url && true}
-                                                {...(errors.links && errors.links[idx]?.url.type === 'pattern') && { errorMesg: '格式錯誤' }}
-                                            >
-                                                <input
-                                                    type="text"
-                                                    name="url"
-                                                    control={control}
-                                                    defaultValue={item.url}
-                                                    placeholder="請輸入完整連結 (https 或 http)"
-                                                    {...register(`links.${idx}.url`, {
-                                                        pattern: /^(https?|chrome):\/\/[^\s$.?#].[^\s]*$/g,
-                                                    })}
-                                                />
-                                            </FormRow>
-
-                                            <ActionLayout>
-                                                <CloseCircleOutlined
-                                                    className={!idx && 'hide'}
-                                                    onClick={() => targetRemove(idx)}
-                                                />
-                                            </ActionLayout>
-                                        </div>
-                                    </Fragment>
-
-                                ))
-                            }
+                            <h3>縮圖(列表頁)</h3>
+                            <UploadSingle size="563x312" />
                         </div>
                     </Col>
 
                     <Col flex={1}>
+                        <div className={`row radio-button ${errors.type ? 'hasError' : ''}`}>
+                            <div className="title isRequired">場域分類 (必填)</div>
+                            <div className="field noBorder">
+                                {
+                                    Object.keys(placeConfig).map((key) => (
+
+                                        <label key={key}>
+                                            <input
+                                                type="radio"
+                                                name="type"
+                                                defaultValue={key}
+                                                defaultChecked="tech"
+                                                // defaultChecked={(formStorageData.type === key)}
+                                                {...register('type', { required: true })}
+                                            />
+                                            {placeConfig[key]}
+                                        </label>
+
+                                    ))
+                                }
+                            </div>
+
+                            {errors.type && <ErrorMesg />}
+                        </div>
+
                         <div className="items">
                             <FormRow
                                 labelTitle="場域名稱"
@@ -210,45 +142,6 @@ const PlaceForm = ({
                                     name="title"
                                     defaultValue={formStorageData.title}
                                     {...register('title', { required: true })}
-                                />
-                            </FormRow>
-
-                            <div className={`row radio-button ${errors.type ? 'hasError' : ''}`}>
-                                <div className="title isRequired">場域分類 (必填)</div>
-                                <div className="field noBorder">
-                                    {
-                                        Object.keys(placeConfig).map((key) => (
-
-                                            <label key={key}>
-                                                <input
-                                                    type="radio"
-                                                    name="type"
-                                                    defaultValue={key}
-                                                    defaultChecked={(formStorageData.type === key)}
-                                                    {...register('type', { required: true })}
-                                                />
-                                                {placeConfig[key]}
-                                            </label>
-
-                                        ))
-                                    }
-                                </div>
-
-                                {errors.type && <ErrorMesg />}
-                            </div>
-                        </div>
-
-                        <div className="items">
-                            <FormRow
-                                labelTitle="地址"
-                                required={true}
-                                error={errors.address && true}
-                            >
-                                <input
-                                    type="text"
-                                    name="address"
-                                    defaultValue={formStorageData.address}
-                                    {...register('address', { required: true })}
                                 />
                             </FormRow>
 
@@ -269,6 +162,45 @@ const PlaceForm = ({
                             </FormRow>
                         </div>
 
+                        <FormRow
+                            labelTitle="場域介紹"
+                            className="textarea"
+                            noBorder={true}
+                        >
+                            <textarea
+                                name="description"
+                                defaultValue={formStorageData.description}
+                                {...register('description')}
+                            />
+                        </FormRow>
+
+                        <div className="items">
+                            <FormRow labelTitle="相關連結名稱" >
+                                <input
+                                    type="text"
+                                    name="relativeLinkName"
+                                    defaultValue={formStorageData.relativeLinkName}
+                                    {...register('relativeLinkName')}
+                                />
+                            </FormRow>
+
+                            <FormRow
+                                labelTitle="相關連結 (URL)"
+                                error={errors.relativeLinkUrl && true}
+                                {...(errors.relativeLinkUrl?.type === 'pattern') && { errorMesg: '格式錯誤' }}
+                            >
+                                <input
+                                    type="text"
+                                    name="relativeLinkUrl"
+                                    defaultValue={formStorageData.relativeLinkUrl}
+                                    placeholder="請輸入完整連結 (https 或 http)"
+                                    {...register('relativeLinkUrl', {
+                                        pattern: /^(https?|chrome):\/\/[^\s$.?#].[^\s]*$/g,
+                                    })}
+                                />
+                            </FormRow>
+                        </div>
+
                         <div className="items">
                             <FormRow
                                 labelTitle="聯絡單位"
@@ -278,7 +210,7 @@ const PlaceForm = ({
                                 <input
                                     type="text"
                                     name="contactUnit"
-                                    defaultValue={formStorageData.contactUnit}
+                                    defaultValue={formStorageData.contact?.unit}
                                     {...register('contactUnit', { required: true })}
                                 />
                             </FormRow>
@@ -287,7 +219,7 @@ const PlaceForm = ({
                                 <input
                                     type="text"
                                     name="contactName"
-                                    defaultValue={formStorageData.contactName}
+                                    defaultValue={formStorageData.contact?.name}
                                     {...register('contactName')}
                                 />
                             </FormRow>
@@ -298,7 +230,7 @@ const PlaceForm = ({
                                 <input
                                     type="text"
                                     name="contactPhone"
-                                    defaultValue={formStorageData.contactPhone}
+                                    defaultValue={formStorageData.contact?.phone}
                                     {...register('contactPhone')}
                                 />
                             </FormRow>
@@ -307,7 +239,7 @@ const PlaceForm = ({
                                 <input
                                     type="text"
                                     name="contactFax"
-                                    defaultValue={formStorageData.contactFax}
+                                    defaultValue={formStorageData.contact?.fax}
                                     {...register('contactFax')}
                                 />
                             </FormRow>
@@ -320,7 +252,7 @@ const PlaceForm = ({
                                 <input
                                     type="text"
                                     name="contactEmail"
-                                    defaultValue={formStorageData.contactEmail}
+                                    defaultValue={formStorageData.contact?.email}
                                     placeholder="xxx@xxx.com"
                                     {...register('contactEmail', {
                                         required: true,
@@ -332,29 +264,41 @@ const PlaceForm = ({
 
                         <div className="items">
                             <FormRow
-                                labelTitle="場域介紹"
+                                labelTitle="大眾運輸"
                                 className="textarea"
                                 noBorder={true}
                             >
                                 <textarea
-                                    name="description"
-                                    defaultValue={formStorageData.description}
-                                    {...register('description')}
+                                    name="byMRT"
+                                    defaultValue={formStorageData.byMRT}
+                                    {...register('byMRT')}
                                 />
                             </FormRow>
 
                             <FormRow
-                                labelTitle="影片嵌入"
+                                labelTitle="自行開車"
                                 className="textarea"
                                 noBorder={true}
                             >
                                 <textarea
-                                    name="videoIframe"
-                                    defaultValue={formStorageData.videoIframe}
-                                    {...register('videoIframe')}
+                                    name="byDrive"
+                                    defaultValue={formStorageData.byDrive}
+                                    {...register('byDrive')}
                                 />
                             </FormRow>
                         </div>
+
+                        <FormRow
+                            labelTitle="影片嵌入"
+                            className="textarea"
+                            noBorder={true}
+                        >
+                            <textarea
+                                name="videoIframe"
+                                defaultValue={formStorageData.videoIframe}
+                                {...register('videoIframe')}
+                            />
+                        </FormRow>
                     </Col>
                 </Row>
 

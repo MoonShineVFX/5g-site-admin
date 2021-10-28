@@ -1,77 +1,58 @@
 import { useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import ActionWrap from '../../src/components/news/ActionWrap';
+import ActionWrap from '../../src/components/place/ActionWrap';
 import { GlobalContext } from '../../src/context/global.state';
 import admin from '../../src/utils/admin';
 
-// Mapping
-const mappingCheckbox = (data, tags) => data.reduce((acc, curr) => {
+const PlaceDetail = ({ pageData }) => {
 
-    // 先找到對應的
-    let temp = tags.find((obj) => obj.id === curr);
-    acc[curr] = acc[curr] || {};
-    acc[curr].isChecked = true;
-    acc[curr].category = temp?.categoryKey;
-    return acc;
-
-}, {});
-
-const NewsDetail = ({ pageData }) => {
+    // console.log('pageData:', pageData)
 
     // Router
     const router = useRouter();
 
     // Context
-    const {
-        newsTags,
-        globalDispatch,
-        formStorageDispatch,
-    } = useContext(GlobalContext);
+    const { globalDispatch, formStorageDispatch } = useContext(GlobalContext);
 
     useEffect(() => {
 
         globalDispatch({
             type: 'page',
-            payload: 'news',
+            payload: 'place',
         });
 
         formStorageDispatch({
             type: 'COLLECT',
-            payload: {
-                selected: mappingCheckbox(pageData.data.tags, newsTags),
-                category: Object.keys(mappingCheckbox(pageData.data.tags, newsTags)).map((key) => mappingCheckbox(pageData.data.tags, newsTags)[key].category)[0],
-            },
+            payload: pageData.data,
         });
 
-    }, [globalDispatch, formStorageDispatch, newsTags]);
+    }, [globalDispatch]);
 
     return (
 
         <ActionWrap
             title={pageData.title}
-            id={pageData.data.id}
-            newsTitle={pageData.data.title}
-            description={pageData.data.description}
-            content={pageData.data.detail}
-            isHot={pageData.data.isHot}
-            serviceKey="newsUpdate"
-            successCallback={() => router.push('/news')}
+            serviceKey="demoPlaceUpdate"
+            successCallback={() => router.push('/place')}
         />
 
     );
 
 };
 
-export default NewsDetail;
+export default PlaceDetail;
 
 export async function getServerSideProps ({ params }) {
 
-    const response = await admin.serviceServer({
-        method: 'get',
-        url: `/news/${+params.id}`,
-    });
+    // const response = await admin.serviceServer({
+    //     method: 'get',
+    //     url: `/demo_places/${+params.id}`,
+    // });
 
-    const { data } = response;
+    // const { data } = response;
+
+    const res = await fetch('http://localhost:1002/admin/json/place/8313.json');
+    const data = await res.json();
 
     if (!data.result) {
 
@@ -84,7 +65,7 @@ export async function getServerSideProps ({ params }) {
     return {
         props: {
             pageData: {
-                title: '編輯文章',
+                title: '編輯示範場域',
                 data: data.data,
             },
         },

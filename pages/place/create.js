@@ -28,7 +28,7 @@ const PlaceCreate = () => {
 
         <ActionWrap
             title={title}
-            serviceKey="placeCreate"
+            serviceKey="demoPlaceCreate"
             successCallback={() => router.push('/place')}
         />
 

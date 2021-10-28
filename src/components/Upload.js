@@ -1,12 +1,15 @@
 import React, { useContext, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { UploadOutlined } from '@ant-design/icons';
+import { Upload, message } from 'antd';
+import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
 import { red } from '@ant-design/colors';
 import styled from 'styled-components';
 import Buttons from './Buttons';
 import { GlobalContext } from '../context/global.state';
+import Service from '../utils/admin.service';
 
-const UploadLayout = styled.div.attrs(() => ({
+//
+const UploadSingleLayout = styled.div.attrs(() => ({
     className: 'fileUploadWrap',
 }))(({ theme }) => ({
     '.upload-action': {
@@ -46,6 +49,7 @@ const UploadLayout = styled.div.attrs(() => ({
     },
 }));
 
+//
 const ButtonsLayout = styled(Buttons)({
     fontSize: '14px',
     marginRight: '12px',
@@ -55,9 +59,11 @@ const ButtonsLayout = styled(Buttons)({
     },
 });
 
+// 圖片預覽
 const ImgPreview = ({ url }) => <img src={url} alt="thumb" />;
 
-const Upload = ({ size }) => {
+// 單張
+const UploadSingle = ({ size }) => {
 
     // Context
     const {
@@ -79,7 +85,10 @@ const Upload = ({ size }) => {
             setImgPreview(target.files[0]);
             formStorageDispatch({
                 type: 'COLLECT',
-                payload: { ...formStorageData, file: target.files[0] },
+                payload: {
+                    ...formStorageData,
+                    file: target.files[0],
+                },
             });
 
         }
@@ -91,7 +100,7 @@ const Upload = ({ size }) => {
 
     return (
 
-        <UploadLayout>
+        <UploadSingleLayout>
             <div className="upload-action">
                 <input
                     type="file"
@@ -137,14 +146,116 @@ const Upload = ({ size }) => {
                 <li>檔案大小不得超過 5MB</li>
                 <li>圖片尺寸為: {size}</li>
             </ul>
-        </UploadLayout>
+        </UploadSingleLayout>
 
     );
 
 };
 
-Upload.propTypes = {
+UploadSingle.propTypes = {
     size: PropTypes.string, // 1200x520
+    multiple: PropTypes.bool, // 1200x520
 };
 
-export default Upload;
+export default UploadSingle;
+
+// 多張
+const UploadMultiple = () => {
+
+    // Context
+    const {
+        formStorageData,
+        formStorageDispatch,
+    } = useContext(GlobalContext);
+
+    // State
+    const [fileList, setFileList] = useState([]);
+
+    // Ref
+    const inputFileRef = useRef(null);
+
+    //
+    const handleChangeInput = ({ target }) => {
+
+        // console.log('target:', target.files[0])
+
+        setFileList([...fileList, target.files[0]]);
+
+        // setFileList([...fileList, target.files[0]]);
+
+        console.log('fileList:', fileList)
+
+        if (target.files && target.files.length) {
+
+            // setImgPreview(target.files[0]);
+            formStorageDispatch({
+                type: 'COLLECT',
+                payload: {
+                    ...formStorageData,
+                    fileList,
+                },
+            });
+
+        }
+
+    };
+
+    // 觸發 input file
+    const handleTriggerUpload = () => inputFileRef.current.click();
+
+    // console.log('fileList:', fileList)
+
+    return (
+
+        <UploadSingleLayout>
+            <div className="upload-action">
+                <input
+                    type="file"
+                    name="file"
+                    accept="image/*"
+                    onChange={handleChangeInput}
+                    ref={inputFileRef}
+                />
+
+                <ButtonsLayout
+                    type="default"
+                    text="上傳圖片"
+                    icon={<UploadOutlined />}
+                    onClick={handleTriggerUpload}
+                />
+
+                {
+                    // imgPreview &&
+                    //     <span className="info">
+                    //         <span>{imgPreview.name}</span>
+                    //         <span className="size">
+                    //             {
+                    //                 // 小於 1MB 顯示 KB
+                    //                 (imgPreview.size / 1024 / 1024 > 1) ?
+                    //                     `${Math.round((imgPreview.size / 1024 / 1024) * 100) / 100} MB` :
+                    //                     `${Math.round((imgPreview.size / 1024) * 100) / 100} KB`
+                    //             }
+                    //         </span>
+                    //     </span>
+                }
+            </div>
+
+            {/* <div className="upload-preview">
+                <ImgPreview
+                    url={imgPreview ? URL.createObjectURL(imgPreview) : formStorageData?.imgUrl}
+                />
+            </div>
+
+             <ul className="upload-notice">
+                <li className="warning-text">圖片經上傳後將取代原圖，請小心使用</li>
+                <li className="warning-text">檔名請勿重複，以免被覆寫</li>
+                <li>僅支援以下格式: jpg, png</li>
+                <li>檔案大小不得超過 5MB</li>
+                <li>圖片尺寸為: {size}</li>
+            </ul> */}
+        </UploadSingleLayout>
+
+    );
+};
+
+export { UploadMultiple };

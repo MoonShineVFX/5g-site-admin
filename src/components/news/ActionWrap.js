@@ -6,6 +6,7 @@ import {
 } from 'react';
 
 import PropTypes from 'prop-types';
+import { useRouter } from 'next/router';
 import { Tag } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { blue } from '@ant-design/colors';
@@ -91,8 +92,10 @@ const ActionWrap = ({
     content,
     isHot,
     serviceKey,
-    successCallback,
 }) => {
+
+    // Router
+    const router = useRouter();
 
     // Context
     const {
@@ -179,7 +182,7 @@ const ActionWrap = ({
                     isHot: isHotChecked || false,
                     tags: formStorageData.selected ? Object.keys(formStorageData.selected).filter((val) => formStorageData.selected[val].isChecked).map((val) => +val) : []
                 }}
-                successCallback={successCallback}
+                successCallback={() => router.push('/news')}
             >
                 <IsHotLayout>
                     <Checkbox
@@ -245,7 +248,6 @@ ActionWrap.propTypes = {
     description: PropTypes.string,
     content: PropTypes.any.isRequired, // html string
     serviceKey: PropTypes.string.isRequired,
-    successCallback: PropTypes.func.isRequired,
 };
 
 export default ActionWrap;

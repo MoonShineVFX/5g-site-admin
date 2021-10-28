@@ -1,14 +1,20 @@
+import { Row } from 'antd';
 import { blue } from '@ant-design/colors';
 import styled from 'styled-components';
 
+/** Place Form */
 //
 const FormWrap = styled.form(({ theme }) => ({
-    maxWidth: '90%',
+    '&.with-thumb': {
+        '.upload-preview': {
+            height: 'auto',
+        },
+    },
     '.upload-preview': {
-        height: '312px',
+        minHeight: '312px',
     },
     '.left': {
-        maxWidth: '563px',
+        maxWidth: '600px',
         marginRight: '40px',
     },
     '.items': {
@@ -45,7 +51,44 @@ const FormWrap = styled.form(({ theme }) => ({
     'hr': {
         margin: '30px 0',
     },
+    'h3': {
+        fontWeight: 'bold',
+    },
 }));
+
+/** Place Other Fields Form */
+//
+const PlaceOtherFormWrapLayout = styled(Row)(({ theme }) => ({
+    borderTop: `1px solid ${theme.palette.border}`,
+    marginTop: '40px',
+    paddingTop: '40px',
+    'h3': {
+        fontWeight: 'bold',
+    },
+    '.ant-col': {
+        paddingRight: '40px',
+    },
+}));
+
+//
+const PlaceOtherFormLayout = styled(FormWrap)(({ theme }) => ({
+}));
+
+//
+const CreateFieldLayout = styled.span.attrs(() => ({
+    className: 'row-create-field',
+}))({
+    fontSize: '14px',
+    color: blue.primary,
+    textDecoration: 'underline',
+    display: 'inline-block',
+    float: 'right',
+    marginTop: '3.5px',
+    cursor: 'pointer',
+    '& + p': {
+        display: 'none',
+    },
+});
 
 //
 const ActionLayout = styled.div.attrs(() => ({
@@ -67,24 +110,10 @@ const ActionLayout = styled.div.attrs(() => ({
     },
 });
 
-//
-const CreateFieldLayout = styled.span.attrs(() => ({
-    className: 'row-create-field',
-}))({
-    fontSize: '14px',
-    color: blue.primary,
-    textDecoration: 'underline',
-    display: 'inline-block',
-    float: 'right',
-    marginTop: '3.5px',
-    cursor: 'pointer',
-    '& + p': {
-        display: 'none',
-    },
-});
-
 export {
     FormWrap,
-    ActionLayout,
+    PlaceOtherFormWrapLayout,
+    PlaceOtherFormLayout,
     CreateFieldLayout,
+    ActionLayout,
 };

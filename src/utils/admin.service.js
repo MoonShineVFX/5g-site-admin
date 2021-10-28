@@ -46,6 +46,11 @@ const Service = {
 
     // 關於我們
     aboutUpdate: (reqData) => admin.serviceProxy('/about_update', reqData),
+
+    // 示範場域
+    demoPlaceCreate: (reqData) => admin.serviceProxy('/demo_place_create', reqData),
+    demoPlaceUpdate: (reqData) => admin.serviceProxy('/demo_place_update', reqData),
+
 };
 
 export default Service;

@@ -7,60 +7,19 @@ import {
 
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
-import { useForm } from 'react-hook-form';
-
 import HeadTag from '../../containers/HeadTag';
 import ContentHeader from '../../containers/ContentHeader';
 import PlaceForm from './PlaceForm';
+import PlaceOtherForm from './PlaceOtherForm';
 import { GlobalContext } from '../../context/global.state';
 
-// Mapping
-const mappingTagOpt = (opts) => opts.reduce((acc, { id, name }) => {
-
-    acc[id] = name;
-    return acc;
-
-}, {});
-
-//
-const ActionWrap = ({
-    title,
-    id,
-    newsTitle,
-    description,
-    content,
-    isHot,
-    serviceKey,
-    successCallback,
-}) => {
-
-    // Router
-    const router = useRouter();
+const ActionWrap = ({ title, serviceKey }) => {
 
     // Context
     const {
         formStorageData,
         globalDispatch,
-        lightboxDispatch,
     } = useContext(GlobalContext);
-
-    // React Hook Form
-    const {
-        handleSubmit,
-        register,
-        formState: { errors },
-    } = useForm();
-
-    // State
-    const [newsTtitle, setNewsTitle] = useState(newsTitle);
-    const [newsDescription, setNewsDescription] = useState(description);
-    const [isHotChecked, setIsHotChecked] = useState(isHot);
-
-    useEffect(() => {
-
-        globalDispatch({ type: 'page', payload: 'place' });
-
-    }, [globalDispatch]);
 
     return (
 
@@ -72,7 +31,12 @@ const ActionWrap = ({
                 showButton={false}
             />
 
-            <PlaceForm />
+            <PlaceForm serviceKey={serviceKey} />
+
+            {
+                (serviceKey === 'demoPlaceUpdate') &&
+                    <PlaceOtherForm />
+            }
         </Fragment>
 
     );

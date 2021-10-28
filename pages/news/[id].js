@@ -1,5 +1,4 @@
 import { useContext, useEffect } from 'react';
-import { useRouter } from 'next/router';
 import ActionWrap from '../../src/components/news/ActionWrap';
 import { GlobalContext } from '../../src/context/global.state';
 import admin from '../../src/utils/admin';
@@ -17,9 +16,6 @@ const mappingCheckbox = (data, tags) => data.reduce((acc, curr) => {
 }, {});
 
 const NewsDetail = ({ pageData }) => {
-
-    // Router
-    const router = useRouter();
 
     // Context
     const {
@@ -55,7 +51,6 @@ const NewsDetail = ({ pageData }) => {
             content={pageData.data.detail}
             isHot={pageData.data.isHot}
             serviceKey="newsUpdate"
-            successCallback={() => router.push('/news')}
         />
 
     );

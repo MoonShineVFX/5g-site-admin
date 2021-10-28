@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import Buttons from '../Buttons';
 import Checkbox from '../Checkbox';
-import Upload from '../Upload';
+import UploadSingle from '../Upload';
 import { FormRow } from '../LightboxForm';
 import { GlobalContext } from '../../context/global.state';
 import { PartnerContext } from '../../context/partner/partner.state';
@@ -216,7 +216,7 @@ const PartnerForm = () => {
             >
                 <textarea
                     name="description"
-                    placeholder="限制 80 字內"
+                    placeholder="限制 150 字內"
                     defaultValue={formStorageData.description}
                     {...register('description', {
                         required: true,
@@ -226,7 +226,7 @@ const PartnerForm = () => {
             </FormRow>
 
             <RowUpload>
-                <Upload size={imageSize} />
+                <UploadSingle size={imageSize} />
             </RowUpload>
 
             <div className="row row-btns">
