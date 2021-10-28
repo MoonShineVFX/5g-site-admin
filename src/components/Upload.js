@@ -39,6 +39,7 @@ const UploadSingleLayout = styled.div.attrs(() => ({
         },
         'img': {
             maxHeight: '100%',
+            maxWidth: '100%',
         },
     },
     '.upload-notice': {

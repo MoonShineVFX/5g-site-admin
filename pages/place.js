@@ -11,11 +11,8 @@ export default Place;
 
 export async function getServerSideProps () {
 
-    // const res = await admin.serviceServer({ url: '/demo_places' });
-    // const { data } = res;
-
-    const res = await fetch('http://localhost:1002/admin/json/place/place.json');
-    const data = await res.json();
+    const res = await admin.serviceServer({ url: '/demo_places' });
+    const { data } = res;
 
     if (!data.result) {
 

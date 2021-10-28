@@ -151,7 +151,7 @@ const LightboxFormStyle = createGlobalStyle`
     }
     .hasError {
         .field {
-            border-color: ${red};
+            border-color: ${red.primary};
             &:hover {
                 border-color: ${red.primary};
             }

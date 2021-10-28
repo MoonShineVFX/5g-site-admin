@@ -1,4 +1,4 @@
-import { Fragment, useContext } from 'react';
+import { Fragment, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
@@ -6,7 +6,7 @@ import { Row, Col, message } from 'antd';
 
 import LightboxFormStyle from '../LightboxFormStyle';
 import Buttons from '../Buttons';
-import { FormRow, ErrorMesg } from '../LightboxForm';
+import { FormRow } from '../LightboxForm';
 import Prompt from '../Prompt';
 import UploadSingle from '../Upload';
 import { FormWrap } from './PlaceFormLayout';
@@ -28,7 +28,6 @@ const PlaceForm = ({ serviceKey }) => {
         formStorageData,
         formStorageDispatch,
         globalDispatch,
-        lightboxDispatch,
     } = useContext(GlobalContext);
 
     // React Hook Form
@@ -36,7 +35,21 @@ const PlaceForm = ({ serviceKey }) => {
         handleSubmit,
         register,
         formState: { errors },
+        reset,
     } = useForm();
+
+    useEffect(() => {
+
+        reset({
+            ...formStorageData,
+            contactUnit: formStorageData.contact?.unit,
+            contactName: formStorageData.contact?.name,
+            contactPhone: formStorageData.contact?.phone,
+            contactFax: formStorageData.contact?.fax,
+            contactEmail: formStorageData.contact?.email,
+        });
+
+    }, [formStorageData, reset]);
 
     // 送資料
     const handleReqData = (reqData) => {
@@ -48,6 +61,10 @@ const PlaceForm = ({ serviceKey }) => {
             ...formStorageData?.file && { thumb: formStorageData?.file },
             ...formStorageData.id ? { id: formStorageData.id } : null,
         };
+
+        console.log('reqData:', reqData)
+
+        return;
 
         // 檢查: 圖片尺寸
         if (formStorageData?.files) {
@@ -78,8 +95,8 @@ const PlaceForm = ({ serviceKey }) => {
 
                         formStorageDispatch({ type: 'CLEAR' });
 
-                        // Betty: 先暫時註解
-                        // router.push('/place');
+                        if (serviceKey === 'demoPlaceCreate') router.push('/place');
+                        else router.reload();
 
                     },
                 });
@@ -106,8 +123,8 @@ const PlaceForm = ({ serviceKey }) => {
                     </Col>
 
                     <Col flex={1}>
-                        <div className={`row radio-button ${errors.type ? 'hasError' : ''}`}>
-                            <div className="title isRequired">場域分類 (必填)</div>
+                        <div className="row radio-button">
+                            <div className="title">場域分類</div>
                             <div className="field noBorder">
                                 {
                                     Object.keys(placeConfig).map((key) => (
@@ -116,10 +133,9 @@ const PlaceForm = ({ serviceKey }) => {
                                             <input
                                                 type="radio"
                                                 name="type"
-                                                defaultValue={key}
-                                                defaultChecked="tech"
-                                                // defaultChecked={(formStorageData.type === key)}
-                                                {...register('type', { required: true })}
+                                                value={key}
+                                                defaultChecked={(key === formStorageData.type)}
+                                                {...register(`type.${key}`)}
                                             />
                                             {placeConfig[key]}
                                         </label>
@@ -127,8 +143,6 @@ const PlaceForm = ({ serviceKey }) => {
                                     ))
                                 }
                             </div>
-
-                            {errors.type && <ErrorMesg />}
                         </div>
 
                         <div className="items">
@@ -140,7 +154,6 @@ const PlaceForm = ({ serviceKey }) => {
                                 <input
                                     type="text"
                                     name="title"
-                                    defaultValue={formStorageData.title}
                                     {...register('title', { required: true })}
                                 />
                             </FormRow>
@@ -153,7 +166,6 @@ const PlaceForm = ({ serviceKey }) => {
                                 <input
                                     type="text"
                                     name="locationUrl"
-                                    defaultValue={formStorageData.locationUrl}
                                     placeholder="請輸入完整連結 (https 或 http)"
                                     {...register('locationUrl', {
                                         pattern: /^(https?|chrome):\/\/[^\s$.?#].[^\s]*$/g,
@@ -169,7 +181,6 @@ const PlaceForm = ({ serviceKey }) => {
                         >
                             <textarea
                                 name="description"
-                                defaultValue={formStorageData.description}
                                 {...register('description')}
                             />
                         </FormRow>
@@ -179,7 +190,6 @@ const PlaceForm = ({ serviceKey }) => {
                                 <input
                                     type="text"
                                     name="relativeLinkName"
-                                    defaultValue={formStorageData.relativeLinkName}
                                     {...register('relativeLinkName')}
                                 />
                             </FormRow>
@@ -192,7 +202,6 @@ const PlaceForm = ({ serviceKey }) => {
                                 <input
                                     type="text"
                                     name="relativeLinkUrl"
-                                    defaultValue={formStorageData.relativeLinkUrl}
                                     placeholder="請輸入完整連結 (https 或 http)"
                                     {...register('relativeLinkUrl', {
                                         pattern: /^(https?|chrome):\/\/[^\s$.?#].[^\s]*$/g,
@@ -210,49 +219,57 @@ const PlaceForm = ({ serviceKey }) => {
                                 <input
                                     type="text"
                                     name="contactUnit"
-                                    defaultValue={formStorageData.contact?.unit}
                                     {...register('contactUnit', { required: true })}
                                 />
                             </FormRow>
 
-                            <FormRow labelTitle="聯絡人">
+                            <FormRow
+                                labelTitle="聯絡人"
+                                required={true}
+                                error={errors.contactName && true}
+                            >
                                 <input
                                     type="text"
                                     name="contactName"
-                                    defaultValue={formStorageData.contact?.name}
-                                    {...register('contactName')}
+                                    {...register('contactName', { required: true })}
                                 />
                             </FormRow>
                         </div>
 
                         <div className="items">
-                            <FormRow labelTitle="聯絡電話">
+                            <FormRow
+                                labelTitle="聯絡電話"
+                                required={true}
+                                error={errors.contactPhone && true}
+                            >
                                 <input
                                     type="text"
                                     name="contactPhone"
-                                    defaultValue={formStorageData.contact?.phone}
-                                    {...register('contactPhone')}
+                                    {...register('contactPhone', { required: true })}
                                 />
                             </FormRow>
 
-                            <FormRow labelTitle="傳真">
+                            <FormRow
+                                labelTitle="傳真"
+                                required={true}
+                                error={errors.contactFax && true}
+                            >
                                 <input
                                     type="text"
                                     name="contactFax"
-                                    defaultValue={formStorageData.contact?.fax}
-                                    {...register('contactFax')}
+                                    {...register('contactFax', { required: true })}
                                 />
                             </FormRow>
 
                             <FormRow
                                 labelTitle="聯絡信箱"
+                                required={true}
                                 error={errors.contactEmail && true}
                                 {...(errors.contactEmail?.type === 'pattern') && { errorMesg: '格式錯誤' }}
                             >
                                 <input
                                     type="text"
                                     name="contactEmail"
-                                    defaultValue={formStorageData.contact?.email}
                                     placeholder="xxx@xxx.com"
                                     {...register('contactEmail', {
                                         required: true,
@@ -270,7 +287,6 @@ const PlaceForm = ({ serviceKey }) => {
                             >
                                 <textarea
                                     name="byMRT"
-                                    defaultValue={formStorageData.byMRT}
                                     {...register('byMRT')}
                                 />
                             </FormRow>
@@ -282,7 +298,6 @@ const PlaceForm = ({ serviceKey }) => {
                             >
                                 <textarea
                                     name="byDrive"
-                                    defaultValue={formStorageData.byDrive}
                                     {...register('byDrive')}
                                 />
                             </FormRow>
@@ -295,7 +310,6 @@ const PlaceForm = ({ serviceKey }) => {
                         >
                             <textarea
                                 name="videoIframe"
-                                defaultValue={formStorageData.videoIframe}
                                 {...register('videoIframe')}
                             />
                         </FormRow>
