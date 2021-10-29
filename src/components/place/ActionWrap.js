@@ -5,7 +5,7 @@ import ContentHeader from '../../containers/ContentHeader';
 import PlaceForm from './PlaceForm';
 import PlaceOtherForm from './PlaceOtherForm';
 
-const ActionWrap = ({ title, serviceKey }) => (
+const ActionWrap = ({ title, data, serviceKey }) => (
 
     <Fragment>
         <HeadTag title={title} />
@@ -15,10 +15,14 @@ const ActionWrap = ({ title, serviceKey }) => (
             showButton={false}
         />
 
-        <PlaceForm serviceKey={serviceKey} />
+        <PlaceForm
+            data={data}
+            serviceKey={serviceKey}
+        />
 
         {
-            (serviceKey === 'demoPlaceUpdate') && <PlaceOtherForm />
+            // 需先建立一筆 demo place 後，才能上傳圖片輪播與與文件
+            (serviceKey === 'demoPlaceUpdate') && <PlaceOtherForm data={data} />
         }
     </Fragment>
 
@@ -26,6 +30,7 @@ const ActionWrap = ({ title, serviceKey }) => (
 
 ActionWrap.propTypes = {
     title: PropTypes.string,
+    data: PropTypes.object,
     serviceKey: PropTypes.string.isRequired,
 };
 

@@ -1,10 +1,9 @@
 import { Row } from 'antd';
-import { blue } from '@ant-design/colors';
 import styled from 'styled-components';
 
 /** Place Form */
 //
-const FormWrap = styled.form(({ theme }) => ({
+const FormWrap = styled.form({
     '.upload-preview': {
         minHeight: '312px',
     },
@@ -49,7 +48,7 @@ const FormWrap = styled.form(({ theme }) => ({
     'h3': {
         fontWeight: 'bold',
     },
-}));
+});
 
 /** Place Other Fields Form */
 //
@@ -63,52 +62,20 @@ const PlaceOtherFormWrapLayout = styled(Row)(({ theme }) => ({
     '.ant-col': {
         paddingRight: '40px',
     },
+    '.upload-preview': {
+        maxWidth: '778px',
+        height: '438px',
+    },
 }));
 
 //
-const PlaceOtherFormLayout = styled(FormWrap)(({ theme }) => ({
+const ImagesWrapLayout = styled.div(({ theme }) => ({
+    border: '1px solid',
+    marginBottom: '20px',
 }));
-
-//
-const CreateFieldLayout = styled.span.attrs(() => ({
-    className: 'row-create-field',
-}))({
-    fontSize: '14px',
-    color: blue.primary,
-    textDecoration: 'underline',
-    display: 'inline-block',
-    float: 'right',
-    marginTop: '3.5px',
-    cursor: 'pointer',
-    '& + p': {
-        display: 'none',
-    },
-});
-
-//
-const ActionLayout = styled.div.attrs(() => ({
-    className: 'btn-clone',
-}))({
-    color: blue.primary,
-    textAlign: 'right',
-    flex: '0 0 auto',
-    display: 'flex',
-    alignItems: 'center',
-    '& > *': {
-        cursor: 'pointer',
-    },
-    '*': {
-        fontSize: '1.16em',
-    },
-    '.hide': {
-        visibility: 'hidden',
-    },
-});
 
 export {
     FormWrap,
     PlaceOtherFormWrapLayout,
-    PlaceOtherFormLayout,
-    CreateFieldLayout,
-    ActionLayout,
+    ImagesWrapLayout,
 };

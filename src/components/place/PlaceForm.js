@@ -12,7 +12,7 @@ import { FormWrap } from './PlaceFormLayout';
 import { GlobalContext } from '../../context/global.state';
 import Service from '../../utils/admin.service';
 
-const PlaceForm = ({ serviceKey }) => {
+const PlaceForm = ({ data, serviceKey }) => {
 
     // Router
     const router = useRouter();
@@ -31,25 +31,29 @@ const PlaceForm = ({ serviceKey }) => {
     useEffect(() => {
 
         // 取 detail 與送的欄位名稱有些不同，直接繼承會包括那些不必要的欄位
-        reset({
-            title: formStorageData.title,
-            imgUrl: formStorageData.imgUrl,
-            locationUrl: formStorageData.locationUrl,
-            description: formStorageData.description,
-            type: formStorageData.type,
-            relativeLinkName: formStorageData.relativeLinkName,
-            relativeLinkUrl: formStorageData.relativeLinkUrl,
-            contactUnit: formStorageData.contact?.unit,
-            contactName: formStorageData.contact?.name,
-            contactPhone: formStorageData.contact?.phone,
-            contactFax: formStorageData.contact?.fax,
-            contactEmail: formStorageData.contact?.email,
-            videoIframe: formStorageData.videoIframe,
-            byMRT: formStorageData.byMRT,
-            byDrive: formStorageData.byDrive,
-        });
+        if (serviceKey === 'demoPlaceUpdate') {
 
-    }, [formStorageData, reset]);
+            reset({
+                title: data.title,
+                imgUrl: data.imgUrl,
+                locationUrl: data.locationUrl,
+                description: data.description,
+                type: data.type,
+                websiteName: data.websiteName,
+                websiteUrl: data.websiteUrl,
+                contactUnit: data.contact?.unit,
+                contactName: data.contact?.name,
+                contactPhone: data.contact?.phone,
+                contactFax: data.contact?.fax,
+                contactEmail: data.contact?.email,
+                videoIframe: data.videoIframe,
+                byMRT: data.byMRT,
+                byDrive: data.byDrive,
+            });
+
+        }
+
+    }, [data, serviceKey, reset]);
 
     // 送資料
     const handleReqData = (reqData) => {
@@ -59,7 +63,7 @@ const PlaceForm = ({ serviceKey }) => {
         reqData = {
             ...reqData,
             ...formStorageData?.file && { thumb: formStorageData?.file },
-            ...formStorageData.id ? { id: formStorageData.id } : null,
+            ...(serviceKey === 'demoPlaceUpdate') && { id: data.id },
         };
 
         // 檢查: 圖片尺寸
@@ -89,12 +93,8 @@ const PlaceForm = ({ serviceKey }) => {
                 Prompt('success', {
                     callback: () => {
 
-                        if (serviceKey === 'demoPlaceCreate') {
-
-                            formStorageDispatch({ type: 'CLEAR' });
-                            router.push('/place');
-
-                        }
+                        formStorageDispatch({ type: 'CLEAR' });
+                        if (serviceKey === 'demoPlaceCreate') router.push('/place');
 
                     },
                 });
@@ -192,21 +192,21 @@ const PlaceForm = ({ serviceKey }) => {
                             <FormRow labelTitle="相關連結名稱" >
                                 <input
                                     type="text"
-                                    name="relativeLinkName"
-                                    {...register('relativeLinkName')}
+                                    name="websiteName"
+                                    {...register('websiteName')}
                                 />
                             </FormRow>
 
                             <FormRow
                                 labelTitle="相關連結 (URL)"
-                                error={errors.relativeLinkUrl && true}
-                                {...(errors.relativeLinkUrl?.type === 'pattern') && { errorMesg: '格式錯誤' }}
+                                error={errors.websiteUrl && true}
+                                {...(errors.websiteUrl?.type === 'pattern') && { errorMesg: '格式錯誤' }}
                             >
                                 <input
                                     type="text"
-                                    name="relativeLinkUrl"
+                                    name="websiteUrl"
                                     placeholder="請輸入完整連結 (https 或 http)"
-                                    {...register('relativeLinkUrl', {
+                                    {...register('websiteUrl', {
                                         pattern: /^(https?|chrome):\/\/[^\s$.?#].[^\s]*$/g,
                                     })}
                                 />

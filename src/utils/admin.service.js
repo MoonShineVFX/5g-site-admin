@@ -40,6 +40,26 @@ const Service = {
         },
     }),
 
+    // 示範場域: 上傳圖片
+    demoPlaceUploadImage: (reqData) => admin.serviceProxy('/demo_place_image_upload', reqData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
+    }),
+
+    // 示範場域: 刪除圖片
+    demoPlaceRemoveImage: (reqData) => admin.serviceProxy('/demo_place_image_delete', reqData),
+
+    // 示範場域: 上傳檔案
+    demoPlaceUploadFile: (reqData) => admin.serviceProxy('/demo_place_file_upload', reqData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
+    }),
+
+    // 示範場域: 刪除檔案
+    demoPlaceRemoveFile: (reqData) => admin.serviceProxy('/demo_place_image_delete', reqData),
+
     // 最新消息
     newsCreate: (reqData) => admin.serviceProxy('/news_create', reqData),
     newsUpdate: (reqData) => admin.serviceProxy('/news_update', reqData),

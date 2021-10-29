@@ -6,7 +6,7 @@ import admin from '../../src/utils/admin';
 const PlaceDetail = ({ pageData }) => {
 
     // Context
-    const { globalDispatch, formStorageDispatch } = useContext(GlobalContext);
+    const { globalDispatch } = useContext(GlobalContext);
 
     useEffect(() => {
 
@@ -15,17 +15,13 @@ const PlaceDetail = ({ pageData }) => {
             payload: 'place',
         });
 
-        formStorageDispatch({
-            type: 'COLLECT',
-            payload: pageData.data,
-        });
-
-    }, [globalDispatch, formStorageDispatch]);
+    }, [globalDispatch]);
 
     return (
 
         <ActionWrap
             title={pageData.title}
+            data={pageData.data}
             serviceKey="demoPlaceUpdate"
         />
 
