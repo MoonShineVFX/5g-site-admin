@@ -207,7 +207,7 @@ const PartnerForm = () => {
             </div>
 
             <FormRow
-                labelTitle="夥伴介紹"
+                labelTitle="夥伴介紹 (限150字)"
                 className="textarea"
                 noBorder={true}
                 required={true}
@@ -220,7 +220,7 @@ const PartnerForm = () => {
                     defaultValue={formStorageData.description}
                     {...register('description', {
                         required: true,
-                        maxLength: 80,
+                        maxLength: 150,
                     })}
                 />
             </FormRow>

@@ -21,7 +21,7 @@ const Service = {
     tagCreate: (reqData) => admin.serviceProxy('/tag_create', reqData),
     tagUpdate: (reqData) => admin.serviceProxy('/tag_update', reqData),
 
-    // 合作夥伴
+    // 策略夥伴
     partnerCreate: (reqData) => admin.serviceProxy('/partner_create', reqData, {
         headers: {
             'Content-Type': 'multipart/form-data',

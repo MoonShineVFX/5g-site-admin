@@ -32,7 +32,7 @@ const adminConst = {
             subItems: [],
         },
         {
-            name: '合作夥伴',
+            name: '策略夥伴',
             pageKey: 'partner',
             subItems: [],
         },
