@@ -1,5 +1,4 @@
 import { Fragment, useContext, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { Row, Col, message } from 'antd';
@@ -10,25 +9,16 @@ import { FormRow } from '../LightboxForm';
 import Prompt from '../Prompt';
 import UploadSingle from '../Upload';
 import { FormWrap } from './PlaceFormLayout';
-
 import { GlobalContext } from '../../context/global.state';
-import adminConst from '../../utils/admin.const';
 import Service from '../../utils/admin.service';
 
-const { placeConfig } = adminConst;
-
-//
 const PlaceForm = ({ serviceKey }) => {
 
     // Router
     const router = useRouter();
 
     // Context
-    const {
-        formStorageData,
-        formStorageDispatch,
-        globalDispatch,
-    } = useContext(GlobalContext);
+    const { formStorageData, formStorageDispatch } = useContext(GlobalContext);
 
     // React Hook Form
     const {
@@ -40,13 +30,23 @@ const PlaceForm = ({ serviceKey }) => {
 
     useEffect(() => {
 
+        // 取 detail 與送的欄位名稱有些不同，直接繼承會包括那些不必要的欄位
         reset({
-            ...formStorageData,
+            title: formStorageData.title,
+            imgUrl: formStorageData.imgUrl,
+            locationUrl: formStorageData.locationUrl,
+            description: formStorageData.description,
+            type: formStorageData.type,
+            relativeLinkName: formStorageData.relativeLinkName,
+            relativeLinkUrl: formStorageData.relativeLinkUrl,
             contactUnit: formStorageData.contact?.unit,
             contactName: formStorageData.contact?.name,
             contactPhone: formStorageData.contact?.phone,
             contactFax: formStorageData.contact?.fax,
             contactEmail: formStorageData.contact?.email,
+            videoIframe: formStorageData.videoIframe,
+            byMRT: formStorageData.byMRT,
+            byDrive: formStorageData.byDrive,
         });
 
     }, [formStorageData, reset]);
@@ -62,14 +62,10 @@ const PlaceForm = ({ serviceKey }) => {
             ...formStorageData.id ? { id: formStorageData.id } : null,
         };
 
-        console.log('reqData:', reqData)
-
-        return;
-
         // 檢查: 圖片尺寸
-        if (formStorageData?.files) {
+        if (formStorageData?.file) {
 
-            const limitSize = (reqData.image.size / 1024 / 1024) < 5;
+            const limitSize = (reqData.thumb.size / 1024 / 1024) < 5;
 
             // 檢查圖片大小是否超過 5MB
             if (!limitSize) {
@@ -93,10 +89,12 @@ const PlaceForm = ({ serviceKey }) => {
                 Prompt('success', {
                     callback: () => {
 
-                        formStorageDispatch({ type: 'CLEAR' });
+                        if (serviceKey === 'demoPlaceCreate') {
 
-                        if (serviceKey === 'demoPlaceCreate') router.push('/place');
-                        else router.reload();
+                            formStorageDispatch({ type: 'CLEAR' });
+                            router.push('/place');
+
+                        }
 
                     },
                 });
@@ -126,22 +124,27 @@ const PlaceForm = ({ serviceKey }) => {
                         <div className="row radio-button">
                             <div className="title">場域分類</div>
                             <div className="field noBorder">
-                                {
-                                    Object.keys(placeConfig).map((key) => (
+                                 <label>
+                                    <input
+                                        type="radio"
+                                        name="type"
+                                        value="5g"
+                                        defaultChecked={(formStorageData.type === '5g')}
+                                        {...register('type')}
+                                    />
+                                    5G
+                                </label>
 
-                                        <label key={key}>
-                                            <input
-                                                type="radio"
-                                                name="type"
-                                                value={key}
-                                                defaultChecked={(key === formStorageData.type)}
-                                                {...register(`type.${key}`)}
-                                            />
-                                            {placeConfig[key]}
-                                        </label>
-
-                                    ))
-                                }
+                                 <label>
+                                    <input
+                                        type="radio"
+                                        name="type"
+                                        value="tech"
+                                        defaultChecked={(formStorageData.type === 'tech')}
+                                        {...register('type')}
+                                    />
+                                    互動科技
+                                </label>
                             </div>
                         </div>
 
@@ -327,20 +330,6 @@ const PlaceForm = ({ serviceKey }) => {
 
     );
 
-};
-
-PlaceForm.defaultProps = {
-    // content: '',
-};
-
-PlaceForm.propTypes = {
-    title: PropTypes.string,
-    // id: PropTypes.number,
-    // newsTitle: PropTypes.string,
-    // description: PropTypes.string,
-    // content: PropTypes.any.isRequired, // html string
-    // serviceKey: PropTypes.string.isRequired,
-    // successCallback: PropTypes.func.isRequired,
 };
 
 export default PlaceForm;

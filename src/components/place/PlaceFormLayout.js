@@ -5,11 +5,6 @@ import styled from 'styled-components';
 /** Place Form */
 //
 const FormWrap = styled.form(({ theme }) => ({
-    '&.with-thumb': {
-        '.upload-preview': {
-            height: 'auto',
-        },
-    },
     '.upload-preview': {
         minHeight: '312px',
     },

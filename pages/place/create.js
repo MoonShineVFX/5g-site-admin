@@ -1,14 +1,8 @@
 import { useContext, useEffect } from 'react';
-import { useRouter } from 'next/router';
 import ActionWrap from '../../src/components/place/ActionWrap';
 import { GlobalContext } from '../../src/context/global.state';
 
-const title = '新增示範場域';
-
 const PlaceCreate = () => {
-
-    // Router
-    const router = useRouter();
 
     // Context
     const { globalDispatch, formStorageDispatch } = useContext(GlobalContext);
@@ -27,9 +21,8 @@ const PlaceCreate = () => {
     return (
 
         <ActionWrap
-            title={title}
+            title="新增示範場域"
             serviceKey="demoPlaceCreate"
-            successCallback={() => router.push('/place')}
         />
 
     );
