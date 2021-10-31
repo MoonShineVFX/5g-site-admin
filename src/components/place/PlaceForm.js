@@ -25,35 +25,27 @@ const PlaceForm = ({ data, serviceKey }) => {
         handleSubmit,
         register,
         formState: { errors },
-        reset,
-    } = useForm();
+    } = useForm({
+        defaultValues: {
+            ...data,
+            contactUnit: data?.contact?.unit,
+            contactName: data?.contact?.name,
+            contactPhone: data?.contact?.phone,
+            contactFax: data?.contact?.fax,
+            contactEmail: data?.contact?.email,
+        },
+    });
 
     useEffect(() => {
 
         // 取 detail 與送的欄位名稱有些不同，直接繼承會包括那些不必要的欄位
         if (serviceKey === 'demoPlaceUpdate') {
 
-            reset({
-                title: data.title,
-                imgUrl: data.imgUrl,
-                locationUrl: data.locationUrl,
-                description: data.description,
-                type: data.type,
-                websiteName: data.websiteName,
-                websiteUrl: data.websiteUrl,
-                contactUnit: data.contact?.unit,
-                contactName: data.contact?.name,
-                contactPhone: data.contact?.phone,
-                contactFax: data.contact?.fax,
-                contactEmail: data.contact?.email,
-                videoIframe: data.videoIframe,
-                byMRT: data.byMRT,
-                byDrive: data.byDrive,
-            });
+            formStorageDispatch({ type: 'COLLECT', payload: { imgUrl: data.imgUrl } });
 
         }
 
-    }, [data, serviceKey, reset]);
+    }, [data, serviceKey, formStorageDispatch]);
 
     // 送資料
     const handleReqData = (reqData) => {
@@ -129,7 +121,6 @@ const PlaceForm = ({ data, serviceKey }) => {
                                         type="radio"
                                         name="type"
                                         value="5g"
-                                        defaultChecked={(formStorageData.type === '5g')}
                                         {...register('type')}
                                     />
                                     5G
@@ -140,7 +131,6 @@ const PlaceForm = ({ data, serviceKey }) => {
                                         type="radio"
                                         name="type"
                                         value="tech"
-                                        defaultChecked={(formStorageData.type === 'tech')}
                                         {...register('type')}
                                     />
                                     互動科技
