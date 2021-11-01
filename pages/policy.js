@@ -1,21 +1,21 @@
-import PlaceBase from '../src/components/place/PlaceBase';
+import PolicyBase from '../src/components/policy/PolicyBase';
+import { PolicyProvider } from '../src/context/policy/policy.state';
 import admin from '../src/utils/admin';
 
-const Place = ({ pageData }) => (
+const Policy = ({ pageData }) => (
 
-    <PlaceBase pageData={pageData} />
+    <PolicyProvider>
+        <PolicyBase pageData={pageData} />
+    </PolicyProvider>
 
 );
 
-export default Place;
+export default Policy;
 
 export async function getServerSideProps () {
 
-    // const res = await admin.serviceServer({ url: '/demo_places' });
-    // const { data } = res;
-
-    const res = await fetch('http://localhost:1002/admin/json/policy.json');
-    const { data } = await res.json();
+    const res = await admin.serviceServer({ method: 'get', url: '/policies' });
+    const { data } = res;
 
     if (!data.result) {
 
@@ -28,7 +28,7 @@ export async function getServerSideProps () {
     return {
         props: {
             pageData: {
-                title: '資源政策',
+                title: '政策資源',
                 data: data.data,
             },
         },

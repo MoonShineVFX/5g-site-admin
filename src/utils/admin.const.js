@@ -6,9 +6,6 @@ const adminConst = {
     sendSuccessText: '資料已成功送出，將於 3 秒後更新。',
     emptyText: '目前沒有資料...',
     errorText: '此欄位為必填!',
-    startDateText: '開始時間',
-    endDateText: '結束時間',
-    formatDate: 'YYYY/MM/DD',
 
     // 側邊攔
     navbar: [
@@ -60,12 +57,19 @@ const adminConst = {
         updateTag: '編輯標籤',
         createPartner: '新增夥伴',
         updatePartner: '編輯夥伴',
+        createPolicy: '新增政策資源',
+        updatePolicy: '編輯政策資源',
         settingTag: '設定標籤',
     },
 
     placeConfig: {
         '5g': '5G',
         'tech': '互動科技',
+    },
+
+    policyConfig: {
+        'local': '地方資源',
+        'center': '中央資源',
     },
 
     // Prompt type

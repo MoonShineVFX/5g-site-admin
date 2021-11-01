@@ -99,7 +99,7 @@ const AdminSite = ({ Component, pageProps }) => {
                                 </MainContent>
                             </ContentLayout>
 
-                            <FooterLayout>中華電信 5G ©2021 Created by MoonShine</FooterLayout>
+                            <FooterLayout>中華電信 5G ©2021 Created by CHT</FooterLayout>
                         </Layout>
                     </Layout>
                 </GlobalProvider>

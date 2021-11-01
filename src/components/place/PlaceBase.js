@@ -67,11 +67,6 @@ const PlaceBase = ({ pageData }) => {
             render: (title) => renderWithoutValue(title),
         },
         {
-            title: '地址',
-            dataIndex: 'address',
-            render: (address) => renderWithoutValue(address),
-        },
-        {
             title: '分類',
             dataIndex: 'type',
             render: (type) => renderWithoutValue(placeConfig[type]),
