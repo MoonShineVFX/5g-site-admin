@@ -1,6 +1,7 @@
 import { Fragment, useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { Tag } from 'antd';
+import styled from 'styled-components';
 
 import HeadTag from '../../containers/HeadTag';
 import ContentHeader from '../../containers/ContentHeader';
@@ -16,6 +17,13 @@ import adminConst from '../../utils/admin.const';
 
 const { pathnameKey, renderWithoutValue, renderDateTime } = admin;
 const { lightboxTitle, policyConfig } = adminConst;
+
+const TablesLayout = styled(Tables)({
+    '.col-tags > div': {
+        marginBottom: '6px',
+    },
+});
+
 
 // Mapping
 const mappingTagOpt = (opts) => opts.reduce((acc, { id, name }) => {
@@ -37,8 +45,6 @@ const antdTableFilter = (data) => data.reduce((acc, key) => {
 }, []);
 
 const PlaceBase = ({ pageData }) => {
-
-    console.log('pageData:', pageData)
 
     // Router
     const router = useRouter();
@@ -184,7 +190,7 @@ const PlaceBase = ({ pageData }) => {
                 onClick={btnCreate}
             />
 
-            <Tables
+            <TablesLayout
                 rowKey="id"
                 columns={columns}
                 data={action ? lists : pageData.data.list}

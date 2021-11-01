@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
+import { blue } from '@ant-design/colors';
 import styled from 'styled-components';
 import Buttons from '../Buttons';
 import Checkbox from '../Checkbox';
@@ -7,10 +8,25 @@ import { FormRow } from '../LightboxForm';
 import { GlobalContext } from '../../context/global.state';
 import { PolicyContext } from '../../context/policy/policy.state';
 
+// 整理分類資料結構
+const arrangeCategory = (data) => data.reduce((acc, obj) => {
+
+    const key = obj.categoryKey;
+    acc[key] = acc[key] || {};
+    acc[key].tags = acc[key].tags || [];
+    acc[key].label = obj.categoryName;
+    acc[key].tags.push(obj);
+    return acc;
+
+}, {});
+
 //
 const FormWrapLayout = styled.form({
     '.row.textarea .field': {
         minHeight: '100px',
+    },
+    '.warning-text': {
+        color: blue.primary,
     },
 });
 
@@ -18,8 +34,15 @@ const FormWrapLayout = styled.form({
 const CheckboxWrapLayout = styled.div({
     display: 'flex',
     flexWrap: 'wrap',
+    margin: '0 -10px 40px',
+    '.checkboxGrid': {
+        flex: '1',
+        padding: '0 10px',
+    },
+    'h4': {
+        marginBottom: '4px',
+    },
     '.checkbox-item': {
-        flex: '0 0 calc(100% / 3)',
         marginBottom: '8px',
     },
 });
@@ -194,33 +217,6 @@ const PolicyForm = () => {
                 </FormRow>
             </div>
 
-            <div className="row">
-                <div className="title">標籤</div>
-                <div>
-                    <CheckboxWrapLayout>
-                        {
-                            policyTags.map(({ id, name }, idx) => (
-
-                                <div
-                                    key={idx}
-                                    className="checkbox-item"
-                                >
-                                    <Checkbox
-                                        name="tags"
-                                        value={id}
-                                        defaultChecked={formStorageData?.tags?.some((val) => val === id)}
-                                        register={register(`tags.${idx}`)}
-                                    >
-                                        {name}-{id}
-                                    </Checkbox>
-                                </div>
-
-                            ))
-                        }
-                    </CheckboxWrapLayout>
-                </div>
-            </div>
-
             <div className="items">
                 <FormRow labelTitle="資金額度">
                     <input
@@ -271,6 +267,47 @@ const PolicyForm = () => {
                     {...register('applicationObject')}
                 />
             </FormRow>
+
+            <div className="row row-checkbox">
+                <div className="warning-text">(請勿選取不同類別)</div>
+                <CheckboxWrapLayout>
+                    {
+                        Object.keys(arrangeCategory(policyTags)).map((key) => (
+
+                            <div
+                                key={key}
+                                className="checkboxGrid"
+                            >
+                                <h4>{arrangeCategory(policyTags)[key].label}</h4>
+                                <div className="checkboxItemWrap">
+                                    {
+                                        arrangeCategory(policyTags)[key].tags.map(({ id, name }, idx) => (
+
+                                            <div
+                                                key={idx}
+                                                className="checkbox-item"
+                                            >
+                                                <Checkbox
+                                                    name="tags"
+                                                    value={id}
+                                                    defaultChecked={formStorageData?.tags?.some((val) => val === id)}
+                                                    register={register(`tags.${idx}`)}
+                                                    data-key={key}
+                                                >
+                                                    {name}-{id}
+                                                </Checkbox>
+                                            </div>
+
+                                        ))
+                                    }
+                                </div>
+                            </div>
+
+
+                        ))
+                    }
+                </CheckboxWrapLayout>
+            </div>
 
             <div className="row row-btns">
                 <Buttons
