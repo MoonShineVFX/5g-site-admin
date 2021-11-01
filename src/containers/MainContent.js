@@ -1,18 +1,20 @@
 import { useContext, useEffect } from 'react';
+import Cookie from 'js-cookie';
 import { GlobalContext } from '../context/global.state';
 
 const MainContent = ({ children }) => {
 
     // Context
-    const { getGlobalData } = useContext(GlobalContext);
+    const { newsTags, getGlobalData } = useContext(GlobalContext);
 
     useEffect(() => {
 
-        getGlobalData();
+        if (!Cookie.get('token')) return;
+        if (!newsTags.length) getGlobalData();
 
     }, []);
 
-    return <section>{children}</section>;
+    return <section className="section">{children}</section>;
 
 };
 

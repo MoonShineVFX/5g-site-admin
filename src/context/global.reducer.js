@@ -6,6 +6,7 @@ const globalReducer = (state, { type, payload }) => {
             return {
                 ...state,
                 newsTags: payload.newsTags,
+                policyTags: payload.policyTags,
                 user: payload.other,
             };
 

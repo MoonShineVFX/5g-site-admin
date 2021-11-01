@@ -1,6 +1,11 @@
 import admin from './admin';
 
 const Service = {
+    // login
+    login: ({ reqData, headers }) => admin.serviceProxy('/get_token', reqData, {
+        headers: { ...headers },
+    }),
+
     // common
     common: (reqData) => admin.serviceProxy('/common', reqData),
 
@@ -71,6 +76,9 @@ const Service = {
     demoPlaceCreate: (reqData) => admin.serviceProxy('/demo_place_create', reqData),
     demoPlaceUpdate: (reqData) => admin.serviceProxy('/demo_place_update', reqData),
 
+    // 政策資源
+    policyCreate: (reqData) => admin.serviceProxy('/policy_create', reqData),
+    policyUpdate: (reqData) => admin.serviceProxy('/policy_update', reqData),
 };
 
 export default Service;

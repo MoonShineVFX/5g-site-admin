@@ -11,6 +11,7 @@ import {
 const globalInitState = {
     page: 'banner',
     newsTags: [],
+    policyTags: [],
     user: {},
 };
 
@@ -37,6 +38,7 @@ const GlobalProvider = ({ children }) => {
     const {
         page,
         newsTags,
+        policyTags,
         user,
     } = globalState;
 
@@ -50,11 +52,12 @@ const GlobalProvider = ({ children }) => {
         Service.common()
             .then((resData) => {
 
-                const { newsTags, ...rest } = resData;
+                const { newsTags, policyTags, ...rest } = resData;
                 globalDispatch({
                     type: 'global_data',
                     payload: {
                         newsTags,
+                        policyTags,
                         other: rest,
                     },
                 });
@@ -69,6 +72,7 @@ const GlobalProvider = ({ children }) => {
             // 全域資料
             page,
             newsTags,
+            policyTags,
             user,
             getGlobalData,
 

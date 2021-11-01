@@ -12,18 +12,26 @@ const Tags = ({ pageData }) => (
 
 export default Tags;
 
-export async function getServerSideProps () {
+export async function getServerSideProps ({ req }) {
 
-    const res = await admin.serviceServer({ url: '/tags_and_categories' });
-    const { data } = res;
-
-    if (!data.result) {
+    // 沒有 cookie(token) 導登入頁
+    if (!req.cookies.token) {
 
         return {
-            notFound: true,
+            redirect: {
+                destination: '/login',
+                permanent: false,
+            },
         };
 
     }
+
+    const resData = await admin.serviceServer({
+        url: '/tags_and_categories',
+        cookie: req.cookies.token,
+    });
+
+    const { data } = resData;
 
     return {
         props: {

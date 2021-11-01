@@ -31,8 +31,6 @@ const antdTableFilter = (data) => data.reduce((acc, key) => {
 
 const PlaceBase = ({ pageData }) => {
 
-    // console.log('pageData:', pageData)
-
     // Router
     const router = useRouter();
 
@@ -65,11 +63,6 @@ const PlaceBase = ({ pageData }) => {
             title: '標題',
             dataIndex: 'title',
             render: (title) => renderWithoutValue(title),
-        },
-        {
-            title: '地址',
-            dataIndex: 'address',
-            render: (address) => renderWithoutValue(address),
         },
         {
             title: '分類',

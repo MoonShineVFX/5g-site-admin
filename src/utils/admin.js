@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { Modal } from 'antd';
 import dayjs from 'dayjs';
+import Cookies from 'js-cookie';
 
 const util = {
     /**
@@ -56,14 +57,13 @@ const util = {
 
             const authHeader = {
                 headers: {
-                    // 驗證(新增、編輯需要)
-                    'Authorization': 'Basic c3RhZmZAbW9vbnNoaW5lLnR3OkFETSFOQE0wMG5zaGluZQ==',
+                    Authorization: `Bearer ${Cookies.get('token')}`,
                 },
             };
 
             axios[CONFIG().method](CONFIG().url, reqData, {
                 ...option,
-                ...authHeader,
+                ...(Cookies.get()?.token) && { ...authHeader },
             })
             .then(
                 // result: 1
@@ -90,9 +90,15 @@ const util = {
 
     },
 
-    serviceServer: ({ method = 'post', url }, reqData = {}) => {
+    serviceServer: ({ method = 'post', url, cookie }, reqData = {}) => {
 
-        return axios[method](`http://${process.env.HOST}/api${url}`, reqData);
+        return axios({
+            url: `http://${process.env.HOST}/api${url}`,
+            method,
+            headers: {
+                Authorization: `Bearer ${cookie}`,
+            },
+        });
 
     },
 

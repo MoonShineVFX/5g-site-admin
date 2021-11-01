@@ -53,6 +53,7 @@
   },
   "devDependencies": {
     "babel-plugin-styled-components": "^1.13.2",
-    "babel-preset-next": "^1.4.0"
+    "babel-preset-next": "^1.4.0",
+    "js-cookie": "^3.0.1"
   }
 }
