@@ -90,8 +90,8 @@ const UploadFiles = ({
                 accept={(type === 'image') ? '.jpg,.jpeg,.png,.gif' : ''} // 限制檔案格式
                 fileList={handleFileList(fileData, type)}
                 customRequest={handleUploadData}
-                onPreview={handlePreview}
                 onRemove={handleRemove}
+                {...(type === 'image') && { onPreview: handlePreview }}
             >
                 {
                     (type === 'image') ? (

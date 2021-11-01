@@ -166,6 +166,14 @@ const BannerBase = ({ pageData }) => {
 
     }, {});
 
+    // 隱藏 Modal
+    const hideModal = () => {
+
+        lightboxDispatch({ type: 'HIDE' });
+        formStorageDispatch({ type: 'CLEAR' });
+
+    };
+
     // 新增按鈕
     const btnCreate = () => lightboxDispatch({ type: 'SHOW', currEvent: 'createPartner' });
 
@@ -177,14 +185,6 @@ const BannerBase = ({ pageData }) => {
             type: 'COLLECT',
             payload: data,
         });
-
-    };
-
-    // 隱藏 Modal
-    const hideModal = () => {
-
-        lightboxDispatch({ type: 'HIDE' });
-        formStorageDispatch({ type: 'CLEAR' });
 
     };
 

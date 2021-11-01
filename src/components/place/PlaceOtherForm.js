@@ -15,9 +15,6 @@ const PlaceOtherForm = ({ data }) => {
     // 送資料
     const handleUploadData = ({ file }, type = 'image') => {
 
-        console.log('file:', file)
-        console.log('type:', type)
-
         const isLt10M = file.size / 1024 / 1024 < 10;
         const formData = new FormData();
         const config = {
@@ -46,7 +43,7 @@ const PlaceOtherForm = ({ data }) => {
     };
 
     // 刪除檔案
-    const handleRemoveImage = (file, type = 'image') => {
+    const handleRemove = (file, type = 'image') => {
 
         const config = {
             image: 'demoPlaceRemoveImage',
@@ -57,7 +54,7 @@ const PlaceOtherForm = ({ data }) => {
             .then(() => {
 
                 if (type === 'image') setImageLists(imageLists.filter(({ id }) => id !== file.uid));
-                else setFileLists(imageLists.filter(({ id }) => id !== file.uid));
+                else setFileLists(fileLists.filter(({ id }) => id !== file.uid));
 
             });
 
@@ -76,7 +73,7 @@ const PlaceOtherForm = ({ data }) => {
                             fileData={imageLists}
                             size="778x438"
                             handleUploadData={handleUploadData}
-                            handleRemove={handleRemoveImage}
+                            handleRemove={handleRemove}
                         />
                     </div>
                 </Col>
@@ -88,7 +85,7 @@ const PlaceOtherForm = ({ data }) => {
                             type="file"
                             fileData={fileLists}
                             handleUploadData={(obj) => handleUploadData(obj, 'file')}
-                            handleRemove={(obj) => handleRemoveImage(obj, 'file')}
+                            handleRemove={(obj) => handleRemove(obj, 'file')}
                         />
                     </div>
                 </Col>

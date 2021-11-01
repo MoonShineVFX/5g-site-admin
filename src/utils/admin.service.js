@@ -58,7 +58,7 @@ const Service = {
     }),
 
     // 示範場域: 刪除檔案
-    demoPlaceRemoveFile: (reqData) => admin.serviceProxy('/demo_place_image_delete', reqData),
+    demoPlaceRemoveFile: (reqData) => admin.serviceProxy('/demo_place_file_delete', reqData),
 
     // 最新消息
     newsCreate: (reqData) => admin.serviceProxy('/news_create', reqData),

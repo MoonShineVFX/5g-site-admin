@@ -66,13 +66,16 @@ const PlaceOtherFormWrapLayout = styled(Row)(({ theme }) => ({
         maxWidth: '778px',
         height: '438px',
     },
+    '.ant-upload-list-item-info': {
+        display: 'inline-block',
+    },
 }));
 
 //
-const ImagesWrapLayout = styled.div(({ theme }) => ({
+const ImagesWrapLayout = styled.div({
     border: '1px solid',
     marginBottom: '20px',
-}));
+});
 
 export {
     FormWrap,
