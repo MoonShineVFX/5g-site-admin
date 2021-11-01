@@ -187,7 +187,7 @@ const PlaceBase = ({ pageData }) => {
             <Tables
                 rowKey="id"
                 columns={columns}
-                data={pageData.data.list}
+                data={action ? lists : pageData.data.list}
             />
 
             {

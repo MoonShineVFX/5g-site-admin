@@ -72,8 +72,8 @@ const Service = {
     demoPlaceUpdate: (reqData) => admin.serviceProxy('/demo_place_update', reqData),
 
     // 政策資源
-    policyCreate: (reqData) => admin.serviceProxy('/???', reqData),
-    policyUpdate: (reqData) => admin.serviceProxy('/???', reqData),
+    policyCreate: (reqData) => admin.serviceProxy('/policy_create', reqData),
+    policyUpdate: (reqData) => admin.serviceProxy('/policy_update', reqData),
 };
 
 export default Service;
