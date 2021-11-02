@@ -12,19 +12,52 @@ const Banner = ({ pageData }) => (
 
 export default Banner;
 
-export async function getServerSideProps () {
+export async function getServerSideProps ({ req, res }) {
 
-    const res = await admin.serviceServer({
+    console.log('banner req:', req)
+    // console.log('banner res:', res)
+    console.log('banner req.cookies:', req.cookies)
+    console.log('banner req.cookies.token:', req.cookies.token)
+    // console.log('banner length:', Object.entries(req.cookies).length)
+
+    if (!Object.entries(req.cookies).length) {
+
+        return {
+            redirect: {
+                destination: '/login',
+                permanent: false,
+            },
+        };
+
+    }
+
+    const test = {
+        headers: {
+            // 驗證(列表需要)
+            Authorization: `Bearer ${req.cookies.token}`,
+        },
+    };
+
+    const resData = await admin.serviceServer({
         method: 'get',
         url: '/banners',
+        cookie: req.cookies.token,
+        // headers: test,
     });
 
-    const { data } = res;
+    console.log('betty resData:', resData)
+    const { data } = resData;
+    console.log('betty data:', data)
+
 
     if (!data.result) {
 
         return {
             notFound: true,
+            // redirect: {
+            //     destination: '/login',
+            //     permanent: false,
+            // },
         };
 
     }

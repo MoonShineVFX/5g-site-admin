@@ -1,5 +1,6 @@
 import { useContext, useEffect } from 'react';
 import { GlobalContext } from '../context/global.state';
+import Cookies from 'js-cookie';
 
 const MainContent = ({ children }) => {
 
@@ -8,11 +9,11 @@ const MainContent = ({ children }) => {
 
     useEffect(() => {
 
-        getGlobalData();
+        if (Cookies.get()?.token) getGlobalData();
 
     }, []);
 
-    return <section>{children}</section>;
+    return <section className="section">{children}</section>;
 
 };
 

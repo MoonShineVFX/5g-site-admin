@@ -68,16 +68,14 @@ const AdminSite = ({ Component, pageProps }) => {
                 <GlobalStyle />
 
                 <GlobalProvider>
-                    <Layout
-                        // style={{ overflow: 'hidden' }}
-                    >
+                    <Layout className="appContainer">
                         <Navbar width={navbarWidth} />
 
                         <Layout
+                            className="appContent"
                             style={{
                                 marginLeft: navbarWidth,
                                 backgroundColor: '#FFF',
-                                // overflowX: 'auto',
                             }}
                         >
                             <HeaderLayout>

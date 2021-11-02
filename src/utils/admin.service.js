@@ -1,6 +1,11 @@
 import admin from './admin';
 
 const Service = {
+    // login
+    login: ({ reqData, headers }) => admin.serviceProxy('/get_token', reqData, {
+        headers: { ...headers },
+    }),
+
     // common
     common: (reqData) => admin.serviceProxy('/common', reqData),
 

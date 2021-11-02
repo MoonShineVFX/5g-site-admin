@@ -1,71 +1,139 @@
-import { Fragment, createRef } from 'react';
-import axios from 'axios';
+import { Fragment, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import Cookies from 'js-cookie';
 import { useForm } from 'react-hook-form';
+import theme from '../src/utils/theme';
+import LightboxFormStyle from '../src/components/LightboxFormStyle';
+import { createGlobalStyle } from 'styled-components';
+import Buttons from '../src/components/Buttons';
+import { FormRow } from '../src/components/LightboxForm';
+import HeadTag from '../src/containers/HeadTag';
+import Service from '../src/utils/admin.service';
 
-// import HeadSEO from '../src/containers/HeadSEO';
-// import LinkText from '../src/components/LinkText';
+const errConfig = {
+    pattern: '格式錯誤',
+    minLength: '少於8碼',
+    maxLength: '超過20碼',
+};
+
+const LoginStyle = createGlobalStyle`
+    .appContainer {
+        justify-content: center;
+        padding: 50px 40px 0;
+    }
+    .appContent {
+        max-width: 480px;
+        background-color: ${theme.palette.container} !important;
+        margin-left: 0 !important;
+        justify-content: center;
+    }
+    .ant-layout-header {
+        display: none;
+    }
+    aside {
+        display: none;
+    }
+    .ant-layout-content {
+        width: 100%;
+    }
+    .section {
+        max-height: 360px;
+        height: 100%;
+        background-color: #FFF;
+        padding: 40px;
+    }
+    button.ant-btn.admin-btn {
+        width: 100%;
+        margin: 20px 0 0;
+    }
+`;
 
 const Login = () => {
 
-    // Ref
-    const ref = createRef();
+    // Router
+    const router = useRouter();
 
     //
-    const { register, handleSubmit } = useForm({
-        defaultValues: {
-            name: 'aaa123',
-        },
-    });
+    const {
+        handleSubmit,
+        register,
+        formState: { errors },
+    } = useForm();
 
-    // Submit
+    useEffect(() => {
+
+        console.log('11111')
+    })
+
+    // 送資料
     const handleReqData = (reqData) => {
 
-        reqData = {
-            ...reqData,
-            'g-recaptcha-response': ref.current.getValue(),
-        };
+        let auth = btoa(`${reqData.account}:${reqData.password}`);
 
-        axios({
-            method: 'POST',
-            url: 'https://fullbodyscan.msvfx.com/api/recaptcha_test',
-            data: {
-                'g-recaptcha-response': ref.current.getValue(),
-            },
-            withCredentials: true,
-        })
-        .then((res) => {
+        Service.login({ headers: { Authorization: `Basic ${auth}`} })
+            .then(({ token }) => {
 
-            console.log('res:', res)
+                // 設定 cookie
+                Cookies.set('token', token, {
+                    secure: true,
+                    // expires: ,
+                    // sameSite: 'strict',
+                });
 
-        })
-        .catch( (error) => console.log(error));
+                console.log('22222')
+                router.push('/home/banner');
+
+            });
 
     };
 
     return (
 
         <Fragment>
-            {/* <HeadSEO title="登入" /> */}
+            <LoginStyle />
+            <LightboxFormStyle />
+            <HeadTag title="登入" />
 
             <form onSubmit={handleSubmit(handleReqData)}>
-                {/* <div>
-                    <label htmlFor="name">請輸入名字:</label>
+                <FormRow
+                    labelTitle="帳號 (Email)"
+                    error={errors.account && true}
+                    {...(errors.account?.type === 'pattern') && { errorMesg: '格式錯誤' }}
+                >
                     <input
                         type="text"
-                        name="name"
-                        {...register('name')}
+                        name="account"
+                        {...register('account', {
+                            required: true,
+                            pattern: /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/g,
+                        })}
                     />
-                </div> */}
+                </FormRow>
 
-                {/* <Button
-                    type="submit"
-                    variant="contained"
+                <FormRow
+                    labelTitle="密碼 (至少 8 碼)"
+                    error={errors.password && true}
+                    errorMesg={errConfig[errors.password?.type]}
                 >
-                    送出
-                </Button> */}
-            </form>
+                    <input
+                        type="password"
+                        name="password"
+                        {...register('password', {
+                            required: true,
+                            minLength: 8,
+                            maxLength: 20,
+                            // pattern: /^(?=.*\d)(?=.*[a-z])[0-9a-z]{8,}$/g,
+                        })}
+                    />
+                </FormRow>
 
-            {/* <LinkText /> */}
+                <div className="row row-btns">
+                    <Buttons
+                        text="送出"
+                        htmlType="submit"
+                    />
+                </div>
+            </form>
         </Fragment>
 
     );
@@ -73,8 +141,3 @@ const Login = () => {
 };
 
 export default Login;
-
-/**
- * google recaptcha
- * https://www.youtube.com/watch?v=vrbyaOoZ-4Q
- */
