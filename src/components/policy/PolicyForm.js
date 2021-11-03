@@ -85,9 +85,6 @@ const PolicyForm = () => {
             ...formStorageData.id ? { id: formStorageData.id } : null,
         };
 
-        // console.log('reqData:', reqData)
-        // return;
-
         if (currEvent === 'updatePolicy') policyUpdate(reqData);
         else policyCreate(reqData);
 

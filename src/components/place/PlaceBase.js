@@ -31,8 +31,6 @@ const antdTableFilter = (data) => data.reduce((acc, key) => {
 
 const PlaceBase = ({ pageData }) => {
 
-    // console.log('pageData:', pageData)
-
     // Router
     const router = useRouter();
 
