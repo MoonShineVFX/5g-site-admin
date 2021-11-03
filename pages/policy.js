@@ -12,22 +12,27 @@ const Policy = ({ pageData }) => (
 
 export default Policy;
 
-export async function getServerSideProps () {
+export async function getServerSideProps ({ req }) {
 
-    const res = await admin.serviceServer({ method: 'get', url: '/policies' });
-    const { data } = res;
-
-    if (!data.result) {
+    // 沒有 cookie(token) 導登入頁
+    if (!req.cookies.token) {
 
         return {
-            notFound: true,
-            // redirect: {
-            //     destination: '/login',
-            //     permanent: false,
-            // },
+            redirect: {
+                destination: '/login',
+                permanent: false,
+            },
         };
 
     }
+
+    const resData = await admin.serviceServer({
+        method: 'get', // Notes: 後端目前只允許 get
+        url: '/policies',
+        cookie: req.cookies.token,
+    });
+
+    const { data } = resData;
 
     return {
         props: {

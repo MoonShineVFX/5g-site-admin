@@ -57,9 +57,7 @@ const util = {
 
             const authHeader = {
                 headers: {
-                    // 驗證(新增、編輯需要)
                     Authorization: `Bearer ${Cookies.get('token')}`,
-                    // Authorization: 'Basic c3RhZmZAbW9vbnNoaW5lLnR3OkFETSFOQE0wMG5zaGluZQ==',
                 },
             };
 
@@ -92,22 +90,15 @@ const util = {
 
     },
 
-    serviceServer: ({ method = 'post', url, cookie, headers }, reqData = {}) => {
+    serviceServer: ({ method = 'post', url, cookie }, reqData = {}) => {
 
-        const authHeader = {
+        return axios({
+            url: `http://${process.env.HOST}/api${url}`,
+            method,
             headers: {
-                // 驗證(新增、編輯需要)
                 Authorization: `Bearer ${cookie}`,
-                // Authorization: 'Basic c3RhZmZAbW9vbnNoaW5lLnR3OkFETSFOQE0wMG5zaGluZQ==',
             },
-        };
-
-        console.log('serviceServer cookie:', cookie)
-        // console.log('serviceServer headers:', headers)
-        console.log('serviceServer check:', `Authorization: Bearer ${cookie}`)
-        console.log('serviceServer authHeader:', authHeader)
-
-        return axios[method](`http://${process.env.HOST}/api${url}`, reqData, { ...authHeader });
+        });
 
     },
 

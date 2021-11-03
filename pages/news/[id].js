@@ -59,22 +59,27 @@ const NewsDetail = ({ pageData }) => {
 
 export default NewsDetail;
 
-export async function getServerSideProps ({ params }) {
+export async function getServerSideProps ({ params, req }) {
 
-    const response = await admin.serviceServer({
-        method: 'get',
-        url: `/news/${+params.id}`,
-    });
-
-    const { data } = response;
-
-    if (!data.result) {
+    // 沒有 cookie(token) 導登入頁
+    if (!req.cookies.token) {
 
         return {
-            notFound: true,
+            redirect: {
+                destination: '/login',
+                permanent: false,
+            },
         };
 
     }
+
+    const resData = await admin.serviceServer({
+        method: 'get',
+        url: `/news/${+params.id}`,
+        cookie: req.cookies.token,
+    });
+
+    const { data } = resData;
 
     return {
         props: {

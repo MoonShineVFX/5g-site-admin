@@ -9,18 +9,26 @@ const News = ({ pageData }) => (
 
 export default News;
 
-export async function getServerSideProps () {
+export async function getServerSideProps ({ req }) {
 
-    const res = await admin.serviceServer({ url: '/news' });
-    const { data } = res;
-
-    if (!data.result) {
+    // 沒有 cookie(token) 導登入頁
+    if (!req.cookies.token) {
 
         return {
-            notFound: true,
+            redirect: {
+                destination: '/login',
+                permanent: false,
+            },
         };
 
     }
+
+    const resData = await admin.serviceServer({
+        url: '/news',
+        cookie: req.cookies.token
+    });
+
+    const { data } = resData;
 
     return {
         props: {

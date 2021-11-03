@@ -1,13 +1,16 @@
-import { Fragment, useEffect } from 'react';
+import { Fragment, useContext } from 'react';
 import { useRouter } from 'next/router';
-import Cookies from 'js-cookie';
 import { useForm } from 'react-hook-form';
-import theme from '../src/utils/theme';
-import LightboxFormStyle from '../src/components/LightboxFormStyle';
+import Cookies from 'js-cookie';
 import { createGlobalStyle } from 'styled-components';
+
+import theme from '../src/utils/theme';
+import HeadTag from '../src/containers/HeadTag';
+import LightboxFormStyle from '../src/components/LightboxFormStyle';
 import Buttons from '../src/components/Buttons';
 import { FormRow } from '../src/components/LightboxForm';
-import HeadTag from '../src/containers/HeadTag';
+
+import { GlobalContext } from '../src/context/global.state';
 import Service from '../src/utils/admin.service';
 
 const errConfig = {
@@ -53,17 +56,15 @@ const Login = () => {
     // Router
     const router = useRouter();
 
+    // Context
+    const { getGlobalData } = useContext(GlobalContext);
+
     //
     const {
         handleSubmit,
         register,
         formState: { errors },
     } = useForm();
-
-    useEffect(() => {
-
-        console.log('11111')
-    })
 
     // 送資料
     const handleReqData = (reqData) => {
@@ -76,12 +77,12 @@ const Login = () => {
                 // 設定 cookie
                 Cookies.set('token', token, {
                     secure: true,
-                    // expires: ,
+                    expires: new Date(new Date().getTime() + (60 * 60 * 1000)), // 一小時後過期會自動清除 cookie
                     // sameSite: 'strict',
                 });
 
-                console.log('22222')
                 router.push('/home/banner');
+                getGlobalData();
 
             });
 
@@ -122,7 +123,7 @@ const Login = () => {
                             required: true,
                             minLength: 8,
                             maxLength: 20,
-                            // pattern: /^(?=.*\d)(?=.*[a-z])[0-9a-z]{8,}$/g,
+                            pattern: /^(?=.*\d)[0-9a-zA-Z!\u0022#$%&'()*+,./:;<=>?@[\]\^_`{|}~-]{8,}$/g,
                         })}
                     />
                 </FormRow>
