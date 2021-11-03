@@ -27,7 +27,6 @@ export async function getServerSideProps ({ req }) {
     }
 
     const resData = await admin.serviceServer({
-        method: 'get', // Notes: 後端目前只允許 get
         url: '/policies',
         cookie: req.cookies.token,
     });
