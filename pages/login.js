@@ -1,4 +1,4 @@
-import { Fragment, useContext } from 'react';
+import { Fragment, useContext, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import Cookies from 'js-cookie';
@@ -13,12 +13,14 @@ import { FormRow } from '../src/components/LightboxForm';
 import { GlobalContext } from '../src/context/global.state';
 import Service from '../src/utils/admin.service';
 
+//
 const errConfig = {
     pattern: '格式錯誤',
     minLength: '少於8碼',
     maxLength: '超過20碼',
 };
 
+//
 const LoginStyle = createGlobalStyle`
     .appContainer {
         justify-content: center;
@@ -51,13 +53,17 @@ const LoginStyle = createGlobalStyle`
     }
 `;
 
-const Login = () => {
+//
+const Login = ({ pageData }) => {
 
     // Router
     const router = useRouter();
 
     // Context
     const { getGlobalData } = useContext(GlobalContext);
+
+    // State
+    const [loading, setLoading] = useState(false);
 
     //
     const {
@@ -69,6 +75,7 @@ const Login = () => {
     // 送資料
     const handleReqData = (reqData) => {
 
+        setLoading(true);
         let auth = btoa(`${reqData.account}:${reqData.password}`);
 
         Service.login({ headers: { Authorization: `Basic ${auth}`} })
@@ -93,7 +100,7 @@ const Login = () => {
         <Fragment>
             <LoginStyle />
             <LightboxFormStyle />
-            <HeadTag title="登入" />
+            <HeadTag title={pageData.title} />
 
             <form onSubmit={handleSubmit(handleReqData)}>
                 <FormRow
@@ -112,13 +119,14 @@ const Login = () => {
                 </FormRow>
 
                 <FormRow
-                    labelTitle="密碼 (至少 8 碼)"
+                    labelTitle="密碼 (允許英、數、特殊符號)"
                     error={errors.password && true}
                     errorMesg={errConfig[errors.password?.type]}
                 >
                     <input
                         type="password"
                         name="password"
+                        placeholder="至少 8 碼"
                         {...register('password', {
                             required: true,
                             minLength: 8,
@@ -128,12 +136,11 @@ const Login = () => {
                     />
                 </FormRow>
 
-                <div className="row row-btns">
-                    <Buttons
-                        text="送出"
-                        htmlType="submit"
-                    />
-                </div>
+                <Buttons
+                    {...loading && { loading }}
+                    text="送出"
+                    htmlType="submit"
+                />
             </form>
         </Fragment>
 
@@ -142,3 +149,27 @@ const Login = () => {
 };
 
 export default Login;
+
+export async function getServerSideProps ({ req }) {
+
+    // 有 cookie(token) 導首頁
+    if (req.cookies.token) {
+
+        return {
+            redirect: {
+                destination: '/home/banner',
+                permanent: false,
+            },
+        };
+
+    }
+
+    return {
+        props: {
+            pageData: {
+                title: '登入',
+            },
+        },
+    };
+
+}
