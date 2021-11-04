@@ -79,14 +79,7 @@ const Login = ({ pageData }) => {
         let auth = btoa(`${reqData.account}:${reqData.password}`);
 
         Service.login({ headers: { Authorization: `Basic ${auth}`} })
-            .then(({ token }) => {
-
-                // 設定 cookie
-                Cookie.set('token', token, {
-                    secure: true,
-                    expires: new Date(new Date().getTime() + (60 * 60 * 1000)), // 一小時後過期會自動清除 cookie
-                    sameSite: 'strict',
-                });
+            .then(() => {
 
                 router.push('/home/banner');
                 getGlobalData();
@@ -94,8 +87,6 @@ const Login = ({ pageData }) => {
             });
 
     };
-
-    console.log('check:', Cookie.get('token'))
 
     return (
 
