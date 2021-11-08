@@ -79,6 +79,12 @@ const Service = {
     // 政策資源
     policyCreate: (reqData) => admin.serviceProxy('/policy_create', reqData),
     policyUpdate: (reqData) => admin.serviceProxy('/policy_update', reqData),
+
+    // 資安說明
+    securityUpdate: (reqData) => admin.serviceProxy('/security_update', reqData),
+
+    // 隱私權政策
+    privacyUpdate: (reqData) => admin.serviceProxy('/privacy_update', reqData),
 };
 
 export default Service;

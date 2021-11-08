@@ -39,13 +39,23 @@ const adminConst = {
             subItems: [],
         },
         {
+            name: '場域空間',
+            pageKey: 'place',
+            subItems: [],
+        },
+        {
             name: '政策資源',
             pageKey: 'policy',
             subItems: [],
         },
         {
-            name: '場域空間',
-            pageKey: 'place',
+            name: '資安說明',
+            pageKey: 'security',
+            subItems: [],
+        },
+        {
+            name: '隱私權政策',
+            pageKey: 'privacy',
             subItems: [],
         },
     ],
