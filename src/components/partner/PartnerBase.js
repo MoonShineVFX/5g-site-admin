@@ -82,8 +82,16 @@ const BannerBase = ({ pageData }) => {
             render: (imgUrl, { title }) => <Image src={imgUrl} alt={title} />,
         },
         {
-            title: '夥伴名稱',
+            title: '夥伴名稱 (英)',
             dataIndex: 'name',
+            render: (name, { nameEnglish }) => (
+
+                <Fragment>
+                    {name}
+                    <div>{renderWithoutValue(nameEnglish)}</div>
+                </Fragment>
+
+            ),
         },
         {
             title: '夥伴介紹',

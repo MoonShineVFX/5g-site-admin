@@ -123,23 +123,34 @@ const PartnerForm = () => {
                 </FormRow>
 
                 <FormRow
-                    labelTitle="外部網址(URL)"
-                    required={true}
-                    error={errors.link && true}
-                    {...(errors.link?.type === 'pattern') && { errorMesg: '格式錯誤' }}
+                    labelTitle="夥伴名稱(英文)"
                 >
                     <input
                         type="text"
-                        name="link"
-                        defaultValue={formStorageData.link}
-                        placeholder="請輸入完整連結 (https 或 http)"
-                        {...register('link', {
-                            required: true,
-                            pattern: /^(https?|chrome):\/\/[^\s$.?#].[^\s]*$/g,
-                        })}
+                        name="nameEnglish"
+                        defaultValue={formStorageData.nameEnglish}
+                        {...register('nameEnglish')}
                     />
                 </FormRow>
             </div>
+
+            <FormRow
+                labelTitle="外部網址(URL)"
+                required={true}
+                error={errors.link && true}
+                {...(errors.link?.type === 'pattern') && { errorMesg: '格式錯誤' }}
+            >
+                <input
+                    type="text"
+                    name="link"
+                    defaultValue={formStorageData.link}
+                    placeholder="請輸入完整連結 (https 或 http)"
+                    {...register('link', {
+                        required: true,
+                        pattern: /^(https?|chrome):\/\/[^\s$.?#].[^\s]*$/g,
+                    })}
+                />
+            </FormRow>
 
             <div className="items">
                 <FormRow
