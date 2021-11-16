@@ -23,6 +23,9 @@ const TablesLayout = styled(Tables)({
     '.col-tags > div': {
         marginBottom: '6px',
     },
+    '.col-link': {
+        wordBreak: 'break-word',
+    },
 });
 
 const BannerBase = ({ pageData }) => {
@@ -87,7 +90,7 @@ const BannerBase = ({ pageData }) => {
             render: (name, { nameEnglish }) => (
 
                 <Fragment>
-                    {name}
+                    {name}【
                     <div>{renderWithoutValue(nameEnglish)}</div>
                 </Fragment>
 
@@ -112,6 +115,8 @@ const BannerBase = ({ pageData }) => {
         {
             title: '外部網址(URL)',
             dataIndex: 'link',
+            className: 'col-link',
+            width: 300,
             render: (link) => <Links url={link} target="_blank">{link}</Links>,
         },
         {
