@@ -123,6 +123,12 @@ const LightboxFormStyle = createGlobalStyle`
                 min-height: 70px;
             }
         }
+        &.partner-textarea .field {
+            min-height: 240px;
+            textarea {
+                line-height: 1.5;
+            }
+        }
     }
     .row-btns {
         text-align: center;
