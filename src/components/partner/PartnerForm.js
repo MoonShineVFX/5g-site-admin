@@ -218,8 +218,8 @@ const PartnerForm = () => {
             </div>
 
             <FormRow
-                labelTitle="夥伴介紹 (限1000字)"
-                className="textarea partner-textarea"
+                labelTitle="夥伴介紹 (限150字)"
+                className="textarea"
                 noBorder={true}
                 required={true}
                 error={errors.description && true}
@@ -227,11 +227,11 @@ const PartnerForm = () => {
             >
                 <textarea
                     name="description"
-                    placeholder="限制 1000 字內"
+                    placeholder="限制 150 字內"
                     defaultValue={formStorageData.description}
                     {...register('description', {
                         required: true,
-                        maxLength: 1000,
+                        maxLength: 150,
                     })}
                 />
             </FormRow>

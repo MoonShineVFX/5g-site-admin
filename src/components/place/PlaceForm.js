@@ -169,7 +169,7 @@ const PlaceForm = ({ data, serviceKey }) => {
 
                         <FormRow
                             labelTitle="場域介紹"
-                            className="textarea"
+                            className="textarea place-textarea"
                             noBorder={true}
                         >
                             <textarea

@@ -48,6 +48,12 @@ const FormWrap = styled.form({
     'h3': {
         fontWeight: 'bold',
     },
+    '.row.place-textarea .field': {
+        minHeight: '240px',
+        'textarea': {
+            lineHeight: '1.5',
+        },
+    },
 });
 
 /** Place Other Fields Form */
