@@ -153,39 +153,23 @@ const PartnerForm = () => {
             </FormRow>
 
             <div className="items">
-                <FormRow
-                    labelTitle="聯絡電話"
-                    required={true}
-                    error={errors.phone && true}
-                    {...(errors.phone?.type === 'pattern') && { errorMesg: '格式錯誤' }}
-                >
+                <FormRow labelTitle="聯絡電話">
                     <input
                         type="text"
                         name="phone"
                         defaultValue={formStorageData.phone}
                         placeholder="02-22222222"
-                        {...register('phone', {
-                            required: true,
-                            pattern: /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]*$/g,
-                        })}
+                        {...register('phone')}
                     />
                 </FormRow>
 
-                <FormRow
-                    labelTitle="聯絡信箱"
-                    required={true}
-                    error={errors.email && true}
-                    {...(errors.email?.type === 'pattern') && { errorMesg: '格式錯誤' }}
-                >
+                <FormRow labelTitle="聯絡信箱">
                     <input
                         type="text"
                         name="email"
                         defaultValue={formStorageData.email}
                         placeholder="xxx@xxx.com"
-                        {...register('email', {
-                            required: true,
-                            pattern: /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/g,
-                        })}
+                        {...register('email')}
                     />
                 </FormRow>
             </div>

@@ -21,7 +21,7 @@ const FormWrap = styled.form({
         },
     },
     '.row.textarea .field': {
-        minHeight: '120px',
+        minHeight: '150px',
     },
     '.row-btns': {
         textAlign: 'left',
