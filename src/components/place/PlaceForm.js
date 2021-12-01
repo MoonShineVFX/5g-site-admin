@@ -169,7 +169,7 @@ const PlaceForm = ({ data, serviceKey }) => {
 
                         <FormRow
                             labelTitle="場域介紹"
-                            className="textarea"
+                            className="textarea place-textarea"
                             noBorder={true}
                         >
                             <textarea
@@ -230,44 +230,28 @@ const PlaceForm = ({ data, serviceKey }) => {
                         </div>
 
                         <div className="items">
-                            <FormRow
-                                labelTitle="聯絡電話"
-                                required={true}
-                                error={errors.contactPhone && true}
-                            >
+                            <FormRow labelTitle="聯絡電話">
                                 <input
                                     type="text"
                                     name="contactPhone"
-                                    {...register('contactPhone', { required: true })}
+                                    {...register('contactPhone')}
                                 />
                             </FormRow>
 
-                            <FormRow
-                                labelTitle="傳真"
-                                required={true}
-                                error={errors.contactFax && true}
-                            >
+                            <FormRow labelTitle="傳真">
                                 <input
                                     type="text"
                                     name="contactFax"
-                                    {...register('contactFax', { required: true })}
+                                    {...register('contactFax')}
                                 />
                             </FormRow>
 
-                            <FormRow
-                                labelTitle="聯絡信箱"
-                                required={true}
-                                error={errors.contactEmail && true}
-                                {...(errors.contactEmail?.type === 'pattern') && { errorMesg: '格式錯誤' }}
-                            >
+                            <FormRow labelTitle="聯絡信箱">
                                 <input
                                     type="text"
                                     name="contactEmail"
                                     placeholder="xxx@xxx.com"
-                                    {...register('contactEmail', {
-                                        required: true,
-                                        pattern: /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/g,
-                                    })}
+                                    {...register('contactEmail')}
                                 />
                             </FormRow>
                         </div>

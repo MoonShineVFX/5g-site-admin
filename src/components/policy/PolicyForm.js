@@ -23,7 +23,7 @@ const arrangeCategory = (data) => data.reduce((acc, obj) => {
 //
 const FormWrapLayout = styled.form({
     '.row.textarea .field': {
-        minHeight: '100px',
+        minHeight: '120px',
     },
     '.warning-text': {
         color: blue.primary,
@@ -164,82 +164,63 @@ const PolicyForm = () => {
             </div>
 
             <div className="items">
-                <FormRow
-                    labelTitle="聯絡電話"
-                    required={true}
-                    error={errors.contactPhone && true}
-                    {...(errors.contactPhone?.type === 'pattern') && { errorMesg: '格式錯誤' }}
-                >
+                <FormRow labelTitle="聯絡電話">
                     <input
                         type="text"
                         name="contactPhone"
                         placeholder="02-22222222"
                         defaultValue={formStorageData.contact?.phone}
-                        {...register('contactPhone', {
-                            required: true,
-                            pattern: /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]*$/g,
-                        })}
+                        {...register('contactPhone')}
                     />
                 </FormRow>
 
-                <FormRow
-                    labelTitle="傳真"
-                    required={true}
-                    error={errors.contactFax && true}
-                >
+                <FormRow labelTitle="傳真">
                     <input
                         type="text"
                         name="contactFax"
                         defaultValue={formStorageData.contact?.fax}
-                        {...register('contactFax', { required: true })}
+                        {...register('contactFax')}
                     />
                 </FormRow>
 
-                <FormRow
-                    labelTitle="聯絡信箱"
-                    required={true}
-                    error={errors.contactEmail && true}
-                    {...(errors.contactEmail?.type === 'pattern') && { errorMesg: '格式錯誤' }}
-                >
+                <FormRow labelTitle="聯絡信箱">
                     <input
                         type="text"
                         name="contactEmail"
                         placeholder="xxx@xxx.com"
                         defaultValue={formStorageData.contact?.email}
-                        {...register('contactEmail', {
-                            required: true,
-                            pattern: /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/g,
-                        })}
+                        {...register('contactEmail')}
                     />
                 </FormRow>
             </div>
 
-            <div className="items">
-                <FormRow labelTitle="資金額度">
-                    <input
-                        type="text"
-                        name="amountQuota"
-                        defaultValue={formStorageData.amountQuota}
-                        {...register('amountQuota')}
-                    />
-                </FormRow>
+            <FormRow
+                labelTitle="網站連結 (URL)"
+                error={errors.link && true}
+                {...(errors.link?.type === 'pattern') && { errorMesg: '格式錯誤' }}
+            >
+                <input
+                    type="text"
+                    name="link"
+                    placeholder="請輸入完整連結 (https 或 http)"
+                    defaultValue={formStorageData.link}
+                    {...register('link', {
+                        pattern: /^(https?|chrome):\/\/[^\s$.?#].[^\s]*$/g,
+                    })}
+                />
+            </FormRow>
 
-                <FormRow
-                    labelTitle="網站連結 (URL)"
-                    error={errors.link && true}
-                    {...(errors.link?.type === 'pattern') && { errorMesg: '格式錯誤' }}
-                >
-                    <input
-                        type="text"
-                        name="link"
-                        placeholder="請輸入完整連結 (https 或 http)"
-                        defaultValue={formStorageData.link}
-                        {...register('link', {
-                            pattern: /^(https?|chrome):\/\/[^\s$.?#].[^\s]*$/g,
-                        })}
-                    />
-                </FormRow>
-            </div>
+            <FormRow
+                labelTitle="資金額度"
+                className="textarea"
+                noBorder={true}
+            >
+                <textarea
+                    name="amountQuota"
+                    defaultValue={formStorageData.amountQuota}
+                    {...register('amountQuota')}
+                />
+            </FormRow>
 
             <FormRow
                 labelTitle="申請方式"

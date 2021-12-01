@@ -1,6 +1,6 @@
 module.exports = {
     env: {
-        HOST: '35.206.225.168',
+        HOST: '5gkh.kcg.gov.tw',
     },
     basePath: '/admin',
     async redirects () {

@@ -120,7 +120,7 @@ const LightboxFormStyle = createGlobalStyle`
         }
         &.textarea {
             .field {
-                min-height: 70px;
+                min-height: 100px;
             }
         }
     }
