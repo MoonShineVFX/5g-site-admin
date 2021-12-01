@@ -8,6 +8,7 @@ import ContentHeader from '../../containers/ContentHeader';
 import Tables from '../Tables';
 import Buttons from '../Buttons';
 import LightboxForm from '../LightboxForm';
+import Prompt from '../Prompt';
 import PolicyForm from '../policy/PolicyForm';
 
 import { GlobalContext } from '../../context/global.state';
@@ -63,6 +64,7 @@ const PlaceBase = ({ pageData }) => {
         action,
         lists,
         policyDispatch,
+        policyDelete,
     } = useContext(PolicyContext);
 
     useEffect(() => {
@@ -150,10 +152,17 @@ const PlaceBase = ({ pageData }) => {
             width: 200,
             render: (data) => (
 
-                <Buttons
-                    text="編輯"
-                    onClick={() => btnUpdate(data)}
-                />
+                <Fragment>
+                    <Buttons
+                        text="編輯"
+                        onClick={() => btnUpdate(data)}
+                    />
+                    <Buttons
+                        danger
+                        text="刪除"
+                        onClick={() => btnDelete(data)}
+                    />
+                </Fragment>
             ),
         },
     ];
@@ -176,6 +185,17 @@ const PlaceBase = ({ pageData }) => {
         formStorageDispatch({
             type: 'COLLECT',
             payload: data,
+        });
+
+    };
+
+    // 刪除按鈕
+    const btnDelete = ({ id }) => {
+
+        Prompt('confirm', {
+            title: <Fragment>刪除 <span className="small-text">(ID: {id})</span></Fragment>,
+            mesg: '你確定要刪除嗎？',
+            callback: () => policyDelete(id),
         });
 
     };

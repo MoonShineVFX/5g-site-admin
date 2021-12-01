@@ -75,6 +75,24 @@ const PartnerProvider = ({ children }) => {
 
     };
 
+    // 刪除
+    const partnerDelete = (id) => {
+
+        Service.partnerDelete({ id: +id })
+            .then(() => {
+
+                Prompt('success', {
+                    callback: () => {
+
+                        partnerDispatch({ type: 'partner_delete', payload: { id, action: true } });
+
+                    },
+                });
+
+            });
+
+    };
+
     return (
 
         <Provider value={{
@@ -85,6 +103,7 @@ const PartnerProvider = ({ children }) => {
 
             partnerCreate,
             partnerUpdate,
+            partnerDelete,
 
             // Dispatch
             partnerDispatch,

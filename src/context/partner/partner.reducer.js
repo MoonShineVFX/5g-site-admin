@@ -33,6 +33,13 @@ const partnerReducer = (state, { type, payload }) => {
                 }),
             };
 
+        case 'partner_delete':
+            return {
+                ...state,
+                action: payload.action,
+                lists: state.lists.filter(({ id }) => id !== payload.id),
+            };
+
         default:
             return { ...state };
     }

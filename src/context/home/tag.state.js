@@ -61,6 +61,24 @@ const TagProvider = ({ children }) => {
 
     };
 
+    // 刪除
+    const tagDelete = (id) => {
+
+        Service.tagDelete({ id: +id })
+            .then(() => {
+
+                Prompt('success', {
+                    callback: () => {
+
+                        tagDispatch({ type: 'tag_delete', payload: { id, action: true } });
+
+                    },
+                });
+
+            });
+
+    };
+
     return (
 
         <Provider value={{
@@ -70,6 +88,7 @@ const TagProvider = ({ children }) => {
 
             tagCreate,
             tagUpdate,
+            tagDelete,
 
             // Dispatch
             tagDispatch,

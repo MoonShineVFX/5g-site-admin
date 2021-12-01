@@ -1,4 +1,4 @@
-import { Fragment, useContext, useEffect } from 'react';
+import { Fragment, useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Tag } from 'antd';
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
@@ -9,8 +9,10 @@ import ContentHeader from '../../containers/ContentHeader';
 import Links from '../Links';
 import Tables from '../Tables';
 import Buttons from '../Buttons';
+import Prompt from '../Prompt';
 import { GlobalContext } from '../../context/global.state';
 import admin from '../../utils/admin';
+import Service from '../../utils/admin.service';
 
 const { pathnameKey, renderWithoutValue, renderDateTime } = admin;
 
@@ -22,10 +24,12 @@ const mappingTagOpt = (opts) => opts.reduce((acc, { id, name }) => {
 
 }, {});
 
+//
 const CreateBtnLayout = styled(Buttons)({
     float: 'none',
 });
 
+//
 const TablesLayout = styled(Tables)(({ theme }) => ({
     '.col-tags > div': {
         marginBottom: '6px',
@@ -43,6 +47,7 @@ const TablesLayout = styled(Tables)(({ theme }) => ({
     },
 }));
 
+//
 const antdTableFilter = (data) => data.reduce((acc, { categoryId, categoryName }) => {
 
     const obj = { text: categoryName, value: categoryId };
@@ -53,6 +58,7 @@ const antdTableFilter = (data) => data.reduce((acc, { categoryId, categoryName }
 
 }, []);
 
+//
 const NewsBase = ({ pageData }) => {
 
     // Router
@@ -60,6 +66,12 @@ const NewsBase = ({ pageData }) => {
 
     // Context
     const { newsTags, globalDispatch } = useContext(GlobalContext);
+
+    // State
+    const [storage, setStorage] = useState({
+        action: false,
+        list: pageData.data.list,
+    });
 
     useEffect(() => {
 
@@ -154,13 +166,50 @@ const NewsBase = ({ pageData }) => {
             width: 200,
             render: (data) => (
 
-                <Buttons
-                    text="編輯"
-                    onClick={() => router.push(`/news/${data.id}`)}
-                />
+                <Fragment>
+                    <Buttons
+                        text="編輯"
+                        onClick={() => router.push(`/news/${data.id}`)}
+                    />
+                    <Buttons
+                        danger
+                        text="刪除"
+                        onClick={() => btnDelete(data)}
+                    />
+                </Fragment>
             ),
         },
     ];
+
+    // 刪除按鈕
+    const btnDelete = ({ id }) => {
+
+        Prompt('confirm', {
+            title: <Fragment>刪除 <span className="small-text">(ID: {id})</span></Fragment>,
+            mesg: '你確定要刪除嗎？',
+            callback: () => {
+
+                Service.newsDelete({ id: +id })
+                    .then(() => {
+
+                        Prompt('success', {
+                            callback: () => {
+
+                                setStorage({
+                                    ...storage,
+                                    action: true,
+                                    list: storage.list.filter((obj) => obj.id !== id),
+                                });
+
+                            },
+                        });
+
+                    });
+
+            },
+        });
+
+    };
 
     return (
 
@@ -179,7 +228,7 @@ const NewsBase = ({ pageData }) => {
             <TablesLayout
                 rowKey="id"
                 columns={columns}
-                data={pageData.data.list}
+                data={storage.action ? storage.list : pageData.data.list}
             />
         </Fragment>
 

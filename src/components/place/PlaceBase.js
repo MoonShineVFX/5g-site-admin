@@ -1,4 +1,4 @@
-import { Fragment, useContext, useEffect } from 'react';
+import { Fragment, useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Image } from 'antd';
 import styled from 'styled-components';
@@ -8,9 +8,11 @@ import ContentHeader from '../../containers/ContentHeader';
 import Links from '../Links';
 import Tables from '../Tables';
 import Buttons from '../Buttons';
+import Prompt from '../Prompt';
 import { GlobalContext } from '../../context/global.state';
 import admin from '../../utils/admin';
 import adminConst from '../../utils/admin.const';
+import Service from '../../utils/admin.service';
 
 const { pathnameKey, renderWithoutValue, renderDateTime } = admin;
 const { placeConfig } = adminConst;
@@ -36,6 +38,12 @@ const PlaceBase = ({ pageData }) => {
 
     // Context
     const { globalDispatch } = useContext(GlobalContext);
+
+    // State
+    const [storage, setStorage] = useState({
+        action: false,
+        list: pageData.data.list,
+    });
 
     useEffect(() => {
 
@@ -98,13 +106,50 @@ const PlaceBase = ({ pageData }) => {
             width: 200,
             render: (data) => (
 
-                <Buttons
-                    text="編輯"
-                    onClick={() => router.push(`/place/${data.id}`)}
-                />
+                <Fragment>
+                    <Buttons
+                        text="編輯"
+                        onClick={() => router.push(`/place/${data.id}`)}
+                    />
+                    <Buttons
+                        danger
+                        text="刪除"
+                        onClick={() => btnDelete(data)}
+                    />
+                </Fragment>
             ),
         },
     ];
+
+    // 刪除按鈕
+    const btnDelete = ({ id }) => {
+
+        Prompt('confirm', {
+            title: <Fragment>刪除 <span className="small-text">(ID: {id})</span></Fragment>,
+            mesg: '你確定要刪除嗎？',
+            callback: () => {
+
+                Service.newsDelete({ id: +id })
+                    .then(() => {
+
+                        Prompt('success', {
+                            callback: () => {
+
+                                setStorage({
+                                    ...storage,
+                                    action: true,
+                                    list: storage.list.filter((obj) => obj.id !== id),
+                                });
+
+                            },
+                        });
+
+                    });
+
+            },
+        });
+
+    };
 
     return (
 
@@ -123,7 +168,7 @@ const PlaceBase = ({ pageData }) => {
             <Tables
                 rowKey="id"
                 columns={columns}
-                data={pageData.data.list}
+                data={storage.action ? storage.list : pageData.data.list}
             />
         </Fragment>
 

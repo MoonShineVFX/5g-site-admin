@@ -9,6 +9,7 @@ import Tables from '../../../src/components/Tables';
 import Links from '../../../src/components/Links';
 import Buttons from '../../../src/components/Buttons';
 import LightboxForm from '../../../src/components/LightboxForm';
+import Prompt from '../../../src/components/Prompt';
 import BannerForm from '../../../src/components/home/BannerForm';
 
 import { GlobalContext } from '../../../src/context/global.state';
@@ -51,6 +52,7 @@ const BannerBase = ({ pageData }) => {
         length,
         lists,
         bannerLengthControl,
+        bannerDelete,
         bannerDispatch,
     } = useContext(BannerContext);
 
@@ -115,10 +117,17 @@ const BannerBase = ({ pageData }) => {
             width: 200,
             render: (data) => (
 
-                <Buttons
-                    text="編輯"
-                    onClick={() => btnUpdate(data)}
-                />
+                <Fragment>
+                    <Buttons
+                        text="編輯"
+                        onClick={() => btnUpdate(data)}
+                    />
+                    <Buttons
+                        danger
+                        text="刪除"
+                        onClick={() => btnDelete(data)}
+                    />
+                </Fragment>
             ),
         },
     ];
@@ -141,6 +150,17 @@ const BannerBase = ({ pageData }) => {
         formStorageDispatch({
             type: 'COLLECT',
             payload: data,
+        });
+
+    };
+
+    // 刪除按鈕
+    const btnDelete = ({ id }) => {
+
+        Prompt('confirm', {
+            title: <Fragment>刪除 <span className="small-text">(ID: {id})</span></Fragment>,
+            mesg: '你確定要刪除嗎？',
+            callback: () => bannerDelete(id),
         });
 
     };

@@ -32,6 +32,13 @@ const tagReducer = (state, { type, payload }) => {
                 }),
             };
 
+        case 'tag_delete':
+            return {
+                ...state,
+                action: payload.action,
+                lists: state.lists.filter(({ id }) => id !== payload.id),
+            };
+
         default:
             return { ...state };
     }
