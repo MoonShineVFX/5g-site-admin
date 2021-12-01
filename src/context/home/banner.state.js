@@ -77,6 +77,24 @@ const BannerProvider = ({ children }) => {
 
     };
 
+    // 刪除
+    const bannerDelete = (id) => {
+
+        Service.bannerDelete({ id: +id })
+            .then(() => {
+
+                Prompt('success', {
+                    callback: () => {
+
+                        bannerDispatch({ type: 'banner_delete', payload: { id, action: true } });
+
+                    },
+                });
+
+            });
+
+    };
+
     return (
 
         <Provider value={{
@@ -88,6 +106,7 @@ const BannerProvider = ({ children }) => {
             bannerLengthControl,
             bannerCreate,
             bannerUpdate,
+            bannerDelete,
 
             // Dispatch
             bannerDispatch,

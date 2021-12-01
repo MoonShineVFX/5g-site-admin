@@ -66,6 +66,24 @@ const PolicyProvider = ({ children }) => {
 
     };
 
+    // 刪除
+    const policyDelete = (id) => {
+
+        Service.policyDelete({ id: +id })
+            .then(() => {
+
+                Prompt('success', {
+                    callback: () => {
+
+                        policyDispatch({ type: 'policy_delete', payload: { id, action: true } });
+
+                    },
+                });
+
+            });
+
+    };
+
     return (
 
         <Provider value={{
@@ -74,6 +92,7 @@ const PolicyProvider = ({ children }) => {
 
             policyCreate,
             policyUpdate,
+            policyDelete,
 
             // Dispatch
             policyDispatch,

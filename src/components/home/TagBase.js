@@ -9,6 +9,7 @@ import Tables from '../../../src/components/Tables';
 import Buttons from '../../../src/components/Buttons';
 import LightboxForm from '../LightboxForm';
 import LightboxFormStyle from '../LightboxFormStyle';
+import Prompt from '../Prompt';
 import TagForm from './TagForm';
 
 import { GlobalContext } from '../../context/global.state';
@@ -86,6 +87,7 @@ const TagBase = ({ pageData }) => {
         action,
         lists,
         tagDispatch,
+        tagDelete,
     } = useContext(TagContext);
 
     useEffect(() => {
@@ -147,10 +149,17 @@ const TagBase = ({ pageData }) => {
             width: 200,
             render: (data) => (
 
-                <Buttons
-                    text="編輯"
-                    onClick={() => btnUpdate(data)}
-                />
+                <Fragment>
+                    <Buttons
+                        text="編輯"
+                        onClick={() => btnUpdate(data)}
+                    />
+                    <Buttons
+                        danger
+                        text="刪除"
+                        onClick={() => btnDelete(data)}
+                    />
+                </Fragment>
             ),
         },
     ];
@@ -170,6 +179,17 @@ const TagBase = ({ pageData }) => {
         formStorageDispatch({
             type: 'COLLECT',
             payload: { id, name, categoryId },
+        });
+
+    };
+
+    // 刪除按鈕
+    const btnDelete = ({ id }) => {
+
+        Prompt('confirm', {
+            title: <Fragment>刪除 <span className="small-text">(ID: {id})</span></Fragment>,
+            mesg: '你確定要刪除嗎？',
+            callback: () => tagDelete(id),
         });
 
     };

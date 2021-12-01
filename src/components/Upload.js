@@ -1,12 +1,10 @@
 import React, { useContext, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Upload, message } from 'antd';
-import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
+import { UploadOutlined } from '@ant-design/icons';
 import { red } from '@ant-design/colors';
 import styled from 'styled-components';
 import Buttons from './Buttons';
 import { GlobalContext } from '../context/global.state';
-import Service from '../utils/admin.service';
 
 //
 const UploadSingleLayout = styled.div.attrs(() => ({

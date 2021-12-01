@@ -9,6 +9,7 @@ import Tables from '../Tables';
 import Links from '../Links';
 import Buttons from '../Buttons';
 import LightboxForm from '../LightboxForm';
+import Prompt from '../Prompt';
 import PartnerForm from '../partner/PartnerForm';
 
 import { GlobalContext } from '../../context/global.state';
@@ -47,6 +48,7 @@ const BannerBase = ({ pageData }) => {
         imageSize,
         tagOpt,
         partnerDispatch,
+        partnerDelete,
     } = useContext(PartnerContext);
 
     useEffect(() => {
@@ -90,8 +92,8 @@ const BannerBase = ({ pageData }) => {
             render: (name, { nameEnglish }) => (
 
                 <Fragment>
-                    {name}【
-                    <div>{renderWithoutValue(nameEnglish)}</div>
+                    {name}
+                    <div>({renderWithoutValue(nameEnglish)})</div>
                 </Fragment>
 
             ),
@@ -163,10 +165,17 @@ const BannerBase = ({ pageData }) => {
             dataIndex: '',
             render: (data) => (
 
-                <Buttons
-                    text="編輯"
-                    onClick={() => btnUpdate(data)}
-                />
+                <Fragment>
+                    <Buttons
+                        text="編輯"
+                        onClick={() => btnUpdate(data)}
+                    />
+                    <Buttons
+                        danger
+                        text="刪除"
+                        onClick={() => btnDelete(data)}
+                    />
+                </Fragment>
             ),
         },
     ];
@@ -197,6 +206,17 @@ const BannerBase = ({ pageData }) => {
         formStorageDispatch({
             type: 'COLLECT',
             payload: data,
+        });
+
+    };
+
+    // 刪除按鈕
+    const btnDelete = ({ id }) => {
+
+        Prompt('confirm', {
+            title: <Fragment>刪除 <span className="small-text">(ID: {id})</span></Fragment>,
+            mesg: '你確定要刪除嗎？',
+            callback: () => partnerDelete(id),
         });
 
     };

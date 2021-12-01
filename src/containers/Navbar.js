@@ -30,7 +30,10 @@ const SiderLayout = styled(Sider)({
 const Navbar = ({ width }) => {
 
     // Context
-    const { page } = useContext(GlobalContext);
+    const { page, formStorageDispatch } = useContext(GlobalContext);
+
+    // 清除圖片暫存
+    const handleClearFormStorage = () => formStorageDispatch({ type: 'CLEAR' });
 
     return (
 
@@ -55,7 +58,7 @@ const Navbar = ({ width }) => {
                                     subItems.map((obj) => (
 
                                         <Item key={obj.pageKey}>
-                                            <Links url={`/${pageKey}/${obj.pageKey}`}>{obj.name}</Links>
+                                            <Links url={`/${pageKey}/${obj.pageKey}`} onClick={handleClearFormStorage}>{obj.name}</Links>
                                         </Item>
 
                                     ))
@@ -65,7 +68,7 @@ const Navbar = ({ width }) => {
                         ) : (
 
                             <Item key={pageKey}>
-                                <Links url={`/${pageKey}`}>{name}</Links>
+                                <Links url={`/${pageKey}`} onClick={handleClearFormStorage}>{name}</Links>
                             </Item>
 
                         )
