@@ -75,20 +75,13 @@ const util = {
                 // result: 0
                 ({ response }) => {
 
-                    // console.log('response:', response)
+                    const {
+                        data: { errors },
+                    } = response;
 
-                    if (response && response.status >= 400) {
-
-                        const {
-                            data: { errors },
-                        } = response;
-
-                        reject(showErrorMesg(
-                            Object.keys(errors).map((key) => `${key}: ${errors[key]}`)
-                        ));
-
-                    }
-                    else resolve(); // 例外狀況: 有圖片的資料會回傳 502，但實際上有刪除
+                    reject(showErrorMesg(
+                        Object.keys(errors).map((key) => `${key}: ${errors[key]}`)
+                    ));
 
                 },
             )

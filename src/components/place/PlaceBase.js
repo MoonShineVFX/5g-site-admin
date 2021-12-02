@@ -129,7 +129,7 @@ const PlaceBase = ({ pageData }) => {
             mesg: '你確定要刪除嗎？',
             callback: () => {
 
-                Service.newsDelete({ id: +id })
+                Service.demoPlaceDelete({ id: +id })
                     .then(() => {
 
                         Prompt('success', {
