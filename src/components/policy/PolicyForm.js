@@ -262,14 +262,14 @@ const PolicyForm = () => {
                                         arrangeCategory(policyTags)[key].tags.map(({ id, name }, idx) => (
 
                                             <div
-                                                key={idx}
+                                                key={id}
                                                 className="checkbox-item"
                                             >
                                                 <Checkbox
                                                     name="tags"
                                                     value={id}
                                                     defaultChecked={formStorageData?.tags?.some((val) => val === id)}
-                                                    register={register(`tags.${idx}`)}
+                                                    register={register(`tags.${id}`)}
                                                     data-key={key}
                                                 >
                                                     {name}-{id}
