@@ -31,7 +31,7 @@ const util = {
                 }
 
                 return {
-                    url: (process.env.NODE_ENV === 'development') ? `//${process.env.HOST}/api${url}` : `/api${url}`,
+                    url: (process.env.NODE_ENV === 'development') ? `https://${process.env.HOST}/api${url}` : `/api${url}`,
                     method,
                 };
 
@@ -93,7 +93,7 @@ const util = {
     serviceServer: ({ method = 'post', url, cookie }, reqData = {}) => {
 
         return axios({
-            url: `http://${process.env.HOST}/api${url}`,
+            url: `https://${process.env.HOST}/api${url}`,
             method,
             headers: {
                 Authorization: `Bearer ${cookie}`,
