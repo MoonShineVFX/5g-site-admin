@@ -40,10 +40,18 @@ const TextEditorForm = ({
 
     const handleReqData = (reqData) => {
 
+        // px|pt 強制轉 em
+        const regex = /(font-size: )+(\d*)+(px|pt)/g;
+
         reqData = {
             ...otherReqData,
             ...reqData,
-            detail: formStorageData.detail ? formStorageData.detail : reqData.detail,
+            detail: (formStorageData.detail ? formStorageData.detail : reqData.detail).replace(regex, (match, p1, p2, p3) => {
+
+                var unit = (p3 === 'pt') ? (+p2 * 1.333) : +p2;
+                return `${p1}${unit / 16}em`;
+
+            }),
         };
 
         Service[serviceKey](reqData)
