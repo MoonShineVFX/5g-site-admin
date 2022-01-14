@@ -144,6 +144,7 @@ const TextEditor = ({ content }) => {
                             image: {
                                 previewImage: true,
                                 inputAccept: 'image/jpeg,image/jpg,image/png',
+                                alt: { present: true, mandatory: true },
                                 // 先註解，若覺得圖片太大需要 default 再拔掉
                                 // defaultSize: {
                                 //     width: '300',
