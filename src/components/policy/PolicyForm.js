@@ -194,21 +194,32 @@ const PolicyForm = () => {
                 </FormRow>
             </div>
 
-            <FormRow
-                labelTitle="網站連結 (URL)"
-                error={errors.link && true}
-                {...(errors.link?.type === 'pattern') && { errorMesg: '格式錯誤' }}
-            >
-                <input
-                    type="text"
-                    name="link"
-                    placeholder="請輸入完整連結 (https 或 http)"
-                    defaultValue={formStorageData.link}
-                    {...register('link', {
-                        pattern: /^(https?|chrome):\/\/[^\s$.?#].[^\s]*$/g,
-                    })}
-                />
-            </FormRow>
+            <div className="items">
+                <FormRow labelTitle="網站連結名稱">
+                    <input
+                        type="text"
+                        name="websiteName"
+                        defaultValue={formStorageData.websiteName}
+                        {...register('websiteName')}
+                    />
+                </FormRow>
+
+                <FormRow
+                    labelTitle="網站連結 (URL)"
+                    error={errors.link && true}
+                    {...(errors.link?.type === 'pattern') && { errorMesg: '格式錯誤' }}
+                >
+                    <input
+                        type="text"
+                        name="link"
+                        placeholder="請輸入完整連結 (https 或 http)"
+                        defaultValue={formStorageData.link}
+                        {...register('link', {
+                            pattern: /^(https?|chrome):\/\/[^\s$.?#].[^\s]*$/g,
+                        })}
+                    />
+                </FormRow>
+            </div>
 
             <FormRow
                 labelTitle="資金額度"
