@@ -1,6 +1,6 @@
 module.exports = {
     env: {
-        HOST: '5gkh.kcg.gov.tw',
+        HOST: (process.env.API_URL === undefined) ? 'https://5gkh.kcg.gov.tw' : process.env.API_URL,
     },
     basePath: '/admin',
     async headers() {
