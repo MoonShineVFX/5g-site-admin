@@ -7,6 +7,12 @@ const bannerReducer = (state, { type, payload }) => {
                 ...payload,
             };
 
+        case 'banner_loop':
+            return {
+                ...state,
+                ...payload,
+            };
+
         case 'banner_list':
             return {
                 ...state,

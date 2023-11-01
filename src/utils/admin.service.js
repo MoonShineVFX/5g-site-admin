@@ -11,6 +11,7 @@ const Service = {
 
     // Banner
     bannerLengthControl: (reqData) => admin.serviceProxy('/banner_length_setting', reqData),
+    bannerLoopControl: (reqData) => admin.serviceProxy('/banner_loop_setting', reqData),
     bannerCreate: (reqData) => admin.serviceProxy('/banner_create', reqData, {
         headers: {
             'Content-Type': 'multipart/form-data',

@@ -8,6 +8,7 @@ import Service from '../../utils/admin.service';
 const initState = {
     action: false,
     length: null,
+    loopTime: null,
     imageSize: '',
     lists: [],
 };
@@ -26,7 +27,7 @@ const BannerProvider = ({ children }) => {
 
     const [bannerState, bannerDispatch] = useReducer(bannerReducer, initState);
 
-    const { action, length, imageSize, lists } = bannerState;
+    const { action, length, loopTime, imageSize, lists } = bannerState;
     const { Provider } = BannerContext;
 
     // 控制前台顯示筆數
@@ -37,6 +38,13 @@ const BannerProvider = ({ children }) => {
 
     };
 
+    //控制前台輪播時間
+    const bannerLoopControl = (reqData) => {
+            
+            Service.bannerLoopControl(reqData)
+                .then(() => bannerDispatch({ type: 'banner_loop', payload: reqData }));
+
+    }
     // 新增
     const bannerCreate = (reqData) => {
 
@@ -100,10 +108,12 @@ const BannerProvider = ({ children }) => {
         <Provider value={{
             action,
             length,
+            loopTime,
             imageSize,
             lists,
 
             bannerLengthControl,
+            bannerLoopControl,
             bannerCreate,
             bannerUpdate,
             bannerDelete,
