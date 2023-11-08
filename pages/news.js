@@ -1,6 +1,7 @@
 import NewsBase from '../src/components/news/NewsBase';
 import admin from '../src/utils/admin';
 
+
 const News = ({ pageData }) => (
 
     <NewsBase pageData={pageData} />
@@ -8,6 +9,7 @@ const News = ({ pageData }) => (
 );
 
 export default News;
+
 
 export async function getServerSideProps ({ req }) {
 
@@ -29,12 +31,20 @@ export async function getServerSideProps ({ req }) {
     });
 
     const { data } = resData;
-
+    const dataWithSerial = data.data.list.map((obj, index) => {
+            
+            return {
+                ...obj,
+                serial: index + 1,
+            };
+    
+        });
+    
     return {
         props: {
             pageData: {
                 title: '最新消息',
-                data: data.data,
+                data: {list: dataWithSerial},
             },
         },
     };
