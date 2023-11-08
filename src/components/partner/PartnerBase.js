@@ -78,6 +78,7 @@ const BannerBase = ({ pageData }) => {
         {
             title: 'No.',
             dataIndex: 'serial',
+            sorter: (a, b) => a.serial - b.serial,
         },
         {
             title: '編號(ID)',

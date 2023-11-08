@@ -86,7 +86,6 @@ const PlaceBase = ({ pageData }) => {
         {
             title: 'No.',
             dataIndex: 'serial',
-            width: 80,
             sorter: (a, b) => a.serial - b.serial,
         },
         {
