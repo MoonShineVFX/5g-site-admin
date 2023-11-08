@@ -170,7 +170,7 @@ const BannerBase = ({ pageData }) => {
 
     // 決定前台首頁一共要呈現幾則 Banner
     const handleChangeLength = ({ target }) => bannerLengthControl({ length: +target.value });
-    const handleChangeTimeLoop = ({ target }) => bannerLoopControl({ seconds: +target.value });
+    const handleChangeTimeLoop = ({ target }) => bannerLoopControl({ loopTime: +target.value });
 
     return (
 
