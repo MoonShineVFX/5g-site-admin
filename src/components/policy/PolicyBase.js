@@ -84,6 +84,12 @@ const PlaceBase = ({ pageData }) => {
     // 表格欄位
     const columns = [
         {
+            title: 'No.',
+            dataIndex: 'serial',
+            width: 80,
+            sorter: (a, b) => a.serial - b.serial,
+        },
+        {
             title: '編號(ID)',
             dataIndex: 'id',
         },
