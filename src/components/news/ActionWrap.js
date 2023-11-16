@@ -188,7 +188,7 @@ const ActionWrap = ({
                     title: newsTtitle || '',
                     description: newsDescription || '',
                     isHot: isHotChecked || false,
-                    isActive: isActived || true,
+                    isActive: isActived || false,
                     tags: formStorageData.selected ? Object.keys(formStorageData.selected).filter((val) => formStorageData.selected[val].isChecked).map((val) => +val) : []
                 }}
                 successCallback={() => router.push('/news')}
@@ -204,7 +204,6 @@ const ActionWrap = ({
                     </Checkbox>
 
                     <StyledCheckbox
-                        style={{marginLeft: '24px'}}
                         name="isActive"
                         value={isActived}
                         defaultChecked={isActived}
