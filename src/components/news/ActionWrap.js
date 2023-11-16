@@ -22,6 +22,10 @@ import TagsBox from '../news/TagsBox';
 import { GlobalContext } from '../../context/global.state';
 import adminConst from '../../utils/admin.const';
 
+const StyledCheckbox = styled(Checkbox)`
+    margin-left: 20px;
+`;
+
 const { lightboxTitle } = adminConst;
 
 // Mapping
@@ -47,7 +51,7 @@ const TagsWrapLayout = styled.div({
     marginBottom: '16px',
 });
 
-const IsHotLayout = styled.div({
+const ParamersLayout = styled.div({
     marginBottom: '16px',
     '.checkmark': {
         top: '2px',
@@ -91,12 +95,12 @@ const ActionWrap = ({
     description,
     content,
     isHot,
+    isActive,
     serviceKey,
 }) => {
 
     // Router
     const router = useRouter();
-
     // Context
     const {
         visible,
@@ -111,6 +115,7 @@ const ActionWrap = ({
     const [newsTtitle, setNewsTitle] = useState(newsTitle);
     const [newsDescription, setNewsDescription] = useState(description);
     const [isHotChecked, setIsHotChecked] = useState(isHot);
+    const [isActived, setIsActive] = useState(isActive);
 
     useEffect(() => {
 
@@ -136,6 +141,9 @@ const ActionWrap = ({
                 setIsHotChecked(target.checked);
                 break;
 
+            case 'isActive':
+                setIsActive(target.checked);
+                break;
             default:
                 setNewsDescription(target.value);
                 break;
@@ -180,11 +188,12 @@ const ActionWrap = ({
                     title: newsTtitle || '',
                     description: newsDescription || '',
                     isHot: isHotChecked || false,
+                    isActive: isActived || true,
                     tags: formStorageData.selected ? Object.keys(formStorageData.selected).filter((val) => formStorageData.selected[val].isChecked).map((val) => +val) : []
                 }}
                 successCallback={() => router.push('/news')}
             >
-                <IsHotLayout>
+                <ParamersLayout>
                     <Checkbox
                         name="isHot"
                         value={isHot}
@@ -193,7 +202,17 @@ const ActionWrap = ({
                     >
                         設為熱門文章
                     </Checkbox>
-                </IsHotLayout>
+
+                    <StyledCheckbox
+                        style={{marginLeft: '24px'}}
+                        name="isActive"
+                        value={isActived}
+                        defaultChecked={isActived}
+                        onChange={handleChange}
+                    >
+                        顯示文章
+                    </StyledCheckbox>
+                </ParamersLayout>
 
                 <NewsTitleLayout>
                     文章標題:
