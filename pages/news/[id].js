@@ -52,6 +52,9 @@ const NewsDetail = ({ pageData }) => {
             isHot={pageData.data.isHot}
             isActive={pageData.data.isActive}
             serviceKey="newsUpdate"
+            createAt={pageData.data.createTime}
+            updateAt={pageData.data.updateTime}
+            tags={pageData.data.tags}
         />
 
     );
