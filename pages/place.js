@@ -30,12 +30,17 @@ export async function getServerSideProps ({ req }) {
 
     const { data } = resData;
 
+    const dataWithSerial = data.data.list.map((item, index) => {
+            item.serial = index + 1;
+            return item;
+        });
+
     return {
         props: {
             pageData: {
                 title: '場域空間',
                 imageSize: '563x312',
-                data: data.data,
+                data: {list: dataWithSerial},
             },
         },
     };

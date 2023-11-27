@@ -32,12 +32,17 @@ export async function getServerSideProps ({ req }) {
     });
 
     const { data } = resData;
+    const dataWithSerial = data.data.list.map((item, index) => {
+            item.serial = index + 1;
+            return item;
+        }
+    );
 
     return {
         props: {
             pageData: {
                 title: '政策資源',
-                data: data.data,
+                data: {list: dataWithSerial},
             },
         },
     };

@@ -25,6 +25,7 @@ const NewsCreate = () => {
         <ActionWrap
             title={title}
             serviceKey="newsCreate"
+            isActive={true}
         />
 
     );

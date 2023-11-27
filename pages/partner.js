@@ -32,13 +32,21 @@ export async function getServerSideProps ({ req }) {
     });
 
     const { data } = resData;
+    const dataWithSerial = data.data.partners.map((obj, index) => {
+            
+            return {
+                ...obj,
+                serial: index + 1,
+            };
+    
+        });
 
     return {
         props: {
             pageData: {
                 title: '策略夥伴',
                 imageSize: '152x114',
-                data: data.data,
+                data: {tags: data.data.tags, partners: dataWithSerial},
             },
         },
     };

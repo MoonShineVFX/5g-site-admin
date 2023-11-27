@@ -25,6 +25,7 @@ const SelectOptLayout = styled.span(({ theme }) => ({
     'select': {
         border: `1px solid ${theme.palette.border}`,
         marginLeft: '8px',
+        marginRight: '24px',
         padding: '4px 10px',
         outline: 0,
         cursor: 'pointer',
@@ -50,8 +51,10 @@ const BannerBase = ({ pageData }) => {
     const {
         action,
         length,
+        loopTime,
         lists,
         bannerLengthControl,
+        bannerLoopControl,
         bannerDelete,
         bannerDispatch,
     } = useContext(BannerContext);
@@ -167,6 +170,7 @@ const BannerBase = ({ pageData }) => {
 
     // 決定前台首頁一共要呈現幾則 Banner
     const handleChangeLength = ({ target }) => bannerLengthControl({ length: +target.value });
+    const handleChangeTimeLoop = ({ target }) => bannerLoopControl({ loopTime: +target.value });
 
     return (
 
@@ -178,6 +182,23 @@ const BannerBase = ({ pageData }) => {
                 onClick={btnCreate}
             >
                 <SelectOptLayout>
+                    輪播秒數:
+                    <select
+                        name="seconds"
+                        defaultValue={loopTime ? loopTime : pageData.data.loopTime}
+                        onChange={handleChangeTimeLoop}
+                    >
+                        {
+                            [2, 3, 4, 5, 6, 7, 8, 9, 10].map((val) => (
+                                <option
+                                    key={val}
+                                    value={val}
+                                >
+                                    {val}
+                                </option>
+                            ))
+                        }
+                    </select>
                     前台顯示則數:
                     <select
                         name="length"

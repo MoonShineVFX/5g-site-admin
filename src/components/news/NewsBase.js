@@ -1,7 +1,7 @@
 import { Fragment, useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Tag } from 'antd';
-import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
+import { CheckSquareOutlined, BorderOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 
 import HeadTag from '../../containers/HeadTag';
@@ -73,6 +73,7 @@ const NewsBase = ({ pageData }) => {
         list: pageData.data.list,
     });
 
+
     useEffect(() => {
 
         globalDispatch({
@@ -85,8 +86,19 @@ const NewsBase = ({ pageData }) => {
     // 表格欄位
     const columns = [
         {
+            title: 'No.',
+            dataIndex: 'serial',
+            sorter: (a, b) => a.serial - b.serial,
+        },
+        {
             title: '編號(ID)',
             dataIndex: 'id',
+        },
+        {
+            title: '顯示',
+            dataIndex: 'isActive',
+            className: 'col-isActive',
+            render: (isActive) => isActive ? <CheckSquareOutlined /> : <BorderOutlined />,
         },
         {
             title: '標題',
